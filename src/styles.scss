@@ -1,0 +1,72 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import '../node_modules/primeflex/primeflex.min.css';
+@import "primeicons/primeicons.css";
+@import "./styles/color.scss";
+@import './styles/components/input';
+
+
+$primary-color: #9233DF;
+$surface-100:#e7e7e8;
+
+body{
+    background-color:rgba(0, 0, 0, 0.1);
+    font-family: 'Montserrat', sans-serif !important;
+}
+
+
+.primaryBorderClr{
+    border-color: $primary-color !important;
+}
+.primaryTextClr{
+    color: $primary-color !important;
+}
+
+.p-divider-solid.p-divider-horizontal:before {
+    border-color: var(--p-surface-400);
+}
+
+
+.p-datatable-thead > tr > th{
+    background-color: #F3F3F3 !important;
+    border-top: 1px solid #e2e8f0 !important;
+    padding: 8px !important;
+}
+.p-datatable-tbody > tr > td{
+  padding: 8px !important;
+}
+
+.p-sortable-column-icon{
+  width: 12px !important;
+  height: 12px !important;
+}
+
+::-webkit-scrollbar {
+    width: 4px; /* Scrollbar width */
+  }
+  
+  ::-webkit-scrollbar-track {
+    background-color: #f1f1f1; /* Track background */
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background-color: #888; /* Thumb background */
+  }
+  
+  /* Horizontal Scrollbar */
+  ::-webkit-scrollbar:horizontal {
+    height: 2px; /* Horizontal scrollbar height */
+  }
+
+
+  .boxShadow1{
+    box-shadow: rgba(17, 17, 26, 0.05) 0px 1px 0px, rgba(17, 17, 26, 0.1) 0px 0px 8px;
+  }
+
+  .p-tabs-scrollable{
+    width: 100%;
+  }
+
+  .p-button-outlined{
+    border: 1px solid silver !important;
+  }
