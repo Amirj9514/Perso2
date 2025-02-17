@@ -17,7 +17,7 @@ export const appConfig: ApplicationConfig = {
         preset: MyPreset,
         options: {
           darkModeSelector: false || 'none',
-           prefix: 'p'
+          prefix: 'p',
         },
       },
     }),

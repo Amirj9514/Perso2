@@ -3,10 +3,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { SharedService } from '../../Shared/services/shared.service';
 import { jwtDecode } from "jwt-decode";
+import { CommonModule } from '@angular/common';
+
 @Component({
   selector: 'app-auth',
   standalone: true,
-  imports: [ProgressSpinnerModule],
+  imports: [ProgressSpinnerModule  ],
   templateUrl: './auth.component.html',
   styleUrl: './auth.component.scss'
 })
