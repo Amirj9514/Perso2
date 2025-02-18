@@ -1,15 +1,14 @@
 .mainLayout{
     position: relative;
-    margin: 20px;
+    // margin: 20px;
     .sidebarContainer{
         position: absolute;
         top: 0;
         bottom: 0;
         left: 0;
-        width: 80px;
+        width: 30%;
         background-color: #F3F3F3;
         height: calc(100vh - 40px);
-        border-radius: 16px;
         overflow: hidden;
     }
 
@@ -17,9 +16,10 @@
         position: absolute;
         top: 0;
         bottom: 0;
-        left: 100px;
-        height: calc(100vh - 40px);
+        left: 271px;
+        height: calc(100vh - 2px);
         overflow: auto;
-        width: calc(100% - 100px);
+        background-color:white;
+        width: calc(86% - 80px);
     }
 }

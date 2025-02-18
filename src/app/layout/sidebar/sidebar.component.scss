@@ -1,65 +1,228 @@
+$primary-color: #19b89d;
+$secondary-color: #fff;
+$gradient-start: #f1faff;
+$gradient-end: #cbe4ff;
+$text-color: #333;
+$border-color: #ddd;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+
 .sidebar {
-  position: relative;
-  height: 100%;
-  background-color: #ffffff;
-  
+    position: fixed;
+    width: 270px;
+    margin-bottom:2px ;
+    background: $primary-color;
+    height: calc(100vh - 2px);
+    transition: all 0.4s ease;
 
-  .header {
-    display: flex;
-    justify-content: center;
-    img{
-      width: 60px;
-      object-fit: cover;
+    &.collapsed {
+        width: 85px;
     }
-  }
 
-  .body {
-    .nav-item {
-      width: 50px;
-      height: 50px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 10px;
-      cursor: pointer;
-      transition: all 0.3s;
-      &:hover {
-        background-color: #e7e7e8;
-      }
-    }
-  
-  }
-
-  .footer{
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    padding: 12px 15px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-
-    .profileAvatar{
+    .sidebar-header {
         display: flex;
+        position: relative;
+        padding: 25px 20px;
         align-items: center;
-        justify-content: center;
-       
-        img{
-          width: 50px;
-          height: 50px;
-          border-radius: 50%;
-          overflow: hidden;
+        justify-content:center;
+        margin-bottom: 40px;
+
+        .header-logo img {
+            width: 46px;
+            height: 46px;
+            display: block;
+            object-fit: contain;
+            border-radius: 50%;
+        }
+
+        .toggler {
+            height: 35px;
+            width: 35px;
+            color: $primary-color;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            background: $secondary-color;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            transition: 0.4s ease;
+
+            &:hover {
+                background: lighten($primary-color, 50%);
+            }
+
+            span {
+                font-size: 1.75rem;
+                transition: 0.4s ease;
+            }
+        }
+
+        .sidebar-toggler {
+            position: absolute;
+            right: 20px;
+        }
+
+        .menu-toggler {
+            display: none;
         }
     }
-  }
+
+    &.collapsed .sidebar-header {
+        .toggler {
+            transform: translate(-4px, 65px);
+
+            span {
+                transform: rotate(180deg);
+            }
+        }
+    }
+
+    .sidebar-nav {
+        .nav-list {
+            list-style: none;
+            display: flex;
+            gap: 4px;
+            padding: 0 15px;
+            flex-direction: column;
+            transform: translateY(15px);
+            transition: 0.4s ease;
+        }
+
+        .nav-link {
+            margin-bottom: 2px;
+            color: $secondary-color;
+            display: flex;
+            gap: 12px;
+            white-space: nowrap;
+            border-radius: 40px;
+            padding: 12px 15px;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: 0.4s ease;
+            &:hover {
+                color: black;
+                background:rgb(77, 243, 188);
+            }
+        }
+
+        .nav-item {
+            position: relative;
+
+            .nav-tooltip {
+                position: absolute;
+                top: -10px;
+                opacity: 0;
+                color: $primary-color;
+                display: none;
+                pointer-events: none;
+                padding: 6px 12px;
+                border-radius: 8px;
+                white-space: nowrap;
+                background: $secondary-color;
+                left: calc(100% + 25px);
+                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+                transition: 0s;
+            }
+
+            &:hover .nav-tooltip {
+                opacity: 1;
+                pointer-events: auto;
+                transform: translateY(50%);
+                transition: all 0.4s ease;
+            }
+        }
+    }
+
+    &.collapsed .sidebar-nav {
+        .primary-nav {
+            transform: translateY(65px);
+        }
+
+        .nav-link {
+            border-radius: 12px;
+        }
+
+        .nav-link .nav-label {
+            opacity:0;
+            pointer-events: none;
+        }
+
+        .nav-tooltip {
+            display: block;
+        }
+    }
 }
+// @media (max-width: 1024px) {
+//     .sidebar {
+//         height: 56px;
+//         margin: 13px;
+//         overflow-y: hidden;
+//         scrollbar-width: none;
+//         width: calc(100% - 26px);
+//         max-height: calc(100vh - 26px);
+
+//         &.menu-active {
+//             overflow-y: auto;
+//         }
+
+//         .sidebar-header {
+//             position: sticky;
+//             top: 0;
+//             z-index: 20;
+//             border-radius: 16px;
+//             background: $primary-color;
+//             padding: 8px 10px;
+//         }
+
+//         .header-logo img {
+//             width: 40px;
+//             height: 40px;
+//         }
+
+//         .sidebar-toggler,
+//         .nav-item:hover .nav-tooltip {
+//             display: none;
+//         }
+
+//         .menu-toggler {
+//             display: flex;
+//             height: 30px;
+//             width: 30px;
+
+//             span {
+//                 font-size: 1.3rem;
+//             }
+//         }
+//     }
+
+//     .sidebar-nav {
+//         .nav-list {
+//             padding: 0 10px;
+//         }
+
+//         .nav-link {
+//             gap: 10px;
+//             padding: 10px;
+//             font-size: 0.94rem;
+//         }
+
+//         .nav-link .nav-icon {
+//             font-size: 1.37rem;
+//         }
+
+//         .secondary-nav {
+//             position: relative;
+//             bottom: 0;
+//             margin: 40px 0 30px;
+//         }
+//     }
+// }
 
 
-.active {
-  background-color: #9233df;
-  color: #ffffff;
-  &:hover {
-    background-color: #9233df;
-  }
-}
