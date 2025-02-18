@@ -9,7 +9,7 @@ $border-color: #ddd;
 
 .sidebar {
     position: fixed;
-    width: 270px;
+    width: 200px;
     margin-bottom:2px ;
     background: $primary-color;
     height: calc(100vh - 2px);
@@ -71,7 +71,6 @@ $border-color: #ddd;
     &.collapsed .sidebar-header {
         .toggler {
             transform: translate(-4px, 65px);
-
             span {
                 transform: rotate(180deg);
             }
@@ -80,10 +79,9 @@ $border-color: #ddd;
 
     .sidebar-nav {
         .nav-list {
-            list-style: none;
             display: flex;
-            gap: 4px;
-            padding: 0 15px;
+            gap: 16px;
+            padding: 0 40px;
             flex-direction: column;
             transform: translateY(15px);
             transition: 0.4s ease;
@@ -152,6 +150,19 @@ $border-color: #ddd;
         .nav-tooltip {
             display: block;
         }
+    }
+}
+
+.nav-items{
+    margin-bottom: 2px;
+    color: $secondary-color;
+    white-space: nowrap;
+    border-radius: 40px;
+    text-decoration: none;
+    transition: 0.4s ease;
+    &:hover {
+        color: black;
+        background:rgb(77, 243, 188);
     }
 }
 // @media (max-width: 1024px) {
