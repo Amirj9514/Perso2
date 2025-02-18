@@ -1,4 +1,5 @@
 <aside class="sidebar">
+  <div class="logo"><i class="pi pi-user"></i> <span class="pl-1">{{selectedNavItem }}</span></div>
   <header class="sidebar-header">
     <a href="#" class="header-logo">
       <img
@@ -9,7 +10,11 @@
   </header>
   <nav class="sidebar-nav">
     <div class="nav-list primary-nav">
-      <div class="grid nav-items">
+      <div
+        class="grid nav-items"
+        (click)="setActiveNavItem('Dashboard')"
+        [ngClass]="{ active: selectedNavItem === 'Dashboard' }"
+      >
         <div class="col-3 flex justify-content-end align-items-center">
           <i class="pi pi-chart-pie"></i>
         </div>
@@ -18,7 +23,11 @@
         </div>
       </div>
 
-      <div class="grid nav-items">
+      <div
+        class="grid nav-items"
+        (click)="setActiveNavItem('Vacancies')"
+        [ngClass]="{ active: selectedNavItem === 'Vacancies' }"
+      >
         <div class="col-3 flex justify-content-end align-items-center">
           <i class="pi pi-users"></i>
         </div>
@@ -27,16 +36,24 @@
         </div>
       </div>
 
-      <div class="grid nav-items">
+      <div
+        class="grid nav-items"
+        (click)="setActiveNavItem('Applicants')"
+        [ngClass]="{ active: selectedNavItem === 'Applicants' }"
+      >
         <div class="col-3 flex justify-content-end align-items-center">
           <i class="pi pi-user"></i>
         </div>
         <div class="col-9">
-          <span class="nav-label">Applications</span>
+          <span class="nav-label">Applicants</span>
         </div>
       </div>
 
-      <div class="grid nav-items">
+      <div
+        class="grid nav-items"
+        (click)="setActiveNavItem('Employees')"
+        [ngClass]="{ active: selectedNavItem === 'Employees' }"
+      >
         <div class="col-3 flex justify-content-end align-items-center">
           <i class="pi pi-users"></i>
         </div>
@@ -45,7 +62,11 @@
         </div>
       </div>
 
-      <div class="grid nav-items">
+      <div
+        class="grid nav-items"
+        (click)="setActiveNavItem('Payroll')"
+        [ngClass]="{ active: selectedNavItem === 'Payroll' }"
+      >
         <div class="col-3 flex justify-content-end align-items-center">
           <i class="pi pi-wallet"></i>
         </div>
@@ -54,15 +75,18 @@
         </div>
       </div>
 
-      <div class="grid nav-items">
+      <div
+        class="grid nav-items"
+        (click)="setActiveNavItem('Calendar')"
+        [ngClass]="{ active: selectedNavItem === 'Calendar' }"
+      >
         <div class="col-3 flex justify-content-end align-items-center">
           <i class="pi pi-calendar"></i>
         </div>
         <div class="col-9">
-          <span class="nav-label">Calender</span>
+          <span class="nav-label">Calendar</span>
         </div>
       </div>
-
     </div>
   </nav>
 </aside>

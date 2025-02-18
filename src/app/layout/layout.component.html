@@ -1,8 +1,22 @@
 <div class="mainLayout">
   <div class="sidebarContainer">
-    <app-sidebar></app-sidebar>
+    <app-sidebar (selectedItem)="selectedNavItem($event)"></app-sidebar>
   </div>
   <div class="mainContainer">
-    <router-outlet></router-outlet>
+    <!-- <router-outlet></router-outlet> -->
+     <h1>{{item}}</h1>
+    @if (item=="Applicants") {
+    <app-applicants></app-applicants>
+    }@else if (item=="Vacancies") {
+    <app-vacancies></app-vacancies>
+    }@else if (item=="Payroll") {
+    <app-pay-roll></app-pay-roll>
+    }@else if (item=="Employees") {
+    <app-employees></app-employees>
+    }@else if (item=="Calendar") {
+    <app-calender></app-calender>
+    }@else {
+    <app-dash-board></app-dash-board>
+    }
   </div>
 </div>

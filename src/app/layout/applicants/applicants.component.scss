@@ -1,0 +1,21 @@
+.card{
+    background-color:rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    border-radius: 5px;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+}
+
+.tableStyle{
+    border-radius: 10px;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+}
+
+.delete{
+    color:red;
+    padding-right: 10px;
+    cursor: pointer;
+}
+.edit{
+    color: rgb(71, 71, 200);
+    cursor: pointer;
+}

@@ -7,12 +7,17 @@ export const routes: Routes = [
         path:'login',
         component:AuthComponent
     },
+    {
+        path:'applicants',
+        component:AuthComponent
+    },
+    
 
     {
         path:'',
         component: LayoutComponent,
         children:[
-          
+
         ]
     },
 ];

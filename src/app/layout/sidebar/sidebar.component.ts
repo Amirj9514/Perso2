@@ -1,17 +1,19 @@
-import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'app-sidebar',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './sidebar.component.html',
-  styleUrl: './sidebar.component.scss'
+  styleUrl: './sidebar.component.scss',
 })
 export class SidebarComponent {
+  @Output() selectedItem = new EventEmitter<string>();
+  selectedNavItem: string = 'Dashboard';
 
-  dropdownOpen = false;
-
-  toggleDropdown(): void {
-    this.dropdownOpen = !this.dropdownOpen;
+  setActiveNavItem(navItem: string) {
+    this.selectedNavItem = navItem;
+    this.selectedItem.emit(navItem)
   }
 }

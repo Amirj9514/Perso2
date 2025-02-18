@@ -1,0 +1,98 @@
+<div class="grid">
+    <div class="col-4">
+      <div class="card mt-3 flex justify-content-between">
+        <div>
+          <h3 class="text-2xl font-bold mt-0 mb-4">Open Positions</h3>
+          <div>All Vacancies</div>
+        </div>
+        <div class="text-5xl">358</div>
+      </div>
+    </div>
+
+    <div class="col-4">
+      <div class="card mt-3 flex justify-content-between">
+        <div>
+          <div class="text-2xl font-bold mt-0 mb-4">Active Candidates</div>
+          <div>All Vacancies</div>
+        </div>
+        <div class="text-5xl">125</div>
+      </div>
+    </div>
+
+    <div class="col-4">
+      <div class="card mt-3 flex justify-content-between">
+        <div>
+          <h3 class="text-2xl font-bold mt-0 mb-4">Hirring Process</h3>
+          <div>Average</div>
+        </div>
+        <div class="text-5xl">12</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="col-12 mt-4 tableStyle">
+      <p-table [value]="applicants" [tableStyle]="{ 'min-width': '60rem' }">
+        <ng-template #header>
+          <tr class="tableHeader">
+            <th pSortableColumn="name" style="width: 16%">
+              Applicant Name <p-sortIcon field="name" />
+            </th>
+            <th pSortableColumn="position" style="width: 16%">
+              Position Applied <p-sortIcon field="position" />
+            </th>
+            <th pSortableColumn="date" style="width: 16%">
+              Application Date <p-sortIcon field="date" />
+            </th>
+            <th pSortableColumn="status" style="width: 16%">
+              Status <p-sortIcon field="status" />
+            </th>
+            <th pSortableColumn="info" style="width: 16%">Contact Info</th>
+            <!-- <th pSortableColumn="quantity" style="width: 16%">
+              Abservation <p-sortIcon field="quantity" />
+            </th> -->
+            <th pSortableColumn="action" style="width: 16%">Action</th>
+          </tr>
+        </ng-template>
+        <ng-template #body let-applicant>
+          <tr>
+            <td>
+                <div
+                  class="overflow-hidden flex align-items-center gap-2"
+                >
+                  <img
+                    style="object-fit: cover;border-radius: 50%"
+                    [src]="applicant.image"
+                    alt="Image"
+                    width="50"
+                    height="50"
+                  />
+                  <span>
+                    {{ applicant.name }}
+                  </span>
+                </div>
+            </td>
+            <td>
+              <p-tag
+                [severity]="getSeverity(applicant.position)"
+                [value]="applicant.position"
+                [rounded]="true"
+              />
+            </td>
+            <td>
+              <span class="pi pi-calendar"> {{ applicant.appliedDate }}</span>
+            </td>
+            <td>{{ applicant.status }}</td>
+            <td>{{ applicant.contactInfo }}</td>
+            <!-- <td>{{ applicant.code }}</td> -->
+            <td>
+              <span class="delete" (click)="deleteApplicant(applicant)"
+                ><i class="pi pi-trash"></i
+              ></span>
+              <span class="edit"><i class="pi pi-user-edit"></i></span>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>

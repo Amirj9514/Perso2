@@ -5,11 +5,9 @@ $gradient-end: #cbe4ff;
 $text-color: #333;
 $border-color: #ddd;
 
-
-
 .sidebar {
     position: fixed;
-    width: 200px;
+    width: 240px;
     margin-bottom:2px ;
     background: $primary-color;
     height: calc(100vh - 2px);
@@ -80,8 +78,8 @@ $border-color: #ddd;
     .sidebar-nav {
         .nav-list {
             display: flex;
-            gap: 16px;
-            padding: 0 40px;
+            gap: 20px;
+            padding: 0 30px;
             flex-direction: column;
             transform: translateY(15px);
             transition: 0.4s ease;
@@ -153,18 +151,25 @@ $border-color: #ddd;
     }
 }
 
-.nav-items{
+.nav-items {
     margin-bottom: 2px;
     color: $secondary-color;
     white-space: nowrap;
     border-radius: 40px;
     text-decoration: none;
     transition: 0.4s ease;
-    &:hover {
-        color: black;
-        background:rgb(77, 243, 188);
+  
+    &:hover, &.active { 
+      color: black;
+      background: rgb(77, 243, 188);
     }
-}
+  }
+
+  .logo{
+    color: $secondary-color;
+    margin-bottom: 10px;
+    padding: 3px;
+  }
 // @media (max-width: 1024px) {
 //     .sidebar {
 //         height: 56px;
