@@ -1,86 +1,48 @@
-<!-- <div class="sidebar flex py-3 flex-column align-items-center boxShadow1">
-  <div class="header">
-    <img src="../../../assets/images/logo.PNG" />
-  </div>
-  <div class="body my-5">
-    <div
-      pTooltip="Projections"
-      tooltipPosition="right"
-      [routerLink]="'/'"
-      [routerLinkActive]="['active']"
-      [routerLinkActiveOptions]="{ exact: true }"
-      class="flex items-center gap-1 cursor-pointer text-base rounded-lg p-2 nav-item mb-2"
-    >
-      <div
-        class="flex align-items-center justify-content-center text-2xl"
-        [appSvgIcon]="'graph'"
-      ></div>
-    </div>
 
-    <div
-      [routerLink]="'/players'"
-      [routerLinkActive]="['active']"
-      pTooltip="Players"
-      tooltipPosition="right"
-      class="flex items-center gap-1 cursor-pointer text-base rounded-lg p-2 nav-item mb-2"
-    >
-      <div
-        class="flex align-items-center justify-content-center text-2xl"
-        [appSvgIcon]="'players'"
-      ></div>
-    </div>
-  </div>
-  <div class="footer">
-    <p-divider />
-    <div class="profileAvatar">
-      <img src="../../../assets/images/main-avatar.png" />
-    </div>
-  </div>
-</div> -->
-
-<aside class="sidebar">
-  <header class="sidebar-header">
-    <a href="#" class="header-logo">
-      <img
-        src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTAiIGhlaWdodD0iNTAiIHZpZXdCb3g9IjAgMCA1MCA1MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMjUgNDVDMzYuMDQ1NyA0NSA0NSAzNi4wNDU3IDQ1IDI1QzQ1IDEzLjk1NDMgMzYuMDQ1NyA1IDI1IDVDMTM5NTQzIDUgNSAxMy45NTQzIDUgMjVDNSAzNi4wNDU3IDEzLjk1NDMgNDUgMjUgNDVaIiBmaWxsPSJ3aGl0ZSIvPjx0ZXh0IHg9IjE1IiB5PSIzNSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjI0IiBmaWxsPSIjMTlCODlEIj5QMjwvdGV4dD48L3N2Zz4="
-        alt="PERSO2 Logo"
-      />
-    </a>
-  </header>
-  <nav class="sidebar-nav">
-    <div class="nav-list primary-nav">
-      <div class="nav-item">
-        <a href="#" class="nav-link">
-          <i class="pi pi-user"></i>
-          <span class="nav-label">Dashboard</span>
-        </a>
+<aside class="sidebar ">
+    <header class="sidebar-header">
+      <a href="#" class="header-logo">
+        <img
+          src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTAiIGhlaWdodD0iNTAiIHZpZXdCb3g9IjAgMCA1MCA1MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMjUgNDVDMzYuMDQ1NyA0NSA0NSAzNi4wNDU3IDQ1IDI1QzQ1IDEzLjk1NDMgMzYuMDQ1NyA1IDI1IDVDMTM5NTQzIDUgNSAxMy45NTQzIDUgMjVDNSAzNi4wNDU3IDEzLjk1NDMgNDUgMjUgNDVaIiBmaWxsPSJ3aGl0ZSIvPjx0ZXh0IHg9IjE1IiB5PSIzNSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjI0IiBmaWxsPSIjMTlCODlEIj5QMjwvdGV4dD48L3N2Zz4="
+          alt="PERSO2 Logo"
+        />
+      </a>
+    </header>
+    <nav class="sidebar-nav">
+      <div class="nav-list primary-nav">
+        <div class="nav-item">
+          <a href="#" class="nav-link">
+            <i class="pi pi-user"></i>
+            <span class="nav-label">Dashboard</span>
+          </a>
+        </div>
+        <div class="nav-item">
+          <a href="#" class="nav-link">
+            <i class="pi pi-calendar-times"></i>
+            <span class="nav-label">Vacancies</span>
+          </a>
+        </div>
+        <div class="nav-item">
+          <a href="#" class="nav-link">
+            <span class="nav-label">Applications</span>
+          </a>
+        </div>
+        <div class="nav-item">
+          <a href="#" class="nav-link">
+            <span class="nav-label">Employees</span>
+          </a>
+        </div>
+        <div class="nav-item">
+          <a href="#" class="nav-link">
+            <span class="nav-label">Payroll</span>
+          </a>
+        </div>
+        <div class="nav-item">
+          <a href="#" class="nav-link">
+            <span class="nav-label">Calendar</span>
+          </a>
+        </div>
       </div>
-      <div class="nav-item">
-        <a href="#" class="nav-link">
-          <i class="pi pi-calendar-times"></i>
-          <span class="nav-label">Vacancies</span>
-        </a>
-      </div>
-      <div class="nav-item">
-        <a href="#" class="nav-link">
-          <span class="nav-label">Applications</span>
-        </a>
-      </div>
-      <div class="nav-item">
-        <a href="#" class="nav-link">
-          <span class="nav-label">Employees</span>
-        </a>
-      </div>
-      <div class="nav-item">
-        <a href="#" class="nav-link">
-          <span class="nav-label">Payroll</span>
-        </a>
-      </div>
-      <div class="nav-item">
-        <a href="#" class="nav-link">
-          <span class="nav-label">Calendar</span>
-        </a>
-      </div>
-    </div>
-  </nav>
-</aside>
+    </nav>
+  </aside>
+  

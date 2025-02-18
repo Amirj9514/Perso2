@@ -1,8 +1,105 @@
-<div class="auth-container">
-  <div class="auth-block text-4xl font-semibold flex">
-    <div class="flex flex-column justify-content-center align-items-center">
-      <p-progress-spinner ariaLabel="loading" />
-      <div>Verifying</div>
+<div class="body">
+    <nav class="navbar">
+      <ul>
+        <li><span>software.perso2.de</span></li>
+      </ul>
+    </nav>
+    <div class="container">
+      <div class="login-container">
+        <div class="login-form">
+          <h1 class="text-align">Sign In</h1>
+          <p class="welcome-text">Welcome back! Please enter your details</p>
+  
+          <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+            <div class="form-group">
+              <label for="email">EMAIL</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="example@email.com"
+                formControlName="email"
+              />
+              <span
+                *ngIf="
+                  (loginForm.get('email')?.touched || formSubmit) &&
+                  loginForm.get('email')?.errors
+                "
+              >
+                <span
+                  class="warn-txt"
+                  *ngIf="loginForm.get('email')?.hasError('required')"
+                  >Email Address is required</span
+                >
+                <span
+                  class="warn-txt"
+                  *ngIf="loginForm.get('email')?.hasError('email')"
+                  >Email Address Is Not Correct</span
+                >
+              </span>
+            </div>
+  
+            <div class="form-group">
+              <label for="password">PASSWORD</label>
+              <div class="password-input-container">
+                <input
+                  [type]="isPasswordVisible ? 'text' : 'password'"
+                  id="password"
+                  name="password"
+                  placeholder="Enter Your Password"
+                  formControlName="password"
+                  required
+                />
+                <button
+                  type="button"
+                  (click)="togglePasswordVisibility()"
+                  class="toggle-btn"
+                >
+                  {{ isPasswordVisible ? "🙈" : "👁" }}
+                </button>
+              </div>
+              <span
+                  *ngIf="
+                    (loginForm.get('password')?.touched || formSubmit) &&
+                    loginForm.get('password')?.errors
+                  "
+                >
+                  <span
+                    class="warn-txt"
+                    *ngIf="loginForm.get('password')?.hasError('required')"
+                    >Password is required</span
+                  >
+                </span>
+            </div>
+  
+            <div class="form-options">
+              <label class="remember-me">
+                <input type="checkbox" name="remember" />
+                <span class="checkmark"></span>
+                Remember me
+              </label>
+              <a href="#" class="forgot-password">Forgot Password?</a>
+            </div>
+  
+            <button type="submit" class="sign-in-btn">Sign In</button>
+          </form>
+        </div>
+      </div>
+      <div class="content-container">
+        <div class="content">
+          <h2>
+            Streamline your personnel <br />
+            processes for better efficiency <br />
+            and convenience today!
+          </h2>
+          <div class="logo">
+            <img
+              src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTAiIGhlaWdodD0iNTAiIHZpZXdCb3g9IjAgMCA1MCA1MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMjUgNDVDMzYuMDQ1NyA0NSA0NSAzNi4wNDU3IDQ1IDI1QzQ1IDEzLjk1NDMgMzYuMDQ1NyA1IDI1IDVDMTM5NTQzIDUgNSAxMy45NTQzIDUgMjVDNSAzNi4wNDU3IDEzLjk1NDMgNDUgMjUgNDVaIiBmaWxsPSJ3aGl0ZSIvPjx0ZXh0IHg9IjE1IiB5PSIzNSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjI0IiBmaWxsPSIjMTlCODlEIj5QMjwvdGV4dD48L3N2Zz4="
+              alt="PERSO2 Logo"
+            />
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-</div>
+  

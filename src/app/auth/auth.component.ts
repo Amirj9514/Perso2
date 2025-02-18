@@ -1,50 +1,33 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { ProgressSpinnerModule } from 'primeng/progressspinner';
-import { SharedService } from '../../Shared/services/shared.service';
-import { jwtDecode } from "jwt-decode";
 import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms'
 
 @Component({
   selector: 'app-auth',
   standalone: true,
-  imports: [ProgressSpinnerModule  ],
+  imports: [ReactiveFormsModule ,CommonModule ],
   templateUrl: './auth.component.html',
   styleUrl: './auth.component.scss'
 })
-export class AuthComponent implements OnInit {
-  token: string | null = null;
-  
-  constructor(private route: ActivatedRoute , private sharedS:SharedService , private router:Router) {}
-  ngOnInit() {
-    this.route.queryParamMap.subscribe(params => {
-      this.token = params.get('token'); 
-      if(this.token) {
-        this.verifyToken(this.token);
-      }else{
-         window.location.href = 'https://parlayproz.com/'
-      }
+export class AuthComponent {
+
+  isPasswordVisible: boolean = false;
+  loginForm!: FormGroup;
+  formSubmit: boolean = false;
+
+  ngOnInit(): void {
+    this.loginForm = new FormGroup({
+      email: new FormControl('', [Validators.required, Validators.email]),
+      password: new FormControl('', [Validators.required, Validators.minLength(8)])
     });
+
+  }
+  togglePasswordVisibility(): void {
+    this.isPasswordVisible = !this.isPasswordVisible;
   }
 
-  verifyToken(token: string) {
-    const decodedString = token.replaceAll(' ' , '+');
-    this.sharedS.sendGetRequest('nba/stat/fields' , decodedString).subscribe({
-      next:(res:any)=>{
-        if(res.status === 200) {
-          let token = {key:'token' , val:decodedString};
-          const decodedToken = jwtDecode(decodedString);
-          const userProfile = {key:'userProfile' , val:decodedToken};
-          this.sharedS.insertData(token);
-          this.sharedS.insertData(userProfile);
-          this.router.navigate(['/']);
-        }else{
-          window.location.href = 'https://parlayproz.com/'
-        }
-      },error:(err:any)=>{
-        console.log(err);
-      }
-    })
-  }
+  onSubmit() {
+    this.formSubmit = true;
 
+  }
 }
