@@ -1,5 +1,96 @@
-<div class="card mt-5 p-3">
+<div class="card px-4 my-3">
+
+  <div class="flex align-items-center justify-content-between py-2 w-full mb-3">
+    <div class="text-xl font-semibold">Meetings</div>
+    <div>
+      <p-button (onClick)="visible = !visible" label="Add Meeting" />
+    </div>
+  </div>
     <div class="full-calendar-container">
       <full-calendar [options]="calendarOptions"></full-calendar>
     </div>
   </div>
+
+
+
+  <p-drawer
+  #drawerRef
+  [(visible)]="visible"
+  [modal]="true"
+  [dismissible]="false"
+  position="right"
+  styleClass="w-26rem"
+>
+  <ng-template #headless>
+    <div class="flex flex-col h-full relative">
+      <div class="flex items-center justify-between shrink-0 w-full">
+        <p-button
+          (onClick)="closeCallback($event)"
+          icon="pi pi-angle-left"
+          [rounded]="true"
+          class="drawerBackBtn"
+        />
+
+        <div class="w-full">
+          <div
+            class="text-xl px-4 font-semibold py-3 border-bottom-1 headerBg borderClr "
+          >
+            New Meeting
+          </div>
+
+          <form [formGroup]="newApplicationFrom" class="pl-4 pr-3 mt-3 draweBody">
+
+            <div class="mt-3">
+              
+                <div class="grid pt-2">
+                  <div class="col-12 mb-2">
+                    <p-floatlabel class="w-full md:w-56" variant="on">
+                      <input
+                        type="text"
+                        pInputText
+                        class="w-full"
+                        formControlName="title"
+                      />
+                      <label for="on_label">Title</label>
+                    </p-floatlabel>
+                  </div>
+                  <div class="col-12 mb-2">
+                    <p-floatlabel class="w-full md:w-56" variant="on">
+                      <input
+                        type="datetime"
+                        class="w-full"
+                        pInputText
+                        formControlName="date"
+                      />
+                      <label for="on_label">Date</label>
+                    </p-floatlabel>
+                  </div>
+
+                  <div class="col-12 pb-3">
+                    <p-floatlabel class="w-full md:w-56" variant="on">
+                      <textarea
+                        rows="5"
+                        cols="30"
+                        class="w-full"
+                        formControlName="description"
+                        pTextarea
+                  
+                      ></textarea>
+  
+                      <label for="on_label">description</label>
+                    </p-floatlabel>
+                  </div>
+                </div>
+            </div>
+          </form>
+
+          <div class="flex justify-content-end align-items-center pt-3 gap-3 w-full px-4 ">
+            <p-button   variant="outlined" severity="secondary" (onClick)="visible = !visible"  label="Cancel" />
+            <p-button (onClick)="visible = !visible"  label="Submit" />
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</p-drawer>

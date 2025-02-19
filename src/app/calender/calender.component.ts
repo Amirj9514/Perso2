@@ -1,18 +1,34 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { CalendarOptions } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid'; // Month view
 import timeGridPlugin from '@fullcalendar/timegrid'; // Week & Day views
 import interactionPlugin from '@fullcalendar/interaction';
 import { FullCalendarModule } from '@fullcalendar/angular';
+import { Drawer, DrawerModule } from 'primeng/drawer';
+import { ButtonModule } from 'primeng/button';
+import { FieldsetModule } from 'primeng/fieldset';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { SelectModule } from 'primeng/select';
+import { FloatLabelModule } from 'primeng/floatlabel';
+import { DatePickerModule } from 'primeng/datepicker';
+import { InputTextModule } from 'primeng/inputtext';
 
 @Component({
   selector: 'app-calender',
   standalone: true,
-  imports: [FullCalendarModule],
+  imports: [FullCalendarModule, DrawerModule,
+    ButtonModule,
+    FieldsetModule,
+    SelectModule,
+    FloatLabelModule,
+    ReactiveFormsModule,
+    DatePickerModule,
+    InputTextModule],
   templateUrl: './calender.component.html',
   styleUrl: './calender.component.scss'
 })
 export class CalenderComponent implements OnInit {
+  @ViewChild('drawerRef') drawerRef!: Drawer;
   calendarOptions: CalendarOptions = {
     initialView: 'dayGridMonth', // Default view
     plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin], // Plugins for different views
@@ -38,6 +54,10 @@ export class CalenderComponent implements OnInit {
   // Calender Configurations Ends Here
   //==========================================================================================================
 
+
+  visible: boolean = false;
+  todayDate = new Date();
+  newApplicationFrom!: FormGroup;
   reservationList:any[] = [
     {
       request_data: { first_name: 'John', last_name: 'Doe' },
@@ -81,11 +101,24 @@ export class CalenderComponent implements OnInit {
     }
   ];
 
+  constructor() {
+    this.newApplicationFrom = new FormGroup({
+      title: new FormControl('', [Validators.required]),
+      description: new FormControl(''),
+      date: new FormControl('', [Validators.required]),
+    });
+  }
+
 
   ngOnInit(): void {
     this.calendarOptions.events = this.reservationList.map((reservation) => ({
       title: `${reservation.request_data.first_name} ${reservation.request_data.last_name}`,
       start: reservation.reservation_time,
     }));
+  }
+
+  
+  closeCallback(e: any): void {
+    this.drawerRef.close(e);
   }
 }
