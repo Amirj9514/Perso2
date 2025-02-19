@@ -1,113 +1,111 @@
 <div class="body">
-    <!-- <nav class="navbar">
+  <!-- <nav class="navbar">
       <ul>
         <li><span>software.perso2.de</span></li>
       </ul>
     </nav> -->
-    <div class="container">
-      <div class="login-container">
-        <div class="login-form">
-          <h1 class="text-align">Sign In</h1>
-          <p class="welcome-text">Welcome back! Please enter your details</p>
-  
-          <form [formGroup]="loginForm" (ngSubmit)="onSubmit(loginForm)">
-            <div class="form-group">
-              <label for="email">EMAIL</label>
-              <input
-                type="email"
-                loginLoader
-                id="email"
-                name="email"
-                placeholder="example@email.com"
-                formControlName="email"
-              />
-              <span
-                *ngIf="
-                  (loginForm.get('email')?.touched || formSubmit) &&
-                  loginForm.get('email')?.errors
-                "
-              >
-                <span
-                  class="warn-txt"
-                  *ngIf="loginForm.get('email')?.hasError('required')"
-                  >Email Address is required</span
-                >
-                <span
-                  class="warn-txt"
-                  *ngIf="loginForm.get('email')?.hasError('email')"
-                  >Email Address Is Not Correct</span
-                >
-              </span>
-            </div>
-  
-            <div class="form-group">
-              <label for="password">PASSWORD</label>
-              <div class="password-input-container">
-                <input
-                  [type]="isPasswordVisible ? 'text' : 'password'"
-                  id="password"
-                  name="password"
-                  loginLoader
-                  placeholder="Enter Your Password"
-                  formControlName="password"
-                  required
-                />
-                <button
-                  type="button"
-                  (click)="togglePasswordVisibility()"
-                  class="toggle-btn"
-                >
-                  {{ isPasswordVisible ? "🙈" : "👁" }}
-                </button>
-              </div>
-              <span
-                  *ngIf="
-                    (loginForm.get('password')?.touched || formSubmit) &&
-                    loginForm.get('password')?.errors
-                  "
-                >
-                  <span
-                    class="warn-txt"
-                    *ngIf="loginForm.get('password')?.hasError('required')"
-                    >Password is required</span
-                  >
-                </span>
-            </div>
-  
-            <div class="form-options">
-              <label class="remember-me">
-                <input type="checkbox" name="remember" />
-                <span class="checkmark"></span>
-                Remember me
-              </label>
-              <a href="#" class="forgot-password">Forgot Password?</a>
-            </div>
-  
-            <button type="submit" [ngClass]="loginLoader?'disableBtn':''"  class="sign-in-btn">
-              @if(loginLoader){
-                <div><i class="pi  pi-spin pi-spinner"></i></div>
-              }@else{
-                <div>Sign In</div>
-              }
-            </button>
-          </form>
-        </div>
-      </div>
-      <div class="content-container">
-        <div class="content">
-          <h2>
-            Streamline your personnel <br />
-            processes for better efficiency <br />
-            and convenience today!
-          </h2>
-          <div class="logo">
-            <img
-             src="../../assets/images/peraoLogo.png"
-              alt="PERSO2 Logo"
+  <div class="container">
+    <div class="login-container">
+      <div class="login-form">
+        <h1 class="text-align">Software Login</h1>
+        <p class="welcome-text">Bitte gebe deine Zugangsdaten ein.</p>
+
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit(loginForm)">
+          <div class="form-group">
+            <label for="email">EMAIL</label>
+            <input
+              type="email"
+              loginLoader
+              id="email"
+              name="email"
+              placeholder="example@email.com"
+              formControlName="email"
             />
+            <span
+              *ngIf="
+                (loginForm.get('email')?.touched || formSubmit) &&
+                loginForm.get('email')?.errors
+              "
+            >
+              <span
+                class="warn-txt"
+                *ngIf="loginForm.get('email')?.hasError('required')"
+                >Email Address Pflichtfeld</span
+              >
+              <span
+                class="warn-txt"
+                *ngIf="loginForm.get('email')?.hasError('email')"
+                >Ungültige E-Mail Adresse</span
+              >
+            </span>
           </div>
+
+          <div class="form-group">
+            <label for="password">Passwort</label>
+            <div class="password-input-container">
+              <input
+                [type]="isPasswordVisible ? 'text' : 'password'"
+                id="password"
+                name="password"
+                loginLoader
+                placeholder="Passwort"
+                formControlName="password"
+                required
+              />
+              <button
+                type="button"
+                (click)="togglePasswordVisibility()"
+                class="toggle-btn"
+              >
+                {{ isPasswordVisible ? "🙈" : "👁" }}
+              </button>
+            </div>
+            <span
+              *ngIf="
+                (loginForm.get('password')?.touched || formSubmit) &&
+                loginForm.get('password')?.errors
+              "
+            >
+              <span
+                class="warn-txt"
+                *ngIf="loginForm.get('password')?.hasError('required')"
+                >Passwort Pflichtfeld</span
+              >
+            </span>
+          </div>
+
+          <div class="form-options">
+            <label class="remember-me">
+              <input type="checkbox" name="remember" />
+              <span class="checkmark"></span>
+              Erinnere mich
+            </label>
+            <a href="#" class="forgot-password">Passwort vergessen?</a>
+          </div>
+
+          <button
+            type="submit"
+            [ngClass]="loginLoader ? 'disableBtn' : ''"
+            class="sign-in-btn"
+          >
+            @if(loginLoader){
+            <div><i class="pi pi-spin pi-spinner"></i></div>
+            }@else{
+            <div>Einloggen</div>
+            }
+          </button>
+        </form>
+      </div>
+    </div>
+    <div class="content-container">
+      <div class="content">
+        <div class="text-5xl font-semibold">Sicherer Zugang zu erstklassigen Talenten</div>
+        <div class=" text-xl pt-2 font-semibold"> Nur für Partner & Unternehmen </div>
+          <br />
+        <div class="logo">
+          <img src="../../assets/images/peraoLogoKopie.png" alt="PERSO2 Logo" />
         </div>
       </div>
     </div>
   </div>
-  
+</div>

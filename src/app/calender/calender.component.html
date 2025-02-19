@@ -33,7 +33,7 @@
           <div
             class="text-xl px-4 font-semibold py-3 border-bottom-1 headerBg borderClr"
           >
-            New Meeting
+          Neu Meeting
           </div>
 
           <form
@@ -73,7 +73,7 @@
                       *ngIf="
                         newApplicationFrom.get('title')?.hasError('required')
                       "
-                      >Title is required</span
+                      >Title Pflichtfeld</span
                     >
                   </span>
                 </div>
@@ -107,7 +107,7 @@
                       *ngIf="
                         newApplicationFrom.get('date')?.hasError('required')
                       "
-                      >Date is required</span
+                      >Date Pflichtfeld</span
                     >
                   </span>
                 </div>
@@ -139,7 +139,7 @@
                           .get('description')
                           ?.hasError('required')
                       "
-                      >Description is required</span
+                      >Description Pflichtfeld</span
                     >
                   </span>
                 </div>

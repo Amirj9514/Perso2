@@ -56,9 +56,9 @@ export class VacanciesComponent implements OnInit {
   ) {
     this.newApplicationFrom = new FormGroup({
       role: new FormControl(null, [Validators.required]),
-      company: new FormControl('', [Validators.required]),
-      country: new FormControl(null, [Validators.required]),
-      description: new FormControl(null, [Validators.required]),
+      company: new FormControl('', ),
+      country: new FormControl(null,),
+      description: new FormControl(null,),
     });
   }
 
@@ -98,9 +98,11 @@ export class VacanciesComponent implements OnInit {
 
     const apiParam = {
       ...formValue,
-      location: formValue.country.name,
-      title: formValue.role,
-      category: formValue.company,
+      location: formValue?.country?.name ?? '',
+      title: formValue?.role ?? '',
+      category: formValue?.company ?? '',
+      country: formValue?.country?.name ?? '',
+      description: formValue?.description ?? '',
     };
     this.formSubmit = true;
     this.sharedS.sendPostRequest('vacancies', apiParam).subscribe({

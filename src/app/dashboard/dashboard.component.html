@@ -17,11 +17,12 @@
     >
       <ng-template #header>
         <tr>
-          <th style="width: 25%">Name</th>
-          <th style="width: 25%">Position</th>
-          <th style="width: 25%">Antragsdatum</th>
-          <th style="width: 25%">Kontakt Info</th>
           <th style="width: 25%">Aktennummer</th>
+          <th style="width: 25%">Vor-Nachname</th>
+          <th style="width: 25%">Position/Status</th>
+          <th style="width: 25%">Arbeitgeber</th>
+          <th style="width: 25%">Kontakt Info</th>
+          
           <th>Bearbeiten</th>
         </tr>
       </ng-template>
@@ -37,11 +38,12 @@
         </tr>
         }@else{
         <tr>
+          <td>{{ product?.age }}</td>
           <td>{{ product?.first_name + " " + product?.last_name }}</td>
           <td>{{ getVacancieById(product?.vacancy_id) }}</td>
           <td>{{ product?.applied_at | date : "MM-dd-yyyy" }}</td>
           <td>{{ product?.email }}</td>
-          <td>AK-{{ product?.id }}</td>
+          
           <td>
             <div class="flex gap-2">
               <div class="pi pi-eye view"></div>
@@ -79,7 +81,7 @@
           <div
             class="text-xl px-4 font-semibold py-3 border-bottom-1 headerBg borderClr"
           >
-            New Kandidaten
+          Neu Kandidaten
           </div>
 
           <form
@@ -126,20 +128,21 @@
                           .get('enrollment')
                           ?.hasError('required')
                       "
-                      >Position date is required</span
+                      >Position date Pflichtfeld</span
                     >
                   </span>
                 </div>
 
                 <div class="col-6">
                   <p-floatlabel class="w-full" variant="on">
-                    <p-datepicker
-                      styleClass="w-full"
-                      appendTo="body"
+                    <input
+                      type="text"
+                      pInputText
+                      class="w-full"
                       formControlName="appledDate"
                     />
                     <label for="on_label"
-                      >Antragsdatum
+                      >Arbeitgeber
                       <span
                         class="text-red-600"
                         *ngIf="
@@ -165,7 +168,7 @@
                           .get('appledDate')
                           ?.hasError('required')
                       "
-                      >Antragsdatum is required</span
+                      >Arbeitgeber Pflichtfeld</span
                     >
                   </span>
                 </div>
@@ -210,7 +213,7 @@
                             .get('firstName')
                             ?.hasError('required')
                         "
-                        >Vorname is required</span
+                        >Vorname Pflichtfeld</span
                       >
                     </span>
                   </div>
@@ -249,7 +252,7 @@
                             .get('lastName')
                             ?.hasError('required')
                         "
-                        >Nachname is required</span
+                        >Nachname Pflichtfeld</span
                       >
                     </span>
                   </div>
@@ -263,7 +266,7 @@
                         formControlName="phone"
                       />
                       <label for="on_label"
-                        >Ruffnummer
+                        >Rufnummer
                         <span
                           class="text-red-600"
                           *ngIf="
@@ -288,7 +291,7 @@
                               .get('phone')
                               ?.hasError('required')
                           "
-                          >Ruffnummer is required</span
+                          >Rufnummer Pflichtfeld</span
                         >
                       </span>
                     </p-floatlabel>
@@ -302,7 +305,7 @@
                         formControlName="age"
                       />
                       <label for="on_label"
-                        >Alter
+                        >Aktennummer
                         <span
                           class="text-red-600"
                           *ngIf="
@@ -326,7 +329,7 @@
                         *ngIf="
                           newApplicationFrom.get('age')?.hasError('required')
                         "
-                        >Alter is required</span
+                        >Aktennummer Pflichtfeld</span
                       >
                     </span>
                   </div>
@@ -364,14 +367,14 @@
                         *ngIf="
                           newApplicationFrom.get('email')?.hasError('required')
                         "
-                        >Email Address is required</span
+                        >Email Address Pflichtfeld</span
                       >
                       <span
                         class="text-red-600"
                         *ngIf="
                           newApplicationFrom.get('email')?.hasError('email')
                         "
-                        >Email Address Is Not Correct</span
+                        >Ungültige E-Mail Adresse</span
                       >
                     </span>
                   </div>
@@ -388,7 +391,7 @@
                         filterBy="name"
                       />
                       <label for="on_label"
-                        >Land
+                        >Nationalität
                         <span
                           class="text-red-600"
                           *ngIf="
@@ -414,7 +417,7 @@
                             .get('country')
                             ?.hasError('required')
                         "
-                        >Land is required</span
+                        >Nationalität Pflichtfeld</span
                       >
                     </span>
                   </div>
@@ -456,7 +459,7 @@
                             .get('maritalStatus')
                             ?.hasError('required')
                         "
-                        >Familienstand is required</span
+                        >Familienstand Pflichtfeld</span
                       >
                     </span>
                   </div>
@@ -492,7 +495,7 @@
                         *ngIf="
                           newApplicationFrom.get('dob')?.hasError('required')
                         "
-                        >Geburtsdatum is required</span
+                        >Geburtsdatum Pflichtfeld</span
                       >
                     </span>
                   </div>
@@ -532,7 +535,7 @@
                             .get('address')
                             ?.hasError('required')
                         "
-                        >Addresse is required</span
+                        >Addresse Pflichtfeld</span
                       >
                     </span>
                   </div>

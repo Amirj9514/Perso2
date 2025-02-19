@@ -58,7 +58,7 @@ export class DashboardComponent implements OnInit {
     private flagS: FlagsService
   ) {
     this.newApplicationFrom = new FormGroup({
-      appledDate: new FormControl(this.todayDate, [Validators.required]),
+      appledDate: new FormControl('', [Validators.required]),
       enrollment: new FormControl(null, [Validators.required]),
       firstName: new FormControl('', [Validators.required]),
       lastName: new FormControl('', [Validators.required]),

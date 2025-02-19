@@ -18,25 +18,25 @@
       <ng-template #header>
         <tr>
           <th style="width: 25%">Position</th>
-          <th style="width: 25%">Arbeitgeber</th>
+          <!-- <th style="width: 25%">Arbeitgeber</th>
           <th style="width: 25%">Stadt</th>
-          <th style="width: 25%">FSB</th>
+          <th style="width: 25%">FSB</th> -->
         </tr>
       </ng-template>
       <ng-template #body let-product>
         @if(getApiLoader){
         <tr>
           <td><p-skeleton /></td>
+          <!-- <td><p-skeleton /></td>
           <td><p-skeleton /></td>
-          <td><p-skeleton /></td>
-          <td><p-skeleton /></td>
+          <td><p-skeleton /></td> -->
         </tr>
         }@else{
         <tr>
           <td>{{ product.role }}</td>
-          <td>{{ product.category }}</td>
+          <!-- <td>{{ product.category }}</td>
           <td>{{ product.location }}</td>
-          <td>{{ product.description }}</td>
+          <td>{{ product.description }}</td> -->
         </tr>
         }
       </ng-template>
@@ -67,7 +67,7 @@
           <div
             class="text-xl px-4 font-semibold py-3 border-bottom-1 headerBg borderClr"
           >
-            New Position
+          Neu Position
           </div>
 
           <form [formGroup]="newApplicationFrom" class="pl-4 pr-3 mt-3 draweBody">
@@ -105,11 +105,11 @@
                       *ngIf="
                         newApplicationFrom.get('role')?.hasError('required')
                       "
-                      >Position is required</span
+                      >Position Pflichtfeld</span
                     >
                   </span>
                 </div>
-                <div class="col-12 pb-3">
+                <!-- <div class="col-12 pb-3">
                   <p-floatlabel class="w-full md:w-56" variant="on">
                     <input
                       type="text"
@@ -142,7 +142,7 @@
                       *ngIf="
                         newApplicationFrom.get('company')?.hasError('required')
                       "
-                      >Arbeitgeber is required</span
+                      >Arbeitgeber Pflichtfeld</span
                     >
                   </span>
                 </div>
@@ -184,7 +184,7 @@
                       *ngIf="
                         newApplicationFrom.get('country')?.hasError('required')
                       "
-                      >Stadt is required</span
+                      >Stadt Pflichtfeld</span
                     >
                   </span>
                 </div>
@@ -226,10 +226,10 @@
                           .get('description')
                           ?.hasError('required')
                       "
-                      >FSB is required</span
+                      >FSB Pflichtfeld</span
                     >
                   </span>
-                </div>
+                </div> -->
               </div>
             </div>
           </form>

@@ -1,4 +1,4 @@
-$primary-color: #19b89d;
+$primary-color: #109F9D;
 $secondary-color: #fff;
 $gradient-start: #f1faff;
 $gradient-end: #cbe4ff;
@@ -156,14 +156,15 @@ $border-color: #ddd;
     .sidebar-footer{
         position: absolute;
         bottom: 0;
-        background-color: #4DF3BC;
+        background-color: #006867;
         width: 100%;
+        color: #ffffff;
 
     }
 }
 .activeNav{
-    color: black !important;
-    background:rgb(77, 243, 188);
+    color: #ffffff !important;
+    background:#006867;
 }
 
 .nav-items{
