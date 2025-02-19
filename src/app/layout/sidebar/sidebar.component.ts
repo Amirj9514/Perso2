@@ -32,11 +32,11 @@ export class SidebarComponent {
       icon: 'pi-users',
       link: '/employees',
     },
-    {
-      title: 'Payroll',
-      icon: 'pi-users',
-      link: '/payroll',
-    },
+    // {
+    //   title: 'Payroll',
+    //   icon: 'pi-users',
+    //   link: '/payroll',
+    // },
     {
       title: 'Calendar',
       icon: 'pi-calendar',
