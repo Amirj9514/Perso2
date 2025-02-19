@@ -26,20 +26,32 @@
         </tr>
       </ng-template>
       <ng-template #body let-product>
-        <tr>
-          <td>{{ product.code }}</td>
-          <td>{{ product.name }}</td>
-          <td>{{ product.category }}</td>
-          <td>{{ product.quantity }}</td>
-          <td>AK-301</td>
-          <td>
-            <div class="flex gap-2">
-              <div class="pi pi-eye view"></div>
-              <div class="pi pi-user-edit edit"></div>
-              <div class="pi pi-trash delete" (click)="onDelete(product)"></div>
-            </div>
-          </td>
+        @if(applicantsLoader){
+          <tr>
+            <td><p-skeleton /></td>
+            <td><p-skeleton /></td>
+            <td><p-skeleton /></td>
+            <td><p-skeleton /></td>
+            <td><p-skeleton /></td>
+            <td><p-skeleton /></td>
         </tr>
+        }@else{
+          <tr>
+            <td>{{ product?.first_name + " " + product?.last_name }}</td>
+            <td>{{ getVacancieById(product?.vacancy_id) }}</td>
+            <td>{{ product?.applied_at | date : "MM-dd-yyyy" }}</td>
+            <td>{{ product?.email }}</td>
+            <td>AK-{{ product?.id }}</td>
+            <td>
+              <div class="flex gap-2">
+                <div class="pi pi-eye view"></div>
+                <div class="pi pi-user-edit edit"></div>
+                <div class="pi pi-trash delete" (click)="onDelete(product)"></div>
+              </div>
+            </td>
+          </tr>
+        }
+       
       </ng-template>
     </p-table>
   </div>
@@ -47,6 +59,7 @@
 
 <p-drawer
   #drawerRef
+  (onHide)="newApplicationFrom.reset()"
   [(visible)]="visible"
   [modal]="true"
   [dismissible]="false"
@@ -81,8 +94,10 @@
                     <p-select
                       formControlName="enrollment"
                       inputId="on_label"
-                      [options]="cities"
-                      optionLabel="name"
+                      [options]="vacancies"
+                      appendTo="body"
+                      [loading]="getApiLoader"
+                      optionLabel="role"
                       styleClass="w-full"
                     />
                     <label for="on_label"
@@ -152,46 +167,6 @@
                           ?.hasError('required')
                       "
                       >Applied date is required</span
-                    >
-                  </span>
-                </div>
-
-                <div class="col-12">
-                  <p-floatlabel class="w-full md:w-56" variant="on">
-                    <input
-                      type="text"
-                      class="w-full"
-                      pInputText
-                      formControlName="profession"
-                    />
-                    <label for="on_label"
-                      >Profession
-                      <span
-                        class="text-red-600"
-                        *ngIf="
-                          newApplicationFrom.get('profession')?.touched &&
-                          newApplicationFrom.get('profession')?.invalid
-                        "
-                        >*</span
-                      >
-                    </label>
-                  </p-floatlabel>
-                  <span
-                    class="text-sm"
-                    *ngIf="
-                      (newApplicationFrom.get('profession')?.touched ||
-                        formSubmit) &&
-                      newApplicationFrom.get('profession')?.errors
-                    "
-                  >
-                    <span
-                      class="text-red-600"
-                      *ngIf="
-                        newApplicationFrom
-                          .get('profession')
-                          ?.hasError('required')
-                      "
-                      >Profession is required</span
                     >
                   </span>
                 </div>
@@ -357,7 +332,7 @@
                     </span>
                   </div>
 
-                  <div class="col-12">
+                  <div class="col-6">
                     <p-floatlabel class="w-full md:w-56" variant="on">
                       <input
                         type="email"
@@ -401,14 +376,58 @@
                       >
                     </span>
                   </div>
+                  <div class="col-6 pb-3">
+                    <p-floatlabel class="w-full md:w-56" variant="on">
+                      <p-select
+                        formControlName="country"
+                        inputId="on_label"
+                        [options]="countryList"
+                        optionLabel="name"
+                        appendTo="body"
+                        styleClass="w-full"
+                        [filter]="true"
+                        filterBy="name"
+                      />
+                      <label for="on_label"
+                        >Country
+                        <span
+                          class="text-red-600"
+                          *ngIf="
+                            newApplicationFrom.get('country')?.touched &&
+                            newApplicationFrom.get('country')?.invalid
+                          "
+                          >*</span
+                        >
+                      </label>
+                    </p-floatlabel>
+                    <span
+                      class="text-sm"
+                      *ngIf="
+                        (newApplicationFrom.get('country')?.touched ||
+                          formSubmit) &&
+                        newApplicationFrom.get('country')?.errors
+                      "
+                    >
+                      <span
+                        class="text-red-600"
+                        *ngIf="
+                          newApplicationFrom
+                            .get('country')
+                            ?.hasError('required')
+                        "
+                        >Country is required</span
+                      >
+                    </span>
+                  </div>
 
                   <div class="col-6">
                     <p-floatlabel class="w-full md:w-56" variant="on">
                       <p-select
                         formControlName="maritalStatus"
                         inputId="on_label"
-                        [options]="cities"
+                        [options]="maritalStatus"
                         optionLabel="name"
+                        appendTo="body"
                         styleClass="w-full"
                       />
                       <label for="on_label"
@@ -495,7 +514,8 @@
                             newApplicationFrom.get('address')?.touched &&
                             newApplicationFrom.get('address')?.invalid
                           "
-                          >*</span>
+                          >*</span
+                        >
                       </label>
                     </p-floatlabel>
                     <span
@@ -517,6 +537,19 @@
                       >
                     </span>
                   </div>
+
+                  <div class="col-12 pb-3">
+                    <p-floatlabel class="w-full" variant="on">
+                      <textarea
+                        rows="5"
+                        cols="30"
+                        class="w-full"
+                        formControlName="description"
+                        pTextarea
+                      ></textarea>
+                      <label for="on_label">Notes </label>
+                    </p-floatlabel>
+                  </div>
                 </div>
               </p-fieldset>
             </div>
@@ -525,13 +558,17 @@
           <div
             class="flex justify-content-end align-items-center pt-3 gap-3 w-full px-4"
           >
-            <p-button variant="outlined" severity="secondary" (onClick)="closeCallback($event)" label="Cancel" />
-            <p-button (click)="onSubmit()" label="Submit" />
+            <p-button
+              variant="outlined"
+              severity="secondary"
+              [ngClass]="{ 'disableBtn': formSubmit}"
+              (onClick)="closeCallback($event)"
+              label="Cancel"
+            />
+            <p-button [loading]="formSubmit" (click)="onSubmit()" label="Submit" />
           </div>
         </div>
       </div>
     </div>
   </ng-template>
 </p-drawer>
-
-

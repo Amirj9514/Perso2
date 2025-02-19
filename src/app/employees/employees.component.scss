@@ -1,7 +1,7 @@
 .mainCard {
     border-radius: 10px;
     background-color: #ffffff;
-    overflow: hidden;
+    padding-top: 10px;
     margin-top: 10px;
     margin-bottom: 20px;
   }
@@ -11,7 +11,6 @@
     left: -19px;
     top: 46%;
   }
-  
 
   .draweBody {
     height: calc(100vh - 130px);

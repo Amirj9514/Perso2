@@ -14,6 +14,7 @@
   #drawerRef
   [(visible)]="visible"
   [modal]="true"
+  (onHide)="newApplicationFrom.reset()"
   [dismissible]="false"
   position="right"
   styleClass="w-26rem"

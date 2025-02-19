@@ -51,6 +51,7 @@
 <p-drawer
   #drawerRef
   [(visible)]="visible"
+  (onHide)="newApplicationFrom.reset()"
   [modal]="true"
   [dismissible]="false"
   position="right"
@@ -243,6 +244,7 @@
                       formControlName="role_code"
                       inputId="on_label"
                       [options]="roleList"
+                      appendTo="body"
                       optionLabel="label"
                       styleClass="w-full"
                     />
