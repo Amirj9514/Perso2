@@ -16,3 +16,18 @@
   height: calc(100vh - 130px);
   overflow: auto;
 }
+
+.view{
+  cursor: pointer;
+  color:green;
+}
+
+.edit{
+  cursor: pointer;
+  color:rgb(56, 56, 161);
+}
+
+.delete{
+  cursor: pointer;
+  color:red;
+}

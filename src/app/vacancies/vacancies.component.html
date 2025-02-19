@@ -71,8 +71,31 @@
                       class="w-full"
                       formControlName="role"
                     />
-                    <label for="on_label">Role</label>
+                    <label for="on_label">Role
+                      <span
+                        class="text-red-600"
+                        *ngIf="
+                          newApplicationFrom.get('role')?.touched &&
+                          newApplicationFrom.get('role')?.invalid
+                        "
+                        >*</span>
+                    </label>
                   </p-floatlabel>
+                  <span
+                    class="text-sm"
+                    *ngIf="
+                      (newApplicationFrom.get('role')?.touched || formSubmit) &&
+                      newApplicationFrom.get('role')?.errors
+                    "
+                  >
+                    <span
+                      class="text-red-600"
+                      *ngIf="
+                        newApplicationFrom.get('role')?.hasError('required')
+                      "
+                      >Roll is required</span
+                    >
+                  </span>
                 </div>
                 <div class="col-12 pb-3">
                   <p-floatlabel class="w-full md:w-56" variant="on">
@@ -82,8 +105,32 @@
                       pInputText
                       formControlName="company"
                     />
-                    <label for="on_label">Company</label>
+                    <label for="on_label">Company
+                      <span
+                        class="text-red-600"
+                        *ngIf="
+                          newApplicationFrom.get('company')?.touched &&
+                          newApplicationFrom.get('company')?.invalid
+                        "
+                        >*</span>
+                    </label>
                   </p-floatlabel>
+                  <span
+                    class="text-sm"
+                    *ngIf="
+                      (newApplicationFrom.get('company')?.touched ||
+                        formSubmit) &&
+                      newApplicationFrom.get('company')?.errors
+                    "
+                  >
+                    <span
+                      class="text-red-600"
+                      *ngIf="
+                        newApplicationFrom.get('company')?.hasError('required')
+                      "
+                      >Company is required</span
+                    >
+                  </span>
                 </div>
 
                 <div class="col-12 pb-3">
@@ -97,8 +144,32 @@
                       [filter]="true"
                       filterBy="name"
                     />
-                    <label for="on_label">Country</label>
+                    <label for="on_label">Country
+                      <span
+                        class="text-red-600"
+                        *ngIf="
+                          newApplicationFrom.get('country')?.touched &&
+                          newApplicationFrom.get('country')?.invalid
+                        "
+                        >*</span>
+                    </label>
                   </p-floatlabel>
+                  <span
+                    class="text-sm"
+                    *ngIf="
+                      (newApplicationFrom.get('country')?.touched ||
+                        formSubmit) &&
+                      newApplicationFrom.get('country')?.errors
+                    "
+                  >
+                    <span
+                      class="text-red-600"
+                      *ngIf="
+                        newApplicationFrom.get('country')?.hasError('required')
+                      "
+                      >Country is required</span
+                    >
+                  </span>
                 </div>
 
                 <div class="col-12 pb-3">
@@ -109,11 +180,37 @@
                       class="w-full"
                       formControlName="description"
                       pTextarea
-                
                     ></textarea>
 
-                    <label for="on_label">description</label>
+                    <label for="on_label"
+                      >Description
+                      <span
+                        class="text-red-600"
+                        *ngIf="
+                          newApplicationFrom.get('description')?.touched &&
+                          newApplicationFrom.get('description')?.invalid
+                        "
+                        >*</span>
+                    </label>
                   </p-floatlabel>
+                  <span
+                    class="text-sm"
+                    *ngIf="
+                      (newApplicationFrom.get('description')?.touched ||
+                        formSubmit) &&
+                      newApplicationFrom.get('description')?.errors
+                    "
+                  >
+                    <span
+                      class="text-red-600"
+                      *ngIf="
+                        newApplicationFrom
+                          .get('description')
+                          ?.hasError('required')
+                      "
+                      >Description is required</span
+                    >
+                  </span>
                 </div>
               </div>
             </div>

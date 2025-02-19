@@ -1,19 +1,16 @@
 <div class="card px-4 my-3">
-
   <div class="flex align-items-center justify-content-between py-2 w-full mb-3">
     <div class="text-xl font-semibold">Meetings</div>
     <div>
       <p-button (onClick)="visible = !visible" label="Add Meeting" />
     </div>
   </div>
-    <div class="full-calendar-container">
-      <full-calendar [options]="calendarOptions"></full-calendar>
-    </div>
+  <div class="full-calendar-container">
+    <full-calendar [options]="calendarOptions"></full-calendar>
   </div>
+</div>
 
-
-
-  <p-drawer
+<p-drawer
   #drawerRef
   [(visible)]="visible"
   [modal]="true"
@@ -33,64 +30,167 @@
 
         <div class="w-full">
           <div
-            class="text-xl px-4 font-semibold py-3 border-bottom-1 headerBg borderClr "
+            class="text-xl px-4 font-semibold py-3 border-bottom-1 headerBg borderClr"
           >
             New Meeting
           </div>
 
-          <form [formGroup]="newApplicationFrom" class="pl-4 pr-3 mt-3 draweBody">
-
+          <form
+            [formGroup]="newApplicationFrom"
+            class="pl-4 pr-3 mt-3 draweBody"
+          >
             <div class="mt-3">
-              
-                <div class="grid pt-2">
-                  <div class="col-12 mb-2">
-                    <p-floatlabel class="w-full md:w-56" variant="on">
-                      <input
-                        type="text"
-                        pInputText
-                        class="w-full"
-                        formControlName="title"
-                      />
-                      <label for="on_label">Title</label>
-                    </p-floatlabel>
-                  </div>
-                  <div class="col-12 mb-2">
-                    <p-floatlabel class="w-full md:w-56" variant="on">
-                      <input
-                        type="datetime"
-                        class="w-full"
-                        pInputText
-                        formControlName="date"
-                      />
-                      <label for="on_label">Date</label>
-                    </p-floatlabel>
-                  </div>
-
-                  <div class="col-12 pb-3">
-                    <p-floatlabel class="w-full md:w-56" variant="on">
-                      <textarea
-                        rows="5"
-                        cols="30"
-                        class="w-full"
-                        formControlName="description"
-                        pTextarea
-                  
-                      ></textarea>
-  
-                      <label for="on_label">description</label>
-                    </p-floatlabel>
-                  </div>
+              <div class="grid pt-2">
+                <div class="col-12 mb-2">
+                  <p-floatlabel class="w-full md:w-56" variant="on">
+                    <input
+                      type="text"
+                      pInputText
+                      class="w-full"
+                      formControlName="title"
+                    />
+                    <label for="on_label">Title
+                      <span
+                          class="text-red-600"
+                          *ngIf="
+                            newApplicationFrom.get('title')?.touched &&
+                            newApplicationFrom.get('title')?.invalid
+                          "
+                          >*</span>
+                    </label>
+                  </p-floatlabel>
+                  <span
+                    class="text-sm"
+                    *ngIf="
+                      (newApplicationFrom.get('title')?.touched ||
+                        formSubmit) &&
+                      newApplicationFrom.get('title')?.errors
+                    "
+                  >
+                    <span
+                      class="text-red-600"
+                      *ngIf="
+                        newApplicationFrom.get('title')?.hasError('required')
+                      "
+                      >Title is required</span
+                    >
+                  </span>
                 </div>
+                <div class="col-12 mb-2">
+                  <p-floatlabel class="w-full md:w-56" variant="on">
+                    <input
+                      type="datetime"
+                      class="w-full"
+                      pInputText
+                      formControlName="date"
+                    />
+                    <label for="on_label">Date
+                      <span
+                          class="text-red-600"
+                          *ngIf="
+                            newApplicationFrom.get('date')?.touched &&
+                            newApplicationFrom.get('date')?.invalid
+                          "
+                          >*</span>
+                    </label>
+                  </p-floatlabel>
+                  <span
+                    class="text-sm"
+                    *ngIf="
+                      (newApplicationFrom.get('date')?.touched || formSubmit) &&
+                      newApplicationFrom.get('date')?.errors
+                    "
+                  >
+                    <span
+                      class="text-red-600"
+                      *ngIf="
+                        newApplicationFrom.get('date')?.hasError('required')
+                      "
+                      >Date is required</span
+                    >
+                  </span>
+                </div>
+
+                <div class="col-12 pb-3">
+                  <p-floatlabel class="w-full md:w-56" variant="on">
+                    <textarea
+                      rows="5"
+                      cols="30"
+                      class="w-full"
+                      formControlName="description"
+                      pTextarea
+                    ></textarea>
+
+                    <label for="on_label">Description</label>
+                  </p-floatlabel>
+                  <span
+                    class="text-sm"
+                    *ngIf="
+                      (newApplicationFrom.get('description')?.touched ||
+                        formSubmit) &&
+                      newApplicationFrom.get('description')?.errors
+                    "
+                  >
+                    <span
+                      class="text-red-600"
+                      *ngIf="
+                        newApplicationFrom
+                          .get('description')
+                          ?.hasError('required')
+                      "
+                      >Description is required</span
+                    >
+                  </span>
+                </div>
+              </div>
             </div>
           </form>
 
-          <div class="flex justify-content-end align-items-center pt-3 gap-3 w-full px-4 ">
-            <p-button   variant="outlined" severity="secondary" (onClick)="visible = !visible"  label="Cancel" />
-            <p-button (onClick)="visible = !visible"  label="Submit" />
-
+          <div
+            class="flex justify-content-end align-items-center pt-3 gap-3 w-full px-4"
+          >
+            <p-button
+              variant="outlined"
+              severity="secondary"
+              (onClick)="visible = !visible"
+              label="Cancel"
+            />
+            <p-button (click)="onSubmit()" label="Submit" />
           </div>
         </div>
       </div>
     </div>
   </ng-template>
 </p-drawer>
+
+<p-dialog
+  [style]="{ width: '30%', borderRadius: '30px', overflow: 'hidden' }"
+  [modal]="true"
+  [(visible)]="showPopup"
+  [focusOnShow]="false"
+>
+  <div class="flex flex-column px-2 gap-2">
+    <div class="text-center flex flex-column gap-2 text-xl my-1">
+      <div>
+        {{ clickedEventObj?.title }}
+      </div>
+      <div>
+        {{ clickedEventObj?.timeStart }}
+      </div>
+    </div>
+    <div class="flex gap-5 my-3">
+      <button
+        (click)="showPopup = false"
+        class="py-2 border-round-xl cancleButton flex justify-content-center border-none text-xl w-full"
+      >
+        Cancel
+      </button>
+      <button
+        (click)="showPopup = false"
+        class="py-2 border-round-xl confirmButton text-xl text-center flex justify-content-center border-none w-full"
+      >
+        <div>Confirm</div>
+      </button>
+    </div>
+  </div>
+</p-dialog>

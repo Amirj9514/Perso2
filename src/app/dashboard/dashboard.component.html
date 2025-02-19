@@ -17,10 +17,12 @@
     >
       <ng-template #header>
         <tr>
-          <th style="width: 25%">Name</th>
-          <th style="width: 25%">Country</th>
-          <th style="width: 25%">Company</th>
-          <th style="width: 25%">Representative</th>
+          <th style="width: 25%">Applicants Name</th>
+          <th style="width: 25%">Position Applied</th>
+          <th style="width: 25%">Application Date</th>
+          <th style="width: 25%">Contact Information</th>
+          <th style="width: 25%">Absorvations</th>
+          <th>Action</th>
         </tr>
       </ng-template>
       <ng-template #body let-product>
@@ -29,6 +31,14 @@
           <td>{{ product.name }}</td>
           <td>{{ product.category }}</td>
           <td>{{ product.quantity }}</td>
+          <td>AK-301</td>
+          <td>
+            <div class="flex gap-2">
+              <div class="pi pi-eye view"></div>
+              <div class="pi pi-user-edit edit"></div>
+              <div class="pi pi-trash delete" (click)="onDelete(product)"></div>
+            </div>
+          </td>
         </tr>
       </ng-template>
     </p-table>
@@ -60,7 +70,10 @@
             New Applicant
           </div>
 
-          <form [formGroup]="newApplicationFrom" class="pl-4 pr-3 mt-3 draweBody">
+          <form
+            [formGroup]="newApplicationFrom"
+            class="pl-4 pr-3 mt-3 draweBody"
+          >
             <p-fieldset legend="Basic Information">
               <div class="grid pt-2">
                 <div class="col-6">
@@ -72,8 +85,36 @@
                       optionLabel="name"
                       styleClass="w-full"
                     />
-                    <label for="on_label">Enrollemnt</label>
+                    <label for="on_label"
+                      >Enrollemnt
+                      <span
+                        class="text-red-600"
+                        *ngIf="
+                          newApplicationFrom.get('enrollment')?.touched &&
+                          newApplicationFrom.get('enrollment')?.invalid
+                        "
+                        >*</span
+                      >
+                    </label>
                   </p-floatlabel>
+                  <span
+                    class="text-sm"
+                    *ngIf="
+                      (newApplicationFrom.get('enrollment')?.touched ||
+                        formSubmit) &&
+                      newApplicationFrom.get('enrollment')?.errors
+                    "
+                  >
+                    <span
+                      class="text-red-600"
+                      *ngIf="
+                        newApplicationFrom
+                          .get('enrollment')
+                          ?.hasError('required')
+                      "
+                      >Enrollment date is required</span
+                    >
+                  </span>
                 </div>
 
                 <div class="col-6">
@@ -83,16 +124,77 @@
                       appendTo="body"
                       formControlName="appledDate"
                     />
-                    <label for="on_label">Applied Date</label>
+                    <label for="on_label"
+                      >Applied Date
+                      <span
+                        class="text-red-600"
+                        *ngIf="
+                          newApplicationFrom.get('appledDate')?.touched &&
+                          newApplicationFrom.get('appledDate')?.invalid
+                        "
+                        >*</span
+                      >
+                    </label>
                   </p-floatlabel>
+                  <span
+                    class="text-sm"
+                    *ngIf="
+                      (newApplicationFrom.get('appledDate')?.touched ||
+                        formSubmit) &&
+                      newApplicationFrom.get('appledDate')?.errors
+                    "
+                  >
+                    <span
+                      class="text-red-600"
+                      *ngIf="
+                        newApplicationFrom
+                          .get('appledDate')
+                          ?.hasError('required')
+                      "
+                      >Applied date is required</span
+                    >
+                  </span>
                 </div>
 
                 <div class="col-12">
-                    <p-floatlabel class="w-full md:w-56" variant="on">
-                      <input type="text" class="w-full" pInputText formControlName="profession" />
-                      <label for="on_label">Profession</label>
-                    </p-floatlabel>
-                  </div>
+                  <p-floatlabel class="w-full md:w-56" variant="on">
+                    <input
+                      type="text"
+                      class="w-full"
+                      pInputText
+                      formControlName="profession"
+                    />
+                    <label for="on_label"
+                      >Profession
+                      <span
+                        class="text-red-600"
+                        *ngIf="
+                          newApplicationFrom.get('profession')?.touched &&
+                          newApplicationFrom.get('profession')?.invalid
+                        "
+                        >*</span
+                      >
+                    </label>
+                  </p-floatlabel>
+                  <span
+                    class="text-sm"
+                    *ngIf="
+                      (newApplicationFrom.get('profession')?.touched ||
+                        formSubmit) &&
+                      newApplicationFrom.get('profession')?.errors
+                    "
+                  >
+                    <span
+                      class="text-red-600"
+                      *ngIf="
+                        newApplicationFrom
+                          .get('profession')
+                          ?.hasError('required')
+                      "
+                      >Profession is required</span
+                    >
+                  </span>
+                </div>
               </div>
             </p-fieldset>
 
@@ -107,8 +209,36 @@
                         class="w-full"
                         formControlName="firstName"
                       />
-                      <label for="on_label">First Name</label>
+                      <label for="on_label"
+                        >First Name
+                        <span
+                          class="text-red-600"
+                          *ngIf="
+                            newApplicationFrom.get('firstName')?.touched &&
+                            newApplicationFrom.get('firstName')?.invalid
+                          "
+                          >*</span
+                        >
+                      </label>
                     </p-floatlabel>
+                    <span
+                      class="text-sm"
+                      *ngIf="
+                        (newApplicationFrom.get('firstName')?.touched ||
+                          formSubmit) &&
+                        newApplicationFrom.get('firstName')?.errors
+                      "
+                    >
+                      <span
+                        class="text-red-600"
+                        *ngIf="
+                          newApplicationFrom
+                            .get('firstName')
+                            ?.hasError('required')
+                        "
+                        >First name is required</span
+                      >
+                    </span>
                   </div>
                   <div class="col-6">
                     <p-floatlabel class="w-full md:w-56" variant="on">
@@ -118,8 +248,36 @@
                         pInputText
                         formControlName="lastName"
                       />
-                      <label for="on_label">Last Name</label>
+                      <label for="on_label"
+                        >Last Name
+                        <span
+                          class="text-red-600"
+                          *ngIf="
+                            newApplicationFrom.get('lastName')?.touched &&
+                            newApplicationFrom.get('lastName')?.invalid
+                          "
+                          >*</span
+                        >
+                      </label>
                     </p-floatlabel>
+                    <span
+                      class="text-sm"
+                      *ngIf="
+                        (newApplicationFrom.get('lastName')?.touched ||
+                          formSubmit) &&
+                        newApplicationFrom.get('lastName')?.errors
+                      "
+                    >
+                      <span
+                        class="text-red-600"
+                        *ngIf="
+                          newApplicationFrom
+                            .get('lastName')
+                            ?.hasError('required')
+                        "
+                        >Last name is required</span
+                      >
+                    </span>
                   </div>
 
                   <div class="col-6">
@@ -130,7 +288,35 @@
                         class="w-full"
                         formControlName="phone"
                       />
-                      <label for="on_label">Contact No#</label>
+                      <label for="on_label"
+                        >Contact No#
+                        <span
+                          class="text-red-600"
+                          *ngIf="
+                            newApplicationFrom.get('phone')?.touched &&
+                            newApplicationFrom.get('phone')?.invalid
+                          "
+                          >*</span
+                        >
+                      </label>
+                      <span
+                        class="text-sm"
+                        *ngIf="
+                          (newApplicationFrom.get('phone')?.touched ||
+                            formSubmit) &&
+                          newApplicationFrom.get('phone')?.errors
+                        "
+                      >
+                        <span
+                          class="text-red-600"
+                          *ngIf="
+                            newApplicationFrom
+                              .get('phone')
+                              ?.hasError('required')
+                          "
+                          >Contact number is required</span
+                        >
+                      </span>
                     </p-floatlabel>
                   </div>
                   <div class="col-6">
@@ -141,18 +327,81 @@
                         pInputText
                         formControlName="age"
                       />
-                      <label for="on_label">Age</label>
+                      <label for="on_label"
+                        >Age
+                        <span
+                          class="text-red-600"
+                          *ngIf="
+                            newApplicationFrom.get('age')?.touched &&
+                            newApplicationFrom.get('age')?.invalid
+                          "
+                          >*</span
+                        >
+                      </label>
                     </p-floatlabel>
+                    <span
+                      class="text-sm"
+                      *ngIf="
+                        (newApplicationFrom.get('age')?.touched ||
+                          formSubmit) &&
+                        newApplicationFrom.get('age')?.errors
+                      "
+                    >
+                      <span
+                        class="text-red-600"
+                        *ngIf="
+                          newApplicationFrom.get('age')?.hasError('required')
+                        "
+                        >Age is required</span
+                      >
+                    </span>
                   </div>
 
                   <div class="col-12">
                     <p-floatlabel class="w-full md:w-56" variant="on">
-                      <input type="email" class="w-full" pInputText formControlName="email" />
-                      <label for="on_label">Email</label>
+                      <input
+                        type="email"
+                        class="w-full"
+                        pInputText
+                        formControlName="email"
+                      />
+                      <label for="on_label"
+                        >Email
+                        <span
+                          class="text-red-600"
+                          *ngIf="
+                            newApplicationFrom.get('email')?.touched &&
+                            newApplicationFrom.get('email')?.invalid
+                          "
+                          >*</span
+                        >
+                      </label>
                     </p-floatlabel>
+                    <span
+                      class="text-sm"
+                      *ngIf="
+                        (newApplicationFrom.get('email')?.touched ||
+                          formSubmit) &&
+                        newApplicationFrom.get('email')?.errors
+                      "
+                    >
+                      <span
+                        class="text-red-600"
+                        *ngIf="
+                          newApplicationFrom.get('email')?.hasError('required')
+                        "
+                        >Email Address is required</span
+                      >
+                      <span
+                        class="text-red-600"
+                        *ngIf="
+                          newApplicationFrom.get('email')?.hasError('email')
+                        "
+                        >Email Address Is Not Correct</span
+                      >
+                    </span>
                   </div>
 
-               
                   <div class="col-6">
                     <p-floatlabel class="w-full md:w-56" variant="on">
                       <p-select
@@ -162,10 +411,37 @@
                         optionLabel="name"
                         styleClass="w-full"
                       />
-                      <label for="on_label">Marital Status</label>
+                      <label for="on_label"
+                        >Marital Status
+                        <span
+                          class="text-red-600"
+                          *ngIf="
+                            newApplicationFrom.get('maritalStatus')?.touched &&
+                            newApplicationFrom.get('maritalStatus')?.invalid
+                          "
+                          >*</span
+                        >
+                      </label>
                     </p-floatlabel>
+                    <span
+                      class="text-sm"
+                      *ngIf="
+                        (newApplicationFrom.get('maritalStatus')?.touched ||
+                          formSubmit) &&
+                        newApplicationFrom.get('maritalStatus')?.errors
+                      "
+                    >
+                      <span
+                        class="text-red-600"
+                        *ngIf="
+                          newApplicationFrom
+                            .get('maritalStatus')
+                            ?.hasError('required')
+                        "
+                        >Marital Status is required</span
+                      >
+                    </span>
                   </div>
-
                   <div class="col-6">
                     <p-floatlabel class="w-full" variant="on">
                       <p-datepicker
@@ -173,32 +449,89 @@
                         appendTo="body"
                         formControlName="dob"
                       />
-                      <label for="on_label">Date of Birth</label>
+                      <label for="on_label"
+                        >Date of Birth
+                        <span
+                          class="text-red-600"
+                          *ngIf="
+                            newApplicationFrom.get('dob')?.touched &&
+                            newApplicationFrom.get('dob')?.invalid
+                          "
+                          >*</span
+                        >
+                      </label>
                     </p-floatlabel>
+                    <span
+                      class="text-sm"
+                      *ngIf="
+                        (newApplicationFrom.get('dob')?.touched ||
+                          formSubmit) &&
+                        newApplicationFrom.get('dob')?.errors
+                      "
+                    >
+                      <span
+                        class="text-red-600"
+                        *ngIf="
+                          newApplicationFrom.get('dob')?.hasError('required')
+                        "
+                        >Date of birth is required</span
+                      >
+                    </span>
                   </div>
-
-               
 
                   <div class="col-12">
                     <p-floatlabel class="w-full md:w-56" variant="on">
-                      <input type="text" class="w-full" pInputText formControlName="address" />
-                      <label for="on_label">Address</label>
+                      <input
+                        type="text"
+                        class="w-full"
+                        pInputText
+                        formControlName="address"
+                      />
+                      <label for="on_label"
+                        >Address
+                        <span
+                          class="text-red-600"
+                          *ngIf="
+                            newApplicationFrom.get('address')?.touched &&
+                            newApplicationFrom.get('address')?.invalid
+                          "
+                          >*</span>
+                      </label>
                     </p-floatlabel>
+                    <span
+                      class="text-sm"
+                      *ngIf="
+                        (newApplicationFrom.get('address')?.touched ||
+                          formSubmit) &&
+                        newApplicationFrom.get('address')?.errors
+                      "
+                    >
+                      <span
+                        class="text-red-600"
+                        *ngIf="
+                          newApplicationFrom
+                            .get('address')
+                            ?.hasError('required')
+                        "
+                        >Address is required</span
+                      >
+                    </span>
                   </div>
                 </div>
               </p-fieldset>
             </div>
-
-         
           </form>
-          
-          <div class="flex justify-content-end align-items-center pt-3 gap-3 w-full px-4 ">
-            <p-button   variant="outlined" severity="secondary" (onClick)="visible = !visible"  label="Cancel" />
-            <p-button (onClick)="visible = !visible"  label="Submit" />
 
+          <div
+            class="flex justify-content-end align-items-center pt-3 gap-3 w-full px-4"
+          >
+            <p-button variant="outlined" severity="secondary" (onClick)="closeCallback($event)" label="Cancel" />
+            <p-button (click)="onSubmit()" label="Submit" />
           </div>
         </div>
       </div>
     </div>
   </ng-template>
 </p-drawer>
+
+

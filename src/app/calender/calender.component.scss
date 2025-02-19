@@ -33,3 +33,32 @@
   height: calc(100vh - 130px);
   overflow: auto;
 }
+//  button{
+//    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);;
+//  }
+
+.confirmButton{
+  margin-bottom: 2px;
+  color:  #fff;;
+  white-space: nowrap;
+  text-decoration: none;
+  transition: 0.4s ease;
+  background: #19b89d;
+  &:hover {
+      color: black;
+      background:rgb(77, 243, 188);
+  }
+}
+
+.cancleButton{
+  margin-bottom: 2px;
+  color:  #000000;;
+  white-space: nowrap;
+  text-decoration: none;
+  border: 1px solid #19b89d;
+  transition: 0.4s ease;
+  &:hover {
+      color: rgb(255, 255, 255);
+      background:rgb(161, 156, 156);
+  }
+}

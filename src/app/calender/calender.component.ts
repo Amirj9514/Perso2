@@ -12,11 +12,13 @@ import { SelectModule } from 'primeng/select';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { DatePickerModule } from 'primeng/datepicker';
 import { InputTextModule } from 'primeng/inputtext';
+import { CommonModule } from '@angular/common';
+import { DialogModule } from 'primeng/dialog';
 
 @Component({
   selector: 'app-calender',
   standalone: true,
-  imports: [FullCalendarModule, DrawerModule,
+  imports: [FullCalendarModule, DrawerModule,CommonModule,DialogModule,
     ButtonModule,
     FieldsetModule,
     SelectModule,
@@ -29,6 +31,14 @@ import { InputTextModule } from 'primeng/inputtext';
 })
 export class CalenderComponent implements OnInit {
   @ViewChild('drawerRef') drawerRef!: Drawer;
+
+  showPopup:boolean=false;
+
+  clickedEventObj:any={
+    title: '',
+    timeStart: null
+  }
+
   calendarOptions: CalendarOptions = {
     initialView: 'dayGridMonth', // Default view
     plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin], // Plugins for different views
@@ -43,12 +53,21 @@ export class CalenderComponent implements OnInit {
     dateClick: this.handleDateClick.bind(this), // Handle date clicks
     eventClick: this.handleEventClick.bind(this), // Handle event clicks
   };
+formSubmit: boolean|undefined;
 
   handleDateClick(arg: any) {
     alert('Date clicked: ' + arg.dateStr);
   }
   handleEventClick(arg: any) {
-    alert(`Event clicked: ${arg.event.title}\nStart: ${arg.event.start}`);
+    console.log(arg);
+    this.clickedEventObj={
+      title: arg.event.title,
+      timeStart: arg.event.start
+    }
+    
+    // alert(`Event clicked: ${arg.event.title}\nStart: ${arg.event.start}`);
+    this.showPopup=true;
+
   }
 
   // Calender Configurations Ends Here
@@ -58,7 +77,7 @@ export class CalenderComponent implements OnInit {
   visible: boolean = false;
   todayDate = new Date();
   newApplicationFrom!: FormGroup;
-  reservationList:any[] = [
+  reservationList: any[] = [
     {
       request_data: { first_name: 'John', last_name: 'Doe' },
       reservation_time: new Date('2025-02-20T10:00:00'),
@@ -117,8 +136,18 @@ export class CalenderComponent implements OnInit {
     }));
   }
 
+  onSubmit(): void {  
+    if (this.newApplicationFrom.invalid) {
+      this.newApplicationFrom.markAllAsTouched(); // Ensure all validation errors appear
+      return;
+    }
   
+    console.log('Form Submitted:', this.newApplicationFrom.value);
+    this.visible = false;
+  }
+
   closeCallback(e: any): void {
     this.drawerRef.close(e);
   }
+
 }

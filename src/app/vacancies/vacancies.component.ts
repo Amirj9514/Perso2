@@ -16,10 +16,11 @@ import { DatePickerModule } from 'primeng/datepicker';
 import { InputTextModule } from 'primeng/inputtext';
 import { FlagsService } from '../Shared/services/flags.service';
 import { TextareaModule } from 'primeng/textarea';
+import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-vacancies',
   standalone: true,
-  imports: [
+  imports: [CommonModule,
     TableModule,
     DrawerModule,
     ButtonModule,
@@ -41,6 +42,7 @@ export class VacanciesComponent implements OnInit {
 
   newApplicationFrom!: FormGroup;
   flags: any[] = [];
+formSubmit: boolean|undefined;
 
 
   constructor(private productS: ProductService , private flagS:FlagsService) {
@@ -48,7 +50,7 @@ export class VacanciesComponent implements OnInit {
       role: new FormControl(null, [Validators.required]),
       company: new FormControl('', [Validators.required]),
       country: new FormControl(null, [Validators.required]),
-      description: new FormControl(''),
+      description: new FormControl(null,[Validators.required]),
     });
   }
 
