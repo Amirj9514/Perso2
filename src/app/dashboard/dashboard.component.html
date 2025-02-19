@@ -81,7 +81,7 @@
           <div
             class="text-xl px-4 font-semibold py-3 border-bottom-1 headerBg borderClr"
           >
-          Neu Kandidaten
+          Kandidat hinzufügen
           </div>
 
           <form
@@ -565,12 +565,12 @@
               severity="secondary"
               [ngClass]="{ disableBtn: formSubmit }"
               (onClick)="closeCallback($event)"
-              label="Cancel"
+              label="Abbrechen"
             />
             <p-button
               [loading]="formSubmit"
               (click)="onSubmit()"
-              label="Submit"
+              label="Speichern"
             />
           </div>
         </div>
