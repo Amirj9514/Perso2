@@ -10,11 +10,12 @@
           <h1 class="text-align">Sign In</h1>
           <p class="welcome-text">Welcome back! Please enter your details</p>
   
-          <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+          <form [formGroup]="loginForm" (ngSubmit)="onSubmit(loginForm)">
             <div class="form-group">
               <label for="email">EMAIL</label>
               <input
                 type="email"
+                loginLoader
                 id="email"
                 name="email"
                 placeholder="example@email.com"
@@ -46,6 +47,7 @@
                   [type]="isPasswordVisible ? 'text' : 'password'"
                   id="password"
                   name="password"
+                  loginLoader
                   placeholder="Enter Your Password"
                   formControlName="password"
                   required
@@ -81,7 +83,13 @@
               <a href="#" class="forgot-password">Forgot Password?</a>
             </div>
   
-            <button type="submit" class="sign-in-btn">Sign In</button>
+            <button type="submit" [ngClass]="loginLoader?'disableBtn':''"  class="sign-in-btn">
+              @if(loginLoader){
+                <div><i class="pi  pi-spin pi-spinner"></i></div>
+              }@else{
+                <div>Sign In</div>
+              }
+            </button>
           </form>
         </div>
       </div>
