@@ -9,60 +9,17 @@
   </header>
   <nav class="sidebar-nav">
     <div class="nav-list primary-nav">
-      <div class="grid nav-items">
-        <div class="col-3 flex justify-content-end align-items-center">
-          <i class="pi pi-chart-pie"></i>
-        </div>
-        <div class="col-9">
-          <span class="nav-label">Dashboard</span>
-        </div>
-      </div>
 
-      <div class="grid nav-items">
-        <div class="col-3 flex justify-content-end align-items-center">
-          <i class="pi pi-users"></i>
+      @for (nav of sidebarNavItems; track $index) {
+        <div class="grid nav-items cursor-pointer" [routerLink]="nav.link" [routerLinkActiveOptions]="{ exact: true }"  [routerLinkActive]="'activeNav'">
+          <div class="col-3 flex justify-content-end align-items-center">
+            <i class="pi" [ngClass]="nav.icon"></i>
+          </div>
+          <div class="col-9">
+            <span class="nav-label">{{ nav.title }}</span>
+          </div>
         </div>
-        <div class="col-9">
-          <span class="nav-label">Vacancies</span>
-        </div>
-      </div>
-
-      <div class="grid nav-items">
-        <div class="col-3 flex justify-content-end align-items-center">
-          <i class="pi pi-user"></i>
-        </div>
-        <div class="col-9">
-          <span class="nav-label">Applications</span>
-        </div>
-      </div>
-
-      <div class="grid nav-items">
-        <div class="col-3 flex justify-content-end align-items-center">
-          <i class="pi pi-users"></i>
-        </div>
-        <div class="col-9">
-          <span class="nav-label">Employees</span>
-        </div>
-      </div>
-
-      <div class="grid nav-items">
-        <div class="col-3 flex justify-content-end align-items-center">
-          <i class="pi pi-wallet"></i>
-        </div>
-        <div class="col-9">
-          <span class="nav-label">Payroll</span>
-        </div>
-      </div>
-
-      <div class="grid nav-items">
-        <div class="col-3 flex justify-content-end align-items-center">
-          <i class="pi pi-calendar"></i>
-        </div>
-        <div class="col-9">
-          <span class="nav-label">Calender</span>
-        </div>
-      </div>
-
+      }
     </div>
   </nav>
 </aside>

@@ -8,11 +8,9 @@ $border-color: #ddd;
 
 
 .sidebar {
-    position: fixed;
-    width: 200px;
-    margin-bottom:2px ;
     background: $primary-color;
-    height: calc(100vh - 2px);
+ 
+    height: 100%;
     transition: all 0.4s ease;
 
     &.collapsed {
@@ -81,7 +79,7 @@ $border-color: #ddd;
         .nav-list {
             display: flex;
             gap: 16px;
-            padding: 0 40px;
+            padding: 0 30px;
             flex-direction: column;
             transform: translateY(15px);
             transition: 0.4s ease;
@@ -104,6 +102,8 @@ $border-color: #ddd;
                 background:rgb(77, 243, 188);
             }
         }
+
+        
 
         .nav-item {
             position: relative;
@@ -151,6 +151,10 @@ $border-color: #ddd;
             display: block;
         }
     }
+}
+.activeNav{
+    color: black !important;
+    background:rgb(77, 243, 188);
 }
 
 .nav-items{

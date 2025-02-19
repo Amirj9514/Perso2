@@ -1,0 +1,157 @@
+<div class="mx-4 mt-3">
+  <div class="flex align-items-center justify-content-between py-2 w-full">
+    <div class="text-xl font-semibold">Employees</div>
+    <div>
+      <p-button (onClick)="visible = !visible" label="Add  Employee" />
+    </div>
+  </div>
+
+  <div class="mainCard">
+    <p-table
+      [value]="products"
+      [paginator]="true"
+      stripedRows
+      [rows]="10"
+      [tableStyle]="{ 'min-width': '50rem' }"
+      [rowsPerPageOptions]="[10, 50, 100]"
+    >
+      <ng-template #header>
+        <tr>
+          <th style="width: 25%">Name</th>
+          <th style="width: 25%">Country</th>
+          <th style="width: 25%">Company</th>
+          <th style="width: 25%">Representative</th>
+        </tr>
+      </ng-template>
+      <ng-template #body let-product>
+        <tr>
+          <td>{{ product.code }}</td>
+          <td>{{ product.name }}</td>
+          <td>{{ product.category }}</td>
+          <td>{{ product.quantity }}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>
+
+<p-drawer
+  #drawerRef
+  [(visible)]="visible"
+  [modal]="true"
+  [dismissible]="false"
+  position="right"
+  styleClass="w-26rem"
+>
+  <ng-template #headless>
+    <div class="flex flex-col h-full relative">
+      <div class="flex items-center justify-between shrink-0 w-full">
+        <p-button
+          (onClick)="closeCallback($event)"
+          icon="pi pi-angle-left"
+          [rounded]="true"
+          class="drawerBackBtn"
+        />
+
+        <div class="w-full">
+          <div
+            class="text-xl px-4 font-semibold py-3 border-bottom-1 headerBg borderClr "
+          >
+            New Employee
+          </div>
+
+          <form [formGroup]="newApplicationFrom" class="pl-4 pr-3 mt-3 draweBody">
+
+            <div class="mt-3">
+              
+                <div class="grid pt-2">
+                  <div class="col-12 mb-2">
+                    <p-floatlabel class="w-full md:w-56" variant="on">
+                      <input
+                        type="text"
+                        pInputText
+                        class="w-full"
+                        formControlName="firstName"
+                      />
+                      <label for="on_label">First Name</label>
+                    </p-floatlabel>
+                  </div>
+                  <div class="col-12 mb-2">
+                    <p-floatlabel class="w-full md:w-56" variant="on">
+                      <input
+                        type="text"
+                        class="w-full"
+                        pInputText
+                        formControlName="lastName"
+                      />
+                      <label for="on_label">Last Name</label>
+                    </p-floatlabel>
+                  </div>
+
+                  <div class="col-12 mb-2">
+                    <p-floatlabel class="w-full md:w-56" variant="on">
+                      <input
+                        type="text"
+                        pInputText
+                        class="w-full"
+                        formControlName="phone"
+                      />
+                      <label for="on_label">Contact No#</label>
+                    </p-floatlabel>
+                  </div>
+              
+
+                  <div class="col-12 mb-2">
+                    <p-floatlabel class="w-full md:w-56" variant="on">
+                      <input
+                        type="email"
+                        class="w-full"
+                        pInputText
+                        formControlName="email"
+                      />
+                      <label for="on_label">Email</label>
+                    </p-floatlabel>
+                  </div>
+
+                  <div class="col-12 mb-2">
+                    <p-floatlabel class="w-full md:w-56" variant="on">
+                      <p-select
+                      formControlName="country"
+                      inputId="on_label"
+                      [options]="flags"
+                      optionLabel="name"
+                      styleClass="w-full"
+                      [filter]="true"
+                      filterBy="name"
+                    />
+                      <label for="on_label">Country</label>
+                    </p-floatlabel>
+                  </div>
+
+                
+
+                  <div class="col-12 mb-2">
+                    <p-floatlabel class="w-full md:w-56" variant="on">
+                      <input
+                        type="text"
+                        class="w-full"
+                        pInputText
+                        formControlName="address"
+                      />
+                      <label for="on_label">Login Password</label>
+                    </p-floatlabel>
+                  </div>
+                </div>
+            </div>
+          </form>
+
+          <div class="flex justify-content-end align-items-center pt-3 gap-3 w-full px-4 ">
+            <p-button   variant="outlined" severity="secondary" (onClick)="visible = !visible"  label="Cancel" />
+            <p-button (onClick)="visible = !visible"  label="Submit" />
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</p-drawer>

@@ -1,74 +1,80 @@
-.textClr-100{
-    color: var(--p-surface-100);
+.textClr-100 {
+  color: var(--p-surface-100);
 }
 
-.textClr-200{
-    color: var(--p-surface-200);
+.textClr-200 {
+  color: var(--p-surface-200);
 }
 
-.textClr-300{
-    color: var(--p-surface-300);
+.textClr-300 {
+  color: var(--p-surface-300);
 }
 
-.textClr-400{
-    color: var(--p-surface-400);
+.textClr-400 {
+  color: var(--p-surface-400);
 }
 
-.textClr-500{
-    color: var(--p-surface-500);
+.textClr-500 {
+  color: var(--p-surface-500);
 }
 
-.textClr-600{
-    color: var(--p-surface-600);
+.textClr-600 {
+  color: var(--p-surface-600);
 }
 
-.textClr-700{
-    color: var(--p-surface-700);
+.textClr-700 {
+  color: var(--p-surface-700);
 }
 
-
-.textClr-800{
-    color: var(--p-surface-800);
+.textClr-800 {
+  color: var(--p-surface-800);
 }
 
-.dangerClr{
-    color: #B91C1C;
+.dangerClr {
+  color: #b91c1c;
 }
-.successClr{
-    color: #10B981;
+.successClr {
+  color: #10b981;
 }
-.secondaryClr{
-    color: #475569;
-}
-
-
-.danger-td{
-    background-color: #FEE2E2;
-    color: #B91C1C;
-    border-bottom: 2px solid #B91C1C !important;
-    border-right: 2px solid white !important;
-    font-weight: 600;
-    width: 100px;
+.secondaryClr {
+  color: #475569;
 }
 
-.success-td{
-    background-color: #D1FAE5;
-    color: #065F46;
-    border-bottom: 2px solid #6ee7b7 !important;
-    border-right: 2px solid white !important;
-    font-weight: 600;
-    width: 100px;
+.danger-td {
+  background-color: #fee2e2;
+  color: #b91c1c;
+  border-bottom: 2px solid #b91c1c !important;
+  border-right: 2px solid white !important;
+  font-weight: 600;
+  width: 100px;
 }
 
-.warning-td{
-    background-color: #F1F5F9;
-    color: #475569;
-    border-bottom: 2px solid #475569 !important;
-    border-right: 2px solid white !important;
-    font-weight: 600;
-    width: 100px;
+.success-td {
+  background-color: #d1fae5;
+  color: #065f46;
+  border-bottom: 2px solid #6ee7b7 !important;
+  border-right: 2px solid white !important;
+  font-weight: 600;
+  width: 100px;
 }
 
-.defaultTd{
-    width: 100px;
+.warning-td {
+  background-color: #f1f5f9;
+  color: #475569;
+  border-bottom: 2px solid #475569 !important;
+  border-right: 2px solid white !important;
+  font-weight: 600;
+  width: 100px;
+}
+
+.defaultTd {
+  width: 100px;
+}
+
+.headerBg {
+  background-color: #e9e7e7;
+}
+
+.borderClr {
+  border-color: gray;
 }

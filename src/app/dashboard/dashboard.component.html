@@ -1,0 +1,204 @@
+<div class="mx-4 mt-3">
+  <div class="flex align-items-center justify-content-between py-2 w-full">
+    <div class="text-xl font-semibold">Applicants</div>
+    <div>
+      <p-button (onClick)="visible = !visible" label="Add  Applicant" />
+    </div>
+  </div>
+
+  <div class="mainCard">
+    <p-table
+      [value]="products"
+      [paginator]="true"
+      stripedRows
+      [rows]="10"
+      [tableStyle]="{ 'min-width': '50rem' }"
+      [rowsPerPageOptions]="[10, 50, 100]"
+    >
+      <ng-template #header>
+        <tr>
+          <th style="width: 25%">Name</th>
+          <th style="width: 25%">Country</th>
+          <th style="width: 25%">Company</th>
+          <th style="width: 25%">Representative</th>
+        </tr>
+      </ng-template>
+      <ng-template #body let-product>
+        <tr>
+          <td>{{ product.code }}</td>
+          <td>{{ product.name }}</td>
+          <td>{{ product.category }}</td>
+          <td>{{ product.quantity }}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>
+
+<p-drawer
+  #drawerRef
+  [(visible)]="visible"
+  [modal]="true"
+  [dismissible]="false"
+  position="right"
+  styleClass="w-6"
+>
+  <ng-template #headless>
+    <div class="flex flex-col h-full relative">
+      <div class="flex items-center justify-between shrink-0 w-full">
+        <p-button
+          (onClick)="closeCallback($event)"
+          icon="pi pi-angle-left"
+          [rounded]="true"
+          class="drawerBackBtn"
+        />
+
+        <div class="w-full">
+          <div
+            class="text-xl px-4 font-semibold py-3 border-bottom-1 headerBg borderClr"
+          >
+            New Applicant
+          </div>
+
+          <form [formGroup]="newApplicationFrom" class="pl-4 pr-3 mt-3 draweBody">
+            <p-fieldset legend="Basic Information">
+              <div class="grid pt-2">
+                <div class="col-6">
+                  <p-floatlabel class="w-full md:w-56" variant="on">
+                    <p-select
+                      formControlName="enrollment"
+                      inputId="on_label"
+                      [options]="cities"
+                      optionLabel="name"
+                      styleClass="w-full"
+                    />
+                    <label for="on_label">Enrollemnt</label>
+                  </p-floatlabel>
+                </div>
+
+                <div class="col-6">
+                  <p-floatlabel class="w-full" variant="on">
+                    <p-datepicker
+                      styleClass="w-full"
+                      appendTo="body"
+                      formControlName="appledDate"
+                    />
+                    <label for="on_label">Applied Date</label>
+                  </p-floatlabel>
+                </div>
+
+                <div class="col-12">
+                    <p-floatlabel class="w-full md:w-56" variant="on">
+                      <input type="text" class="w-full" pInputText formControlName="profession" />
+                      <label for="on_label">Profession</label>
+                    </p-floatlabel>
+                  </div>
+              </div>
+            </p-fieldset>
+
+            <div class="mt-3">
+              <p-fieldset legend="Personal Information">
+                <div class="grid pt-2">
+                  <div class="col-6">
+                    <p-floatlabel class="w-full md:w-56" variant="on">
+                      <input
+                        type="text"
+                        pInputText
+                        class="w-full"
+                        formControlName="firstName"
+                      />
+                      <label for="on_label">First Name</label>
+                    </p-floatlabel>
+                  </div>
+                  <div class="col-6">
+                    <p-floatlabel class="w-full md:w-56" variant="on">
+                      <input
+                        type="text"
+                        class="w-full"
+                        pInputText
+                        formControlName="lastName"
+                      />
+                      <label for="on_label">Last Name</label>
+                    </p-floatlabel>
+                  </div>
+
+                  <div class="col-6">
+                    <p-floatlabel class="w-full md:w-56" variant="on">
+                      <input
+                        type="text"
+                        pInputText
+                        class="w-full"
+                        formControlName="phone"
+                      />
+                      <label for="on_label">Contact No#</label>
+                    </p-floatlabel>
+                  </div>
+                  <div class="col-6">
+                    <p-floatlabel class="w-full md:w-56" variant="on">
+                      <input
+                        type="text"
+                        class="w-full"
+                        pInputText
+                        formControlName="age"
+                      />
+                      <label for="on_label">Age</label>
+                    </p-floatlabel>
+                  </div>
+
+                  <div class="col-12">
+                    <p-floatlabel class="w-full md:w-56" variant="on">
+                      <input type="email" class="w-full" pInputText formControlName="email" />
+                      <label for="on_label">Email</label>
+                    </p-floatlabel>
+                  </div>
+
+               
+                  <div class="col-6">
+                    <p-floatlabel class="w-full md:w-56" variant="on">
+                      <p-select
+                        formControlName="maritalStatus"
+                        inputId="on_label"
+                        [options]="cities"
+                        optionLabel="name"
+                        styleClass="w-full"
+                      />
+                      <label for="on_label">Marital Status</label>
+                    </p-floatlabel>
+                  </div>
+
+                  <div class="col-6">
+                    <p-floatlabel class="w-full" variant="on">
+                      <p-datepicker
+                        styleClass="w-full"
+                        appendTo="body"
+                        formControlName="dob"
+                      />
+                      <label for="on_label">Date of Birth</label>
+                    </p-floatlabel>
+                  </div>
+
+               
+
+                  <div class="col-12">
+                    <p-floatlabel class="w-full md:w-56" variant="on">
+                      <input type="text" class="w-full" pInputText formControlName="address" />
+                      <label for="on_label">Address</label>
+                    </p-floatlabel>
+                  </div>
+                </div>
+              </p-fieldset>
+            </div>
+
+         
+          </form>
+          
+          <div class="flex justify-content-end align-items-center pt-3 gap-3 w-full px-4 ">
+            <p-button   variant="outlined" severity="secondary" (onClick)="visible = !visible"  label="Cancel" />
+            <p-button (onClick)="visible = !visible"  label="Submit" />
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</p-drawer>

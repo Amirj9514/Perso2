@@ -1,0 +1,18 @@
+.mainCard {
+  border-radius: 10px;
+  background-color: #ffffff;
+  overflow: hidden;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.drawerBackBtn {
+  position: absolute;
+  left: -19px;
+  top: 46%;
+}
+
+.draweBody {
+  height: calc(100vh - 130px);
+  overflow: auto;
+}

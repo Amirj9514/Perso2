@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { AuthComponent } from "./auth/auth.component";
+import { FlagsService } from './Shared/services/flags.service';
 
 @Component({
   selector: 'app-root',
@@ -11,4 +11,10 @@ import { AuthComponent } from "./auth/auth.component";
 })
 export class AppComponent {
   title = 'perso2';
+
+  constructor(private flagS:FlagsService){
+    
+    console.log(this.flagS.getFlagsList());
+    
+  }
 }

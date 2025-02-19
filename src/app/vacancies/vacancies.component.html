@@ -1,0 +1,125 @@
+<div class="mx-4 mt-3">
+  <div class="flex align-items-center justify-content-between py-2 w-full">
+    <div class="text-xl font-semibold">Vacancies</div>
+    <div>
+      <p-button (onClick)="visible = !visible" label="Add  Vacancy" />
+    </div>
+  </div>
+
+  <div class="mainCard">
+    <p-table
+      [value]="products"
+      [paginator]="true"
+      stripedRows
+      [rows]="10"
+      [tableStyle]="{ 'min-width': '50rem' }"
+      [rowsPerPageOptions]="[10, 50, 100]"
+    >
+      <ng-template #header>
+        <tr>
+          <th style="width: 25%">Role</th>
+          <th style="width: 25%">company</th>
+          <th style="width: 25%">location</th>
+          <th style="width: 25%">Actions</th>
+        </tr>
+      </ng-template>
+      <ng-template #body let-product>
+        <tr>
+          <td>{{ product.code }}</td>
+          <td>{{ product.name }}</td>
+          <td>{{ product.category }}</td>
+          <td>{{ product.quantity }}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>
+
+<p-drawer
+  #drawerRef
+  [(visible)]="visible"
+  [modal]="true"
+  [dismissible]="false"
+  position="right"
+  styleClass="w-26rem"
+>
+  <ng-template #headless>
+    <div class="flex flex-col h-full relative">
+      <div class="flex items-center justify-between shrink-0 w-full">
+        <p-button
+          (onClick)="closeCallback($event)"
+          icon="pi pi-angle-left"
+          [rounded]="true"
+          class="drawerBackBtn"
+        />
+
+        <div class="w-full">
+          <div
+            class="text-xl px-4 font-semibold py-3 border-bottom-1 headerBg borderClr"
+          >
+            New Vacancy
+          </div>
+
+          <form [formGroup]="newApplicationFrom" class="pl-4 pr-3 mt-3">
+            <div class="mt-3">
+              <div class="grid pt-2">
+                <div class="col-12 pb-3">
+                  <p-floatlabel class="w-full md:w-56" variant="on">
+                    <input
+                      type="text"
+                      pInputText
+                      class="w-full"
+                      formControlName="role"
+                    />
+                    <label for="on_label">Role</label>
+                  </p-floatlabel>
+                </div>
+                <div class="col-12 pb-3">
+                  <p-floatlabel class="w-full md:w-56" variant="on">
+                    <input
+                      type="text"
+                      class="w-full"
+                      pInputText
+                      formControlName="company"
+                    />
+                    <label for="on_label">Company</label>
+                  </p-floatlabel>
+                </div>
+
+                <div class="col-12 pb-3">
+                  <p-floatlabel class="w-full md:w-56" variant="on">
+                    <p-select
+                      formControlName="country"
+                      inputId="on_label"
+                      [options]="flags"
+                      optionLabel="name"
+                      styleClass="w-full"
+                      [filter]="true"
+                      filterBy="name"
+                    />
+                    <label for="on_label">Country</label>
+                  </p-floatlabel>
+                </div>
+
+                <div class="col-12 pb-3">
+                  <p-floatlabel class="w-full md:w-56" variant="on">
+                    <textarea
+                      rows="5"
+                      cols="30"
+                      class="w-full"
+                      formControlName="description"
+                      pTextarea
+                
+                    ></textarea>
+
+                    <label for="on_label">description</label>
+                  </p-floatlabel>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</p-drawer>

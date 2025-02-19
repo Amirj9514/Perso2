@@ -12,7 +12,22 @@ export const routes: Routes = [
         path:'',
         component: LayoutComponent,
         children:[
-          
+          {
+            path:'',
+            loadComponent:()=>import('./dashboard/dashboard.component').then(m=>m.DashboardComponent)
+          },
+          {
+            path:'employees',
+            loadComponent:()=>import('./employees/employees.component').then(m=>m.EmployeesComponent)
+          },
+          {
+            path:'vacancies',
+            loadComponent:()=>import('./vacancies/vacancies.component').then(m=>m.VacanciesComponent)
+          },
+          {
+            path:'calendar',
+            loadComponent:()=>import('./calender/calender.component').then(m=>m.CalenderComponent)
+          }
         ]
     },
 ];
