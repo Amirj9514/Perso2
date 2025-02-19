@@ -1,8 +1,8 @@
 <div class="mx-4 mt-3">
   <div class="flex align-items-center justify-content-between py-2 w-full">
-    <div class="text-xl font-semibold">Applicants</div>
+    <div class="text-xl font-semibold">Kandidaten</div>
     <div>
-      <p-button (onClick)="visible = !visible" label="Add  Applicant" />
+      <p-button (onClick)="visible = !visible" label="Add  Kandidaten" />
     </div>
   </div>
 
@@ -17,41 +17,40 @@
     >
       <ng-template #header>
         <tr>
-          <th style="width: 25%">Applicants Name</th>
-          <th style="width: 25%">Position Applied</th>
-          <th style="width: 25%">Application Date</th>
-          <th style="width: 25%">Contact Information</th>
-          <th style="width: 25%">Absorvations</th>
-          <th>Action</th>
+          <th style="width: 25%">Name</th>
+          <th style="width: 25%">Position</th>
+          <th style="width: 25%">Antragsdatum</th>
+          <th style="width: 25%">Kontakt Info</th>
+          <th style="width: 25%">Aktennummer</th>
+          <th>Bearbeiten</th>
         </tr>
       </ng-template>
       <ng-template #body let-product>
         @if(applicantsLoader){
-          <tr>
-            <td><p-skeleton /></td>
-            <td><p-skeleton /></td>
-            <td><p-skeleton /></td>
-            <td><p-skeleton /></td>
-            <td><p-skeleton /></td>
-            <td><p-skeleton /></td>
+        <tr>
+          <td><p-skeleton /></td>
+          <td><p-skeleton /></td>
+          <td><p-skeleton /></td>
+          <td><p-skeleton /></td>
+          <td><p-skeleton /></td>
+          <td><p-skeleton /></td>
         </tr>
         }@else{
-          <tr>
-            <td>{{ product?.first_name + " " + product?.last_name }}</td>
-            <td>{{ getVacancieById(product?.vacancy_id) }}</td>
-            <td>{{ product?.applied_at | date : "MM-dd-yyyy" }}</td>
-            <td>{{ product?.email }}</td>
-            <td>AK-{{ product?.id }}</td>
-            <td>
-              <div class="flex gap-2">
-                <div class="pi pi-eye view"></div>
-                <div class="pi pi-user-edit edit"></div>
-                <div class="pi pi-trash delete" (click)="onDelete(product)"></div>
-              </div>
-            </td>
-          </tr>
+        <tr>
+          <td>{{ product?.first_name + " " + product?.last_name }}</td>
+          <td>{{ getVacancieById(product?.vacancy_id) }}</td>
+          <td>{{ product?.applied_at | date : "MM-dd-yyyy" }}</td>
+          <td>{{ product?.email }}</td>
+          <td>AK-{{ product?.id }}</td>
+          <td>
+            <div class="flex gap-2">
+              <div class="pi pi-eye view"></div>
+              <div class="pi pi-user-edit edit"></div>
+              <div class="pi pi-trash delete" (click)="onDelete(product)"></div>
+            </div>
+          </td>
+        </tr>
         }
-       
       </ng-template>
     </p-table>
   </div>
@@ -80,7 +79,7 @@
           <div
             class="text-xl px-4 font-semibold py-3 border-bottom-1 headerBg borderClr"
           >
-            New Applicant
+            New Kandidaten
           </div>
 
           <form
@@ -101,7 +100,7 @@
                       styleClass="w-full"
                     />
                     <label for="on_label"
-                      >Enrollemnt
+                      >Position
                       <span
                         class="text-red-600"
                         *ngIf="
@@ -127,7 +126,7 @@
                           .get('enrollment')
                           ?.hasError('required')
                       "
-                      >Enrollment date is required</span
+                      >Position date is required</span
                     >
                   </span>
                 </div>
@@ -140,7 +139,7 @@
                       formControlName="appledDate"
                     />
                     <label for="on_label"
-                      >Applied Date
+                      >Antragsdatum
                       <span
                         class="text-red-600"
                         *ngIf="
@@ -166,7 +165,7 @@
                           .get('appledDate')
                           ?.hasError('required')
                       "
-                      >Applied date is required</span
+                      >Antragsdatum is required</span
                     >
                   </span>
                 </div>
@@ -185,7 +184,7 @@
                         formControlName="firstName"
                       />
                       <label for="on_label"
-                        >First Name
+                        >Vorname
                         <span
                           class="text-red-600"
                           *ngIf="
@@ -211,7 +210,7 @@
                             .get('firstName')
                             ?.hasError('required')
                         "
-                        >First name is required</span
+                        >Vorname is required</span
                       >
                     </span>
                   </div>
@@ -224,7 +223,7 @@
                         formControlName="lastName"
                       />
                       <label for="on_label"
-                        >Last Name
+                        >Nachname
                         <span
                           class="text-red-600"
                           *ngIf="
@@ -250,7 +249,7 @@
                             .get('lastName')
                             ?.hasError('required')
                         "
-                        >Last name is required</span
+                        >Nachname is required</span
                       >
                     </span>
                   </div>
@@ -264,7 +263,7 @@
                         formControlName="phone"
                       />
                       <label for="on_label"
-                        >Contact No#
+                        >Ruffnummer
                         <span
                           class="text-red-600"
                           *ngIf="
@@ -289,7 +288,7 @@
                               .get('phone')
                               ?.hasError('required')
                           "
-                          >Contact number is required</span
+                          >Ruffnummer is required</span
                         >
                       </span>
                     </p-floatlabel>
@@ -303,7 +302,7 @@
                         formControlName="age"
                       />
                       <label for="on_label"
-                        >Age
+                        >Alter
                         <span
                           class="text-red-600"
                           *ngIf="
@@ -327,7 +326,7 @@
                         *ngIf="
                           newApplicationFrom.get('age')?.hasError('required')
                         "
-                        >Age is required</span
+                        >Alter is required</span
                       >
                     </span>
                   </div>
@@ -389,7 +388,7 @@
                         filterBy="name"
                       />
                       <label for="on_label"
-                        >Country
+                        >Land
                         <span
                           class="text-red-600"
                           *ngIf="
@@ -415,7 +414,7 @@
                             .get('country')
                             ?.hasError('required')
                         "
-                        >Country is required</span
+                        >Land is required</span
                       >
                     </span>
                   </div>
@@ -431,7 +430,7 @@
                         styleClass="w-full"
                       />
                       <label for="on_label"
-                        >Marital Status
+                        >Familienstand
                         <span
                           class="text-red-600"
                           *ngIf="
@@ -457,7 +456,7 @@
                             .get('maritalStatus')
                             ?.hasError('required')
                         "
-                        >Marital Status is required</span
+                        >Familienstand is required</span
                       >
                     </span>
                   </div>
@@ -469,7 +468,7 @@
                         formControlName="dob"
                       />
                       <label for="on_label"
-                        >Date of Birth
+                        >Geburtsdatum
                         <span
                           class="text-red-600"
                           *ngIf="
@@ -493,7 +492,7 @@
                         *ngIf="
                           newApplicationFrom.get('dob')?.hasError('required')
                         "
-                        >Date of birth is required</span
+                        >Geburtsdatum is required</span
                       >
                     </span>
                   </div>
@@ -507,7 +506,7 @@
                         formControlName="address"
                       />
                       <label for="on_label"
-                        >Address
+                        >Addresse
                         <span
                           class="text-red-600"
                           *ngIf="
@@ -533,7 +532,7 @@
                             .get('address')
                             ?.hasError('required')
                         "
-                        >Address is required</span
+                        >Addresse is required</span
                       >
                     </span>
                   </div>
@@ -547,7 +546,7 @@
                         formControlName="description"
                         pTextarea
                       ></textarea>
-                      <label for="on_label">Notes </label>
+                      <label for="on_label">Beschreibung</label>
                     </p-floatlabel>
                   </div>
                 </div>
@@ -561,11 +560,15 @@
             <p-button
               variant="outlined"
               severity="secondary"
-              [ngClass]="{ 'disableBtn': formSubmit}"
+              [ngClass]="{ disableBtn: formSubmit }"
               (onClick)="closeCallback($event)"
               label="Cancel"
             />
-            <p-button [loading]="formSubmit" (click)="onSubmit()" label="Submit" />
+            <p-button
+              [loading]="formSubmit"
+              (click)="onSubmit()"
+              label="Submit"
+            />
           </div>
         </div>
       </div>

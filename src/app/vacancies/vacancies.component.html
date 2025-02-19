@@ -1,8 +1,8 @@
 <div class="mx-4 mt-3">
   <div class="flex align-items-center justify-content-between py-2 w-full">
-    <div class="text-xl font-semibold">Vacancies</div>
+    <div class="text-xl font-semibold">Positionen</div>
     <div>
-      <p-button (onClick)="visible = !visible" label="Add  Vacancy" />
+      <p-button (onClick)="visible = !visible" label="Add  Position" />
     </div>
   </div>
 
@@ -17,10 +17,10 @@
     >
       <ng-template #header>
         <tr>
-          <th style="width: 25%">Role</th>
-          <th style="width: 25%">Category</th>
-          <th style="width: 25%">Location</th>
-          <th style="width: 25%">Description</th>
+          <th style="width: 25%">Position</th>
+          <th style="width: 25%">Arbeitgeber</th>
+          <th style="width: 25%">Stadt</th>
+          <th style="width: 25%">FSB</th>
         </tr>
       </ng-template>
       <ng-template #body let-product>
@@ -67,7 +67,7 @@
           <div
             class="text-xl px-4 font-semibold py-3 border-bottom-1 headerBg borderClr"
           >
-            New Vacancy
+            New Position
           </div>
 
           <form [formGroup]="newApplicationFrom" class="pl-4 pr-3 mt-3 draweBody">
@@ -82,7 +82,7 @@
                       formControlName="role"
                     />
                     <label for="on_label"
-                      >Role
+                      >Position
                       <span
                         class="text-red-600"
                         *ngIf="
@@ -105,7 +105,7 @@
                       *ngIf="
                         newApplicationFrom.get('role')?.hasError('required')
                       "
-                      >Roll is required</span
+                      >Position is required</span
                     >
                   </span>
                 </div>
@@ -118,7 +118,7 @@
                       formControlName="company"
                     />
                     <label for="on_label"
-                      >Company
+                      >Arbeitgeber
                       <span
                         class="text-red-600"
                         *ngIf="
@@ -142,7 +142,7 @@
                       *ngIf="
                         newApplicationFrom.get('company')?.hasError('required')
                       "
-                      >Company is required</span
+                      >Arbeitgeber is required</span
                     >
                   </span>
                 </div>
@@ -160,7 +160,7 @@
                       filterBy="name"
                     />
                     <label for="on_label"
-                      >Country
+                      >Stadt
                       <span
                         class="text-red-600"
                         *ngIf="
@@ -184,7 +184,7 @@
                       *ngIf="
                         newApplicationFrom.get('country')?.hasError('required')
                       "
-                      >Country is required</span
+                      >Stadt is required</span
                     >
                   </span>
                 </div>
@@ -200,7 +200,7 @@
                     ></textarea>
 
                     <label for="on_label"
-                      >Description
+                      >FSB
                       <span
                         class="text-red-600"
                         *ngIf="
@@ -226,7 +226,7 @@
                           .get('description')
                           ?.hasError('required')
                       "
-                      >Description is required</span
+                      >FSB is required</span
                     >
                   </span>
                 </div>

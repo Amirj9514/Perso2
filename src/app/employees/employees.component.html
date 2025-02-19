@@ -1,8 +1,8 @@
 <div class="mx-4 mt-3">
   <div class="flex align-items-center justify-content-between py-2 w-full">
-    <div class="text-xl font-semibold">Employees</div>
+    <div class="text-xl font-semibold">Mitarbeiter</div>
     <div>
-      <p-button (onClick)="visible = !visible" label="Add  Employee" />
+      <p-button (onClick)="visible = !visible" label="Add  Mitarbeiter" />
     </div>
   </div>
 
@@ -17,8 +17,8 @@
     >
       <ng-template #header>
         <tr>
-          <th style="width: 25%">First Name</th>
-          <th style="width: 25%">Last Name</th>
+          <th style="width: 25%">Vorname</th>
+          <th style="width: 25%">Nachname</th>
           <th style="width: 25%">Username</th>
           <th style="width: 25%">Created at</th>
         </tr>
@@ -71,7 +71,7 @@
           <div
             class="text-xl px-4 font-semibold py-3 border-bottom-1 headerBg borderClr"
           >
-            New Employee
+            New Mitarbeiter
           </div>
 
           <form
@@ -89,7 +89,7 @@
                       formControlName="first_name"
                     />
                     <label for="on_label"
-                      >First Name
+                      >Vorname
                       <span
                         class="text-red-600"
                         *ngIf="
@@ -115,7 +115,7 @@
                           .get('first_name')
                           ?.hasError('required')
                       "
-                      >First Name is required</span
+                      >Vorname is required</span
                     >
                   </span>
                 </div>
@@ -128,7 +128,7 @@
                       formControlName="last_name"
                     />
                     <label for="on_label"
-                      >Last Name
+                      >Nachname
                       <span
                         class="text-red-600"
                         *ngIf="
@@ -152,7 +152,7 @@
                       *ngIf="
                         newApplicationFrom.get('last_name')?.hasError('required')
                       "
-                      >Last Name is required</span
+                      >Nachname is required</span
                     >
                   </span>
                 </div>

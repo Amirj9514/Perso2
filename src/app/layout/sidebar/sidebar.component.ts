@@ -14,13 +14,13 @@ import { SharedService } from '../../Shared/services/shared.service';
 export class SidebarComponent {
   sidebarNavItems: any[] = [
     {
-      title: 'Applications',
+      title: 'Kandidaten',
       icon: 'pi-chart-pie',
       link: '/',
       role: ['admin', 'agent'],
     },
     {
-      title: 'Vacancies',
+      title: 'Positionen',
       icon: 'pi-users',
       link: '/vacancies',
       role: ['admin', 'agent'],
@@ -31,7 +31,7 @@ export class SidebarComponent {
     //   link: '/applications',
     // },
     {
-      title: 'Employees',
+      title: 'Mitarbeiter',
       icon: 'pi-users',
       link: '/employees',
       role: ['admin'],

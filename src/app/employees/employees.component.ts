@@ -98,7 +98,7 @@ export class EmployeesComponent implements OnInit {
           this.getEmployeeDetails();
           this.toastS.setToast({
             show: true,
-            message: 'Employee added successfully',
+            message: 'Mitarbeiter added successfully',
           });
           return;
         }
