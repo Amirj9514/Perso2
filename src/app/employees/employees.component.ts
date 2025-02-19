@@ -4,7 +4,12 @@ import { ProductService } from '../Shared/services/product.service';
 import { Drawer, DrawerModule } from 'primeng/drawer';
 import { ButtonModule } from 'primeng/button';
 import { FieldsetModule } from 'primeng/fieldset';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { SelectModule } from 'primeng/select';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { DatePickerModule } from 'primeng/datepicker';
@@ -12,12 +17,16 @@ import { InputTextModule } from 'primeng/inputtext';
 import { FlagsService } from '../Shared/services/flags.service';
 import { CommonModule } from '@angular/common';
 import { PasswordModule } from 'primeng/password';
-
+import { SharedService } from '../Shared/services/shared.service';
+import { CommonService } from '../Shared/services/common.service';
+import { SkeletonModule } from 'primeng/skeleton';
 
 @Component({
   selector: 'app-employees',
   standalone: true,
-  imports: [CommonModule,PasswordModule,
+  imports: [
+    CommonModule,
+    PasswordModule,
     TableModule,
     DrawerModule,
     ButtonModule,
@@ -26,49 +35,98 @@ import { PasswordModule } from 'primeng/password';
     FloatLabelModule,
     ReactiveFormsModule,
     DatePickerModule,
-    InputTextModule
+    InputTextModule,
+    SkeletonModule
   ],
   templateUrl: './employees.component.html',
-  styleUrl: './employees.component.scss'
+  styleUrl: './employees.component.scss',
 })
 export class EmployeesComponent implements OnInit {
+  @ViewChild('drawerRef') drawerRef!: Drawer;
   products: any[] = [];
   visible: boolean = false;
-  isPasswordVisible: boolean = false;  // Add this property
+  isPasswordVisible: boolean = false; // Add this property
 
-  @ViewChild('drawerRef') drawerRef!: Drawer;
   todayDate = new Date();
   newApplicationFrom!: FormGroup;
   flags: any[] = [];
   formSubmit: boolean = false;
+  userListloader: boolean = false;
 
-  constructor(private productS: ProductService, private flagsS: FlagsService) {
+  roleList: any[] = [];
+  constructor(
+    private productS: ProductService,
+    private flagsS: FlagsService,
+    private sharedS: SharedService,
+    private CommonS: CommonService
+  ) {
     this.newApplicationFrom = new FormGroup({
-      firstName: new FormControl('', [Validators.required]),
-      lastName: new FormControl('', [Validators.required]),
-      email: new FormControl('', [Validators.required,Validators.email]),
-      phone: new FormControl('', [Validators.required]),
-      country: new FormControl(null, [Validators.required]),
+      first_name: new FormControl('', [Validators.required]),
+      last_name: new FormControl('', [Validators.required]),
+      email: new FormControl('', [Validators.required, Validators.email]),
+      user_name: new FormControl('', [Validators.required]),
+      role_code: new FormControl(null, [Validators.required]),
       password: new FormControl(null, [Validators.required]),
     });
 
     this.flags = this.flagsS.getFlagsList();
+    this.roleList = this.CommonS.getRoles();
   }
 
   ngOnInit(): void {
     this.productS.getProducts().then((data) => {
       this.products = data;
     });
+    this.getEmployeeDetails();
   }
 
   onSubmit(): void {
     if (this.newApplicationFrom.invalid) {
-      this.newApplicationFrom.markAllAsTouched(); 
+      this.newApplicationFrom.markAllAsTouched();
       return;
     }
 
-    console.log('Form Submitted:', this.newApplicationFrom.value);
+    const apiParam = {
+      ...this.newApplicationFrom.value,
+      role_code: this.newApplicationFrom.value.role_code.value,
+    };
+
+    this.formSubmit = true;
+    this.sharedS.sendPostRequest('users', apiParam).subscribe({
+      next: (res: any) => {
+        this.formSubmit = false;
+        if (res.status === 200) {
+          this.visible = false;
+          this.newApplicationFrom.reset();
+          this.getEmployeeDetails();
+        }
+      },
+      error: (error) => {
+        this.formSubmit = false;
+      },
+    });
     this.visible = false;
+  }
+
+  getEmployeeDetails(): void {
+    // ?first_name=${''}&last_name=${''}&email=${''}&user_name=${''}'
+    const url = `users`;
+    this.userListloader = true;
+    this.products = Array.from({ length: 10 }).map((_, i) => `Item #${i}`);
+    this.sharedS.sendGetRequest(url).subscribe({
+      next: (resp) => {
+        this.userListloader = false;
+        if (resp.status === 200) {
+          this.products = resp?.body?.users ?? [];
+        } else {
+          this.products = [];
+        }
+      },
+      error: (error) => {
+        this.userListloader = false;
+        this.products = [];
+      },
+    });
   }
 
   closeCallback(e: any): void {
@@ -80,4 +138,3 @@ export class EmployeesComponent implements OnInit {
     this.isPasswordVisible = !this.isPasswordVisible;
   }
 }
-

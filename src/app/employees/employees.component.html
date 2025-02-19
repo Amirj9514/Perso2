@@ -17,19 +17,32 @@
     >
       <ng-template #header>
         <tr>
-          <th style="width: 25%">Name</th>
-          <th style="width: 25%">Country</th>
-          <th style="width: 25%">Company</th>
-          <th style="width: 25%">Representative</th>
+          <th style="width: 25%">First Name</th>
+          <th style="width: 25%">Last Name</th>
+          <th style="width: 25%">Username</th>
+          <th style="width: 25%">Created at</th>
         </tr>
       </ng-template>
       <ng-template #body let-product>
-        <tr>
-          <td>{{ product.code }}</td>
-          <td>{{ product.name }}</td>
-          <td>{{ product.category }}</td>
-          <td>{{ product.quantity }}</td>
+
+        @if(userListloader){
+          <tr>
+            <td><p-skeleton /></td>
+            <td><p-skeleton /></td>
+            <td><p-skeleton /></td>
+            <td><p-skeleton /></td>
         </tr>
+        }@else{
+          <tr>
+            <td>{{ product.first_name }}</td>
+            <td>{{ product.last_name }}</td>
+            <td>{{ product.user_name }}</td>
+            <td>{{ product.created_at | date :'MM-dd-yyyy' }}</td>
+          </tr>
+        }
+      
+
+       
       </ng-template>
     </p-table>
   </div>
@@ -72,15 +85,15 @@
                       type="text"
                       pInputText
                       class="w-full"
-                      formControlName="firstName"
+                      formControlName="first_name"
                     />
                     <label for="on_label"
                       >First Name
                       <span
                         class="text-red-600"
                         *ngIf="
-                          newApplicationFrom.get('firstName')?.touched &&
-                          newApplicationFrom.get('firstName')?.invalid
+                          newApplicationFrom.get('first_name')?.touched &&
+                          newApplicationFrom.get('first_name')?.invalid
                         "
                         >*</span
                       >
@@ -89,16 +102,16 @@
                   <span
                     class="text-sm"
                     *ngIf="
-                      (newApplicationFrom.get('firstName')?.touched ||
+                      (newApplicationFrom.get('first_name')?.touched ||
                         formSubmit) &&
-                      newApplicationFrom.get('firstName')?.errors
+                      newApplicationFrom.get('first_name')?.errors
                     "
                   >
                     <span
                       class="text-red-600"
                       *ngIf="
                         newApplicationFrom
-                          .get('firstName')
+                          .get('first_name')
                           ?.hasError('required')
                       "
                       >First Name is required</span
@@ -111,15 +124,15 @@
                       type="text"
                       class="w-full"
                       pInputText
-                      formControlName="lastName"
+                      formControlName="last_name"
                     />
                     <label for="on_label"
                       >Last Name
                       <span
                         class="text-red-600"
                         *ngIf="
-                          newApplicationFrom.get('lastName')?.touched &&
-                          newApplicationFrom.get('lastName')?.invalid
+                          newApplicationFrom.get('last_name')?.touched &&
+                          newApplicationFrom.get('last_name')?.invalid
                         "
                         >*</span
                       >
@@ -128,15 +141,15 @@
                   <span
                     class="text-sm"
                     *ngIf="
-                      (newApplicationFrom.get('lastName')?.touched ||
+                      (newApplicationFrom.get('last_name')?.touched ||
                         formSubmit) &&
-                      newApplicationFrom.get('lastName')?.errors
+                      newApplicationFrom.get('last_name')?.errors
                     "
                   >
                     <span
                       class="text-red-600"
                       *ngIf="
-                        newApplicationFrom.get('lastName')?.hasError('required')
+                        newApplicationFrom.get('last_name')?.hasError('required')
                       "
                       >Last Name is required</span
                     >
@@ -149,15 +162,15 @@
                       type="text"
                       pInputText
                       class="w-full"
-                      formControlName="phone"
+                      formControlName="user_name"
                     />
                     <label for="on_label"
-                      >Contact No#
+                      >Username
                       <span
                         class="text-red-600"
                         *ngIf="
-                          newApplicationFrom.get('phone')?.touched &&
-                          newApplicationFrom.get('phone')?.invalid
+                          newApplicationFrom.get('user_name')?.touched &&
+                          newApplicationFrom.get('user_name')?.invalid
                         "
                         >*</span
                       >
@@ -166,17 +179,17 @@
                   <span
                     class="text-sm"
                     *ngIf="
-                      (newApplicationFrom.get('phone')?.touched ||
+                      (newApplicationFrom.get('user_name')?.touched ||
                         formSubmit) &&
-                      newApplicationFrom.get('phone')?.errors
+                      newApplicationFrom.get('user_name')?.errors
                     "
                   >
                     <span
                       class="text-red-600"
                       *ngIf="
-                        newApplicationFrom.get('phone')?.hasError('required')
+                        newApplicationFrom.get('user_name')?.hasError('required')
                       "
-                      >Contact number is required</span
+                      >Username is required</span
                     >
                   </span>
                 </div>
@@ -214,35 +227,32 @@
                       *ngIf="
                         newApplicationFrom.get('email')?.hasError('required')
                       "
-                      >Email is required</span>
-                      <span
-                        class="text-red-600"
-                        *ngIf="
-                          newApplicationFrom.get('email')?.hasError('email')
-                        "
-                        >Email Address Is Not Correct</span>
-                    
+                      >Email is required</span
+                    >
+                    <span
+                      class="text-red-600"
+                      *ngIf="newApplicationFrom.get('email')?.hasError('email')"
+                      >Email Address Is Not Correct</span
+                    >
                   </span>
                 </div>
 
                 <div class="col-12 mb-2">
                   <p-floatlabel class="w-full md:w-56" variant="on">
                     <p-select
-                      formControlName="country"
+                      formControlName="role_code"
                       inputId="on_label"
-                      [options]="flags"
-                      optionLabel="name"
+                      [options]="roleList"
+                      optionLabel="label"
                       styleClass="w-full"
-                      [filter]="true"
-                      filterBy="name"
                     />
                     <label for="on_label"
-                      >Country
+                      >Role
                       <span
                         class="text-red-600"
                         *ngIf="
-                          newApplicationFrom.get('country')?.touched &&
-                          newApplicationFrom.get('country')?.invalid
+                          newApplicationFrom.get('role_code')?.touched &&
+                          newApplicationFrom.get('role_code')?.invalid
                         "
                         >*</span
                       >
@@ -251,9 +261,9 @@
                   <span
                     class="text-sm"
                     *ngIf="
-                      (newApplicationFrom.get('country')?.touched ||
+                      (newApplicationFrom.get('role_code')?.touched ||
                         formSubmit) &&
-                      newApplicationFrom.get('country')?.errors
+                      newApplicationFrom.get('role_code')?.errors
                     "
                   >
                     <span
@@ -261,7 +271,7 @@
                       *ngIf="
                         newApplicationFrom.get('country')?.hasError('required')
                       "
-                      >Country is required</span
+                      >Role is required</span
                     >
                   </span>
                 </div>
@@ -272,17 +282,18 @@
                       <input
                         [type]="isPasswordVisible ? 'text' : 'password'"
                         pInputText
-                        class="w-full pr-10" 
+                        class="w-full pr-10"
                         formControlName="password"
                       />
                       <span class="">
-                        <span 
-                        class="pi cursor-pointer position text-lg"
-                        [ngClass]="isPasswordVisible ? 'pi-eye-slash' : 'pi-eye'"
-                        (click)="togglePasswordVisibility()"
-                      ></span>
+                        <span
+                          class="pi cursor-pointer position text-lg"
+                          [ngClass]="
+                            isPasswordVisible ? 'pi-eye-slash' : 'pi-eye'
+                          "
+                          (click)="togglePasswordVisibility()"
+                        ></span>
                       </span>
-                      
                     </div>
                     <label for="on_label">
                       Login Password
@@ -292,30 +303,10 @@
                           newApplicationFrom.get('password')?.touched &&
                           newApplicationFrom.get('password')?.invalid
                         "
-                      >*</span>
+                        >*</span
+                      >
                     </label>
                   </p-floatlabel>
-                  
-                  
-                  
-
-                  <!-- <p-floatlabel class="w-full md:w-56" variant="on">
-                      <input
-                        type="text"
-                        class="w-full"
-                        pInputText
-                        formControlName="password"
-                      />
-                      <label for="on_label">Login Password
-                        <span
-                        class="text-red-600"
-                        *ngIf="
-                          newApplicationFrom.get('password')?.touched &&
-                          newApplicationFrom.get('password')?.invalid
-                        "
-                        >*</span>
-                      </label>
-                    </p-floatlabel> -->
                   <span
                     class="text-sm"
                     *ngIf="
@@ -343,10 +334,11 @@
             <p-button
               variant="outlined"
               severity="secondary"
+              [ngClass]="{ 'disableBtn': formSubmit}"
               (onClick)="visible = !visible"
               label="Cancel"
             />
-            <p-button (click)="onSubmit()" label="Submit" />
+            <p-button [ngClass]="{ 'disableBtn': formSubmit}" (click)="onSubmit()" label="Submit" />
           </div>
         </div>
       </div>
