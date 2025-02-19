@@ -1,25 +1,39 @@
 <aside class="sidebar">
   <header class="sidebar-header">
     <a href="#" class="header-logo">
-      <img
-        src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTAiIGhlaWdodD0iNTAiIHZpZXdCb3g9IjAgMCA1MCA1MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMjUgNDVDMzYuMDQ1NyA0NSA0NSAzNi4wNDU3IDQ1IDI1QzQ1IDEzLjk1NDMgMzYuMDQ1NyA1IDI1IDVDMTM5NTQzIDUgNSAxMy45NTQzIDUgMjVDNSAzNi4wNDU3IDEzLjk1NDMgNDUgMjUgNDVaIiBmaWxsPSJ3aGl0ZSIvPjx0ZXh0IHg9IjE1IiB5PSIzNSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjI0IiBmaWxsPSIjMTlCODlEIj5QMjwvdGV4dD48L3N2Zz4="
-        alt="PERSO2 Logo"
-      />
+      <img src="../../../assets/images/peraoLogo.png" alt="PERSO2 Logo" />
     </a>
   </header>
   <nav class="sidebar-nav">
     <div class="nav-list primary-nav">
-
-      @for (nav of sidebarNavItems; track $index) {
-        <div class="grid nav-items cursor-pointer" [routerLink]="nav.link" [routerLinkActiveOptions]="{ exact: true }"  [routerLinkActive]="'activeNav'">
-          <div class="col-3 flex justify-content-end align-items-center">
-            <i class="pi" [ngClass]="nav.icon"></i>
-          </div>
-          <div class="col-9">
-            <span class="nav-label">{{ nav.title }}</span>
-          </div>
+      @for (nav of sidebarNavItems; track $index) { @if(isAllowed(nav)){
+      <div
+        class="grid nav-items cursor-pointer"
+        [routerLink]="nav.link"
+        [routerLinkActiveOptions]="{ exact: true }"
+        [routerLinkActive]="'activeNav'"
+      >
+        <div class="col-3 flex justify-content-end align-items-center">
+          <i class="pi" [ngClass]="nav.icon"></i>
         </div>
-      }
+        <div class="col-9">
+          <span class="nav-label">{{ nav.title }}</span>
+        </div>
+      </div>
+      } }
     </div>
   </nav>
+
+  <footer class="sidebar-footer">
+    <div class="flex justify-content-center py-2">
+      <div class="grid nav-items cursor-pointer h-full pt-2" (click)="logout()">
+        <div class="col-3 flex justify-content-end align-items-center">
+          <i class="pi pi-sign-out"></i>
+        </div>
+        <div class="col-9">
+          <span class="nav-label">Logout</span>
+        </div>
+      </div>
+    </div>
+  </footer>
 </aside>

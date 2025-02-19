@@ -5,10 +5,10 @@
   <div class="mainContainer">
     <div class="topHeader">
       <div class="flex align-items-center justify-content-end">
-        <div class="profileIcon">AJ</div>
+        <div class="profileIcon">{{user?.firstLetter || 'N/A'}}</div>
         <div class="pl-2">
-         <div class="text-sm font-semibold">Mabroor Ahmad</div>
-         <div class="text-xs">Admin</div>
+         <div class="text-sm font-semibold">{{user?.name || 'N/A'}}</div>
+         <div class="text-xs">{{user?.role || 'N/A'}}</div>
         </div>
       </div>
    

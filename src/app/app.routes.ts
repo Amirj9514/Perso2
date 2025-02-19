@@ -13,6 +13,7 @@ export const routes: Routes = [
     path: '',
     component: LayoutComponent,
     canActivate: [authGuard],
+    data: { roles: ['admin'] },
     children: [
       {
         path: '',
@@ -21,6 +22,7 @@ export const routes: Routes = [
             (m) => m.DashboardComponent
           ),
         canActivate: [authGuard],
+        data: { roles: ['admin' ,'agent'] },
       },
       {
         path: 'employees',
@@ -29,6 +31,7 @@ export const routes: Routes = [
             (m) => m.EmployeesComponent
           ),
         canActivate: [authGuard],
+        data: { roles: ['admin'] }
       },
       {
         path: 'vacancies',
@@ -37,6 +40,7 @@ export const routes: Routes = [
             (m) => m.VacanciesComponent
           ),
         canActivate: [authGuard],
+        data: { roles: ['admin','agent'] }
       },
       {
         path: 'calendar',
@@ -45,6 +49,7 @@ export const routes: Routes = [
             (m) => m.CalenderComponent
           ),
         canActivate: [authGuard],
+        data: { roles: ['admin' ,'agent'] }
       },
     ],
   },

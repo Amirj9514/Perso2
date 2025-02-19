@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { TableModule } from 'primeng/table';
-import { ProductService } from '../Shared/services/product.service';
 import { Drawer, DrawerModule } from 'primeng/drawer';
 import { ButtonModule } from 'primeng/button';
 import { FieldsetModule } from 'primeng/fieldset';
@@ -20,6 +19,7 @@ import { PasswordModule } from 'primeng/password';
 import { SharedService } from '../Shared/services/shared.service';
 import { CommonService } from '../Shared/services/common.service';
 import { SkeletonModule } from 'primeng/skeleton';
+import { CustomToastService } from '../Shared/services/custom-toast.service';
 
 @Component({
   selector: 'app-employees',
@@ -36,7 +36,7 @@ import { SkeletonModule } from 'primeng/skeleton';
     ReactiveFormsModule,
     DatePickerModule,
     InputTextModule,
-    SkeletonModule
+    SkeletonModule,
   ],
   templateUrl: './employees.component.html',
   styleUrl: './employees.component.scss',
@@ -55,10 +55,10 @@ export class EmployeesComponent implements OnInit {
 
   roleList: any[] = [];
   constructor(
-    private productS: ProductService,
     private flagsS: FlagsService,
     private sharedS: SharedService,
-    private CommonS: CommonService
+    private CommonS: CommonService,
+    private toastS: CustomToastService
   ) {
     this.newApplicationFrom = new FormGroup({
       first_name: new FormControl('', [Validators.required]),
@@ -74,9 +74,6 @@ export class EmployeesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.productS.getProducts().then((data) => {
-      this.products = data;
-    });
     this.getEmployeeDetails();
   }
 
@@ -99,13 +96,24 @@ export class EmployeesComponent implements OnInit {
           this.visible = false;
           this.newApplicationFrom.reset();
           this.getEmployeeDetails();
+          this.toastS.setToast({
+            show: true,
+            message: 'Employee added successfully',
+          });
+          return;
         }
+
+        this.toastS.setToast({
+          show: true,
+          message: res?.body?.message ?? 'Something went wrong',
+          severity: 'error',
+        });
       },
       error: (error) => {
         this.formSubmit = false;
+      
       },
     });
-    this.visible = false;
   }
 
   getEmployeeDetails(): void {

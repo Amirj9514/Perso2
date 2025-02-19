@@ -12,6 +12,7 @@ $border-color: #ddd;
  
     height: 100%;
     transition: all 0.4s ease;
+    position: relative;
 
     &.collapsed {
         width: 85px;
@@ -20,14 +21,14 @@ $border-color: #ddd;
     .sidebar-header {
         display: flex;
         position: relative;
-        padding: 25px 20px;
+        padding: 0px 20px;
         align-items: center;
         justify-content:center;
         margin-bottom: 40px;
 
         .header-logo img {
-            width: 46px;
-            height: 46px;
+            width: 110px;
+            // height: 46px;
             display: block;
             object-fit: contain;
             border-radius: 50%;
@@ -151,6 +152,14 @@ $border-color: #ddd;
             display: block;
         }
     }
+
+    .sidebar-footer{
+        position: absolute;
+        bottom: 0;
+        background-color: #4DF3BC;
+        width: 100%;
+
+    }
 }
 .activeNav{
     color: black !important;
@@ -169,70 +178,3 @@ $border-color: #ddd;
         background:rgb(77, 243, 188);
     }
 }
-// @media (max-width: 1024px) {
-//     .sidebar {
-//         height: 56px;
-//         margin: 13px;
-//         overflow-y: hidden;
-//         scrollbar-width: none;
-//         width: calc(100% - 26px);
-//         max-height: calc(100vh - 26px);
-
-//         &.menu-active {
-//             overflow-y: auto;
-//         }
-
-//         .sidebar-header {
-//             position: sticky;
-//             top: 0;
-//             z-index: 20;
-//             border-radius: 16px;
-//             background: $primary-color;
-//             padding: 8px 10px;
-//         }
-
-//         .header-logo img {
-//             width: 40px;
-//             height: 40px;
-//         }
-
-//         .sidebar-toggler,
-//         .nav-item:hover .nav-tooltip {
-//             display: none;
-//         }
-
-//         .menu-toggler {
-//             display: flex;
-//             height: 30px;
-//             width: 30px;
-
-//             span {
-//                 font-size: 1.3rem;
-//             }
-//         }
-//     }
-
-//     .sidebar-nav {
-//         .nav-list {
-//             padding: 0 10px;
-//         }
-
-//         .nav-link {
-//             gap: 10px;
-//             padding: 10px;
-//             font-size: 0.94rem;
-//         }
-
-//         .nav-link .nav-icon {
-//             font-size: 1.37rem;
-//         }
-
-//         .secondary-nav {
-//             position: relative;
-//             bottom: 0;
-//             margin: 40px 0 30px;
-//         }
-//     }
-// }
-
-

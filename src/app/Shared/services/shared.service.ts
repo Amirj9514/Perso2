@@ -8,7 +8,7 @@ import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { environment } from '../../../environments/environment.development';
-
+import { CustomToastService } from './custom-toast.service';
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +16,11 @@ import { environment } from '../../../environments/environment.development';
 export class SharedService {
   sharedData = new BehaviorSubject({});
 
-  constructor(private httpClient: HttpClient, private router: Router) {}
+  constructor(
+    private httpClient: HttpClient,
+    private router: Router,
+    private toastS: CustomToastService
+  ) {}
 
   private handleError(error: HttpErrorResponse) {
     let errorMessage: any = '';
@@ -27,6 +31,11 @@ export class SharedService {
     } else {
       errorMessage = `Error: ${error.message}`;
     }
+    this.toastS.setToast({
+      show: true,
+      message: errorMessage ?? 'Something went wrong',
+      severity: 'error',
+    });
     return of({
       success: false,
       error: errorMessage,
