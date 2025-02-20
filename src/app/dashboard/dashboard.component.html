@@ -22,7 +22,7 @@
           <th style="width: 25%">Position/Status</th>
           <th style="width: 25%">Arbeitgeber</th>
           <th style="width: 25%">Kontakt Info</th>
-          
+
           <th>Bearbeiten</th>
         </tr>
       </ng-template>
@@ -41,9 +41,9 @@
           <td>{{ product?.age }}</td>
           <td>{{ product?.first_name + " " + product?.last_name }}</td>
           <td>{{ getVacancieById(product?.vacancy_id) }}</td>
-          <td>{{ product?.applied_at  }}</td>
+          <td>{{ product?.applied_at }}</td>
           <td>{{ product?.email }}</td>
-          
+
           <td>
             <div class="flex gap-2">
               <div class="pi pi-eye view"></div>
@@ -81,7 +81,7 @@
           <div
             class="text-xl px-4 font-semibold py-3 border-bottom-1 headerBg borderClr"
           >
-          Kandidat hinzufügen
+            Kandidat hinzufügen
           </div>
 
           <form
@@ -578,3 +578,40 @@
     </div>
   </ng-template>
 </p-drawer>
+
+<p-dialog
+  [modal]="true"
+  [dismissableMask]="false"
+  maskStyleClass="backdrop-blur-sm"
+  [style]="{ width: '35rem' }"
+  [(visible)]="showDialoag"
+>
+  <ng-template #headless>
+    <div
+      class="flex flex-column align-items-center px-8 py-4 bg-surface-0 dark:bg-surface-900 rounded"
+    >
+      <div
+        class="rounded-full bg-primary text-primary-contrast inline-flex justify-center items-center"
+        style="border-radius: 50%"
+      >
+        <i class="pi pi-question text-5xl" style="padding: 19px"></i>
+      </div>
+      <span class="font-bold text-2xl block mb-2 mt-4">Bist du sicher?</span>
+      <div class="flex items-center gap-2 mt-5">
+        <p-button
+          label="Löschen"
+          (onClick)="onAccept()"
+          [loading]="deleteLoader"
+          styleClass="w-10rem"
+        ></p-button>
+        <p-button
+          label="Abbrechen"
+          [outlined]="true"
+          [ngClass]="deleteLoader ? 'disableBtn' : ''"
+          (onClick)="showDialoag = false; selectedRow = null"
+          styleClass="w-10rem"
+        ></p-button>
+      </div>
+    </div>
+  </ng-template>
+</p-dialog>

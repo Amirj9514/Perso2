@@ -18,6 +18,7 @@ import { CommonService } from '../Shared/services/common.service';
 import { SharedService } from '../Shared/services/shared.service';
 import { FlagsService } from '../Shared/services/flags.service';
 import { SkeletonModule } from 'primeng/skeleton';
+import { Dialog } from 'primeng/dialog';
 
 @Component({
   selector: 'app-dashboard',
@@ -34,6 +35,7 @@ import { SkeletonModule } from 'primeng/skeleton';
     DatePickerModule,
     InputTextModule,
     SkeletonModule,
+    Dialog,
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',
@@ -51,6 +53,9 @@ export class DashboardComponent implements OnInit {
   vacancies: any[] = [];
   maritalStatus: any[] = [];
   countryList: any[] = [];
+  selectedRow: any = null;
+  showDialoag: boolean = false;
+  deleteLoader: boolean = false;
 
   constructor(
     private commonS: CommonService,
@@ -74,13 +79,6 @@ export class DashboardComponent implements OnInit {
 
     this.maritalStatus = this.commonS.getMaritalStatusList();
     this.countryList = this.flagS.getFlagsList();
-    this.cities = [
-      { name: 'New York', code: 'NY' },
-      { name: 'Rome', code: 'RM' },
-      { name: 'London', code: 'LDN' },
-      { name: 'Istanbul', code: 'IST' },
-      { name: 'Paris', code: 'PRS' },
-    ];
   }
 
   ngOnInit(): void {
@@ -96,21 +94,22 @@ export class DashboardComponent implements OnInit {
 
     const formValue = this.newApplicationFrom.value;
     const apiParam = {
-      applied_at: formValue.appledDate,
-      vacancy_id: formValue.enrollment?.id,
-      first_name: formValue.firstName,
-      last_name: formValue.lastName,
-      email: formValue.email,
-      phone: formValue.phone,
-      age: formValue.age,
-      address: formValue.address,
+      applied_at: formValue.appledDate ?? '',
+      vacancy_id: formValue.enrollment?.id ?? '',
+      first_name: formValue.firstName ?? '',
+      last_name: formValue.lastName ?? '',
+      email: formValue.email ?? '',
+      phone: formValue.phone ?? '',
+      age: formValue.age ?? '',
+      address: formValue.address ?? '',
       marital_status: formValue.maritalStatus?.name ?? '',
-      date_of_birth: formValue.dob,
+      date_of_birth: formValue.dob ?? '',
       // profession: formValue.profession,
-      country: formValue.country.name,
-      description: formValue.description,
+      country: formValue.country.name ?? '',
+      description: formValue.description ?? '',
     };
     this.formSubmit = true;
+
 
     this.sharedS.sendPostRequest('applications', apiParam).subscribe({
       next: (response) => {
@@ -127,11 +126,11 @@ export class DashboardComponent implements OnInit {
   }
 
   onDelete(product: any): void {
-    const confirmDelete = confirm('Are you sure you want to delete this item?');
+    this.selectedRow = product;
+    this.showDialoag = true;
 
-    if (confirmDelete) {
-      this.products = this.products.filter((p) => p !== product);
-    }
+    console.log('product', product);
+    
   }
 
   getApplicantDetails(): void {
@@ -184,5 +183,44 @@ export class DashboardComponent implements OnInit {
 
   closeCallback(e: any): void {
     this.drawerRef.close(e);
+  }
+
+  deleteUser(id: number): void {
+    const confirmDelete = confirm('Are you sure you want to delete this item?');
+    if (confirmDelete) {
+      this.sharedS.sendDeleteRequest(`applications/${id}`).subscribe({
+        next: (response) => {
+          if (response.status === 200) {
+            this.getApplicantDetails();
+          }
+        },
+        error: (error) => {
+          console.log('error', error);
+        },
+      });
+    }
+  }
+
+  onAccept(): void {
+    this.deleteLoader = true;
+    this.sharedS.sendDeleteRequest(`applications/${this.selectedRow.id}`).subscribe({
+      next: (response) => {
+        this.deleteLoader = false;
+        if (response.status === 200) {
+          this.products.findIndex((item, index) => {
+            if (item.id === this.selectedRow.id) {
+              this.products.splice(index, 1);
+              this.showDialoag = false
+              this.selectedRow = null;
+              return;
+            }
+          });
+        }
+      },
+      error: (error) => {
+        this.deleteLoader = false;
+        console.log('error', error);
+      },
+    });
   }
 }
