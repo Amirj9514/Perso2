@@ -27,12 +27,14 @@ export class LayoutComponent implements OnInit {
     this.user = {
       name: (user?.first_name + " " + user?.last_name),
       role: user.role ?? 'N/A',
-      firstLetter:this.returnFirstLetter(user.first_name) + this.returnFirstLetter(user.last_name),
+      firstLetter:this.returnFirstLetter(user),
     }
   }
 
 
-  returnFirstLetter(name: string): string {
-    return name.charAt(0);
+  returnFirstLetter(user: any): string {
+    const first = user.first_name.charAt(0);
+    const second = user.last_name.charAt(0);
+    return first+second
   }
 }

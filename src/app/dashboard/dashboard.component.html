@@ -46,7 +46,7 @@
 
           <td>
             <div class="flex gap-2">
-              <div class="pi pi-eye view"></div>
+              <div class="pi pi-eye view" (click)="viewDetail(product)"></div>
               <div class="pi pi-user-edit edit"></div>
               <div class="pi pi-trash delete" (click)="onDelete(product)"></div>
             </div>
@@ -60,12 +60,17 @@
 
 <p-drawer
   #drawerRef
-  (onHide)="newApplicationFrom.reset()"
+  (onHide)="
+    newApplicationFrom.reset();
+    viewDetails = false;
+    selectedRow = null;
+    vacancieName = ''
+  "
   [(visible)]="visible"
   [modal]="true"
   [dismissible]="false"
   position="right"
-  styleClass="w-6"
+  [styleClass]="viewDetails ? 'w-26rem' : 'w-6'"
 >
   <ng-template #headless>
     <div class="flex flex-col h-full relative">
@@ -76,7 +81,13 @@
           [rounded]="true"
           class="drawerBackBtn"
         />
-
+        @if (viewDetails) {
+        <app-view-detail
+          class="w-full"
+          [Vacances]="vacancieName"
+          [selectedRow]="selectedRow"
+        ></app-view-detail>
+        }@else {
         <div class="w-full">
           <div
             class="text-xl px-4 font-semibold py-3 border-bottom-1 headerBg borderClr"
@@ -574,6 +585,7 @@
             />
           </div>
         </div>
+        }
       </div>
     </div>
   </ng-template>

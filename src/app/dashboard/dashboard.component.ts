@@ -19,6 +19,7 @@ import { SharedService } from '../Shared/services/shared.service';
 import { FlagsService } from '../Shared/services/flags.service';
 import { SkeletonModule } from 'primeng/skeleton';
 import { Dialog } from 'primeng/dialog';
+import { ViewDetailComponent } from "./view-detail/view-detail.component";
 
 @Component({
   selector: 'app-dashboard',
@@ -36,7 +37,8 @@ import { Dialog } from 'primeng/dialog';
     InputTextModule,
     SkeletonModule,
     Dialog,
-  ],
+    ViewDetailComponent
+],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',
 })
@@ -56,6 +58,9 @@ export class DashboardComponent implements OnInit {
   selectedRow: any = null;
   showDialoag: boolean = false;
   deleteLoader: boolean = false;
+
+  viewDetails: boolean = true;
+  vacancieName:string = ''
 
   constructor(
     private commonS: CommonService,
@@ -222,5 +227,13 @@ export class DashboardComponent implements OnInit {
         console.log('error', error);
       },
     });
+  }
+
+
+  viewDetail(product:any){
+    this.selectedRow = product;
+    this.viewDetails = true;
+    this.visible = true;
+    this.vacancieName = this.getVacancieById(this.selectedRow.vacancy_id)
   }
 }
