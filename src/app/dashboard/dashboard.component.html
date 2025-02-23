@@ -31,7 +31,7 @@
           <th style="width: 25%">Arbeitgeber</th>
           <th  style="width: 25%">Kontakt Info</th>
  
-          <th *ngIf="activeRole !== 'viewer'">Bearbeiten</th>
+          <th >Bearbeiten</th>
         </tr>
       </ng-template>
       <ng-template #body let-product>
@@ -42,7 +42,7 @@
           <td><p-skeleton /></td>
           <td><p-skeleton /></td>
           <td><p-skeleton /></td>
-          <td><p-skeleton  *ngIf="activeRole !== 'viewer'"  /></td>
+          <td><p-skeleton   /></td>
         </tr>
         }@else{
         <tr>
@@ -52,7 +52,7 @@
           <td>{{ product?.applied_at }}</td>
           <td>{{ product?.email }}</td>
 
-          <td  *ngIf="activeRole !== 'viewer'" >
+          <td   >
             <div class="flex">
               <p-button
               icon="pi pi-eye"
@@ -60,12 +60,14 @@
               [text]="true"
             />
             <p-button
+            *ngIf="activeRole !== 'viewer'"
               icon="pi pi-pen-to-square"
               (onClick)="editDetail(product)"
               [text]="true"
               severity="help"
             />
             <p-button
+            *ngIf="activeRole !== 'viewer'"
               icon="pi pi-trash"
               (onClick)="onDelete(product)"
               [text]="true"

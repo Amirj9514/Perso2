@@ -68,7 +68,7 @@ export class DashboardComponent implements OnInit {
   showDialoag: boolean = false;
   deleteLoader: boolean = false;
 
-  viewDetails: boolean = true;
+  viewDetails: boolean = false;
   vacancieName: string = '';
   isEdit: boolean = false;
   activeRole:string = ''; 
