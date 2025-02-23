@@ -106,18 +106,34 @@ export class SharedService {
   }
 
   /** Delete Request with token auth **/
-public sendDeleteRequest(target: string): Observable<any> {
-  let token = this.getToken();
-  const headers_object = new HttpHeaders({
-    Authorization: `Bearer ${token}`,
-  });
+  public sendDeleteRequest(target: string): Observable<any> {
+    let token = this.getToken();
+    const headers_object = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
 
-  const httpOptions = {
-    headers: headers_object,
-  };
+    const httpOptions = {
+      headers: headers_object,
+    };
 
-  return this.httpClient
-    .delete<any>(environment.apiUrl + target, httpOptions)
-    .pipe(catchError((error) => this.handleError(error)));
-}
+    return this.httpClient
+      .delete<any>(environment.apiUrl + target, httpOptions)
+      .pipe(catchError((error) => this.handleError(error)));
+  }
+
+  /** Put Request with token auth **/
+  public sendPutRequest(target: string, data: any): Observable<any> {
+    let token = this.getToken();
+    const headers_object = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+
+    const httpOptions = {
+      headers: headers_object,
+    };
+
+    return this.httpClient
+      .put<any>(environment.apiUrl + target, data, httpOptions)
+      .pipe(catchError((error) => this.handleError(error)));
+  }
 }

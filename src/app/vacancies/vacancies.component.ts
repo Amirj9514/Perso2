@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { TableModule } from 'primeng/table';
+import { Table, TableModule } from 'primeng/table';
 import { Drawer, DrawerModule } from 'primeng/drawer';
 import { ButtonModule } from 'primeng/button';
 import { FieldsetModule } from 'primeng/fieldset';
@@ -19,6 +19,9 @@ import { CommonModule } from '@angular/common';
 import { SharedService } from '../Shared/services/shared.service';
 import { SkeletonModule } from 'primeng/skeleton';
 import { CustomToastService } from '../Shared/services/custom-toast.service';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
+import { Dialog } from 'primeng/dialog';
 @Component({
   selector: 'app-vacancies',
   standalone: true,
@@ -35,11 +38,15 @@ import { CustomToastService } from '../Shared/services/custom-toast.service';
     InputTextModule,
     TextareaModule,
     SkeletonModule,
+    IconFieldModule,
+    InputIconModule,
+    Dialog,
   ],
   templateUrl: './vacancies.component.html',
   styleUrl: './vacancies.component.scss',
 })
 export class VacanciesComponent implements OnInit {
+  @ViewChild('dt2') dt2!: Table;
   products: any[] = [];
   visible: boolean = false;
   @ViewChild('drawerRef') drawerRef!: Drawer;
@@ -48,6 +55,9 @@ export class VacanciesComponent implements OnInit {
   flags: any[] = [];
   formSubmit: boolean | undefined;
   getApiLoader: boolean = false;
+  selectedRow: any = null;
+  showDialoag: boolean = false;
+  deleteLoader: boolean = false;
 
   constructor(
     private flagS: FlagsService,
@@ -56,15 +66,22 @@ export class VacanciesComponent implements OnInit {
   ) {
     this.newApplicationFrom = new FormGroup({
       role: new FormControl(null, [Validators.required]),
-      company: new FormControl('', ),
-      country: new FormControl(null,),
-      description: new FormControl(null,),
+      company: new FormControl(''),
+      country: new FormControl(null),
+      description: new FormControl(null),
     });
   }
 
   ngOnInit(): void {
     this.flags = this.flagS.getFlagsList();
     this.getVacancies();
+  }
+
+  handelSearch(event: any) {
+    const value = event.target.value;
+    console.log(value);
+
+    this.dt2.filterGlobal(value, 'contains');
   }
 
   getVacancies(): void {
@@ -114,7 +131,7 @@ export class VacanciesComponent implements OnInit {
           this.visible = false;
           this.toastS.setToast({
             show: true,
-            message: 'Vacancy added successfully',
+            message: 'Datensatz erfolgreich hinzugefügt',
             severity: 'success',
           });
         }
@@ -125,7 +142,33 @@ export class VacanciesComponent implements OnInit {
         console.log('error', error);
       },
     });
-    console.log('form', apiParam);
+  }
+
+  deleteRole(product: any): void {
+    this.selectedRow = product;
+    this.showDialoag = true;
+  }
+
+  onAccept(): void {
+    this.sharedS
+      .sendDeleteRequest(`vacancies/${this.selectedRow.id}`)
+      .subscribe({
+        next: (response) => {
+          if (response.status === 200) {
+            this.selectedRow = null;
+            this.showDialoag = false;
+            this.getVacancies();
+            this.toastS.setToast({
+              show: true,
+              message: 'Datensatz erfolgreich gelöscht',
+              severity: 'success',
+            });
+          }
+        },
+        error: (error) => {
+          console.log('error', error);
+        },
+      });
   }
 
   closeCallback(e: any): void {

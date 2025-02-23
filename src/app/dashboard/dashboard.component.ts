@@ -1,8 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { TableModule } from 'primeng/table';
+import { Table, TableModule } from 'primeng/table';
 import { Drawer, DrawerModule } from 'primeng/drawer';
 import { ButtonModule } from 'primeng/button';
 import { FieldsetModule } from 'primeng/fieldset';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
+
 import {
   FormControl,
   FormGroup,
@@ -16,15 +19,20 @@ import { InputTextModule } from 'primeng/inputtext';
 import { CommonModule } from '@angular/common';
 import { CommonService } from '../Shared/services/common.service';
 import { SharedService } from '../Shared/services/shared.service';
+
 import { FlagsService } from '../Shared/services/flags.service';
 import { SkeletonModule } from 'primeng/skeleton';
 import { Dialog } from 'primeng/dialog';
-import { ViewDetailComponent } from "./view-detail/view-detail.component";
+import { ViewDetailComponent } from './view-detail/view-detail.component';
+import { RolesService } from '../Shared/services/roles.service';
+import { CustomToastService } from '../Shared/services/custom-toast.service';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
   imports: [
+    IconFieldModule,
+    InputIconModule,
     CommonModule,
     TableModule,
     DrawerModule,
@@ -37,12 +45,13 @@ import { ViewDetailComponent } from "./view-detail/view-detail.component";
     InputTextModule,
     SkeletonModule,
     Dialog,
-    ViewDetailComponent
-],
+    ViewDetailComponent,
+  ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',
 })
 export class DashboardComponent implements OnInit {
+  @ViewChild('dt2') dt2!: Table;
   products: any[] = [];
   visible: boolean = false;
   @ViewChild('drawerRef') drawerRef!: Drawer;
@@ -60,12 +69,16 @@ export class DashboardComponent implements OnInit {
   deleteLoader: boolean = false;
 
   viewDetails: boolean = true;
-  vacancieName:string = ''
+  vacancieName: string = '';
+  isEdit: boolean = false;
+  activeRole:string = ''; 
 
   constructor(
     private commonS: CommonService,
     private sharedS: SharedService,
-    private flagS: FlagsService
+    private flagS: FlagsService,
+    private rolesS:RolesService,
+    private toastS: CustomToastService
   ) {
     this.newApplicationFrom = new FormGroup({
       appledDate: new FormControl('', [Validators.required]),
@@ -89,7 +102,17 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
     this.getVacancies();
     this.getApplicantDetails();
+
+    const roles = this.rolesS.getLoginUser();
+    this.activeRole = roles?.role ?? '';
+    
   }
+
+  handelSearch(event: any) {
+    const value = event.target.value;
+    this.dt2.filterGlobal(value, 'contains');
+  }
+
 
   onSubmit(): void {
     if (this.newApplicationFrom.invalid) {
@@ -115,12 +138,40 @@ export class DashboardComponent implements OnInit {
     };
     this.formSubmit = true;
 
+    let url = `applications`;
+    if (this.isEdit) {
+      url = `applications/${this.selectedRow.id}`;
 
-    this.sharedS.sendPostRequest('applications', apiParam).subscribe({
+      this.sharedS.sendPutRequest(url, apiParam).subscribe({
+        next: (response) => {
+          this.formSubmit = false;
+          if (response.status === 200) {
+            this.getApplicantDetails();
+            this.visible = false;
+
+            this.toastS.setToast({
+              show: true,
+              message: 'Datensatz erfolgreich hinzugefügt',
+            });
+          }
+        },
+        error: (error) => {
+          this.formSubmit = false;
+        },
+      });
+
+      return;
+    }
+
+    this.sharedS.sendPostRequest(url, apiParam).subscribe({
       next: (response) => {
         this.formSubmit = false;
         if (response.status === 200) {
           this.getApplicantDetails();
+          this.toastS.setToast({
+            show: true,
+            message: 'Datensatz erfolgreich aktualisiert',
+          });
           this.visible = false;
         }
       },
@@ -133,9 +184,6 @@ export class DashboardComponent implements OnInit {
   onDelete(product: any): void {
     this.selectedRow = product;
     this.showDialoag = true;
-
-    console.log('product', product);
-    
   }
 
   getApplicantDetails(): void {
@@ -146,7 +194,26 @@ export class DashboardComponent implements OnInit {
       next: (response) => {
         this.applicantsLoader = false;
         if (response.status === 200) {
-          this.products = response?.body?.applications ?? [];
+          const data: any = response?.body?.applications ?? [];
+
+          this.products = data.map((item: any) => {
+            return {
+              id: item.id,
+              applied_at: item.applied_at,
+              vacancy_id: item.vacancy_id,
+              first_name: item.first_name,
+              last_name: item.last_name,
+              email: item.email,
+              phone: item.phone,
+              age: item.age,
+              address: item.address,
+              marital_status: item.marital_status,
+              date_of_birth: item.date_of_birth,
+              country: item.country,
+              description: item.description,
+              vacancieName: this.getVacancieById(item.vacancy_id),
+            };
+          });
         } else {
           this.products = [];
         }
@@ -190,50 +257,68 @@ export class DashboardComponent implements OnInit {
     this.drawerRef.close(e);
   }
 
-  deleteUser(id: number): void {
-    const confirmDelete = confirm('Are you sure you want to delete this item?');
-    if (confirmDelete) {
-      this.sharedS.sendDeleteRequest(`applications/${id}`).subscribe({
+  onAccept(): void {
+    this.deleteLoader = true;
+    this.sharedS
+      .sendDeleteRequest(`applications/${this.selectedRow.id}`)
+      .subscribe({
         next: (response) => {
+          this.deleteLoader = false;
           if (response.status === 200) {
-            this.getApplicantDetails();
+            this.products.findIndex((item, index) => {
+              if (item.id === this.selectedRow.id) {
+                this.products.splice(index, 1);
+                this.showDialoag = false;
+                this.selectedRow = null;
+                this.toastS.setToast({
+                  show: true,
+                  message: 'Datensatz erfolgreich gelöscht',
+                });
+                return;
+              }
+            });
           }
         },
         error: (error) => {
+          this.deleteLoader = false;
           console.log('error', error);
         },
       });
-    }
   }
 
-  onAccept(): void {
-    this.deleteLoader = true;
-    this.sharedS.sendDeleteRequest(`applications/${this.selectedRow.id}`).subscribe({
-      next: (response) => {
-        this.deleteLoader = false;
-        if (response.status === 200) {
-          this.products.findIndex((item, index) => {
-            if (item.id === this.selectedRow.id) {
-              this.products.splice(index, 1);
-              this.showDialoag = false
-              this.selectedRow = null;
-              return;
-            }
-          });
-        }
-      },
-      error: (error) => {
-        this.deleteLoader = false;
-        console.log('error', error);
-      },
-    });
-  }
-
-
-  viewDetail(product:any){
+  viewDetail(product: any) {
     this.selectedRow = product;
     this.viewDetails = true;
     this.visible = true;
-    this.vacancieName = this.getVacancieById(this.selectedRow.vacancy_id)
+    this.vacancieName = this.getVacancieById(this.selectedRow.vacancy_id);
+  }
+
+  editDetail(product: any) {
+    this.viewDetails = false;
+    this.isEdit = true;
+    this.visible = true;
+    this.selectedRow = product;
+    const vacance = this.vacancies.find(
+      (item) => item.id === product.vacancy_id
+    );
+
+    const dob = new Date(product.date_of_birth);
+
+    this.newApplicationFrom.patchValue({
+      appledDate: product.applied_at,
+      enrollment: vacance,
+      firstName: product.first_name,
+      lastName: product.last_name,
+      email: product.email,
+      phone: product.phone,
+      age: product.age,
+      address: product.address,
+      maritalStatus: this.maritalStatus.find(
+        (item) => item.name === product.marital_status
+      ),
+      country: this.countryList.find((item) => item.name === product.country),
+      dob: dob,
+      description: product.description,
+    });
   }
 }

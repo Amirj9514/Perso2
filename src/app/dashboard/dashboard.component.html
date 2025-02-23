@@ -7,11 +7,19 @@
   </div>
 
   <div class="mainCard">
+    <div class="px-2 py-3 border-bottom-1" style="background-color: #F8FAFC;">
+      <p-iconfield>
+        <p-inputicon styleClass="pi pi-search" />
+        <input (keyup)="handelSearch($event)" type="text" class="w-25rem" pInputText placeholder="Search" />
+    </p-iconfield>
+    </div>
     <p-table
+      #dt2
       [value]="products"
       [paginator]="true"
       stripedRows
       [rows]="10"
+      [globalFilterFields]="['age', 'first_name', 'last_name', 'applied_at' , 'email' , 'vacancieName']"
       [tableStyle]="{ 'min-width': '50rem' }"
       [rowsPerPageOptions]="[10, 50, 100]"
     >
@@ -21,9 +29,9 @@
           <th style="width: 25%">Vor-Nachname</th>
           <th style="width: 25%">Position/Status</th>
           <th style="width: 25%">Arbeitgeber</th>
-          <th style="width: 25%">Kontakt Info</th>
-
-          <th>Bearbeiten</th>
+          <th  style="width: 25%">Kontakt Info</th>
+ 
+          <th *ngIf="activeRole !== 'viewer'">Bearbeiten</th>
         </tr>
       </ng-template>
       <ng-template #body let-product>
@@ -34,21 +42,38 @@
           <td><p-skeleton /></td>
           <td><p-skeleton /></td>
           <td><p-skeleton /></td>
-          <td><p-skeleton /></td>
+          <td><p-skeleton  *ngIf="activeRole !== 'viewer'"  /></td>
         </tr>
         }@else{
         <tr>
           <td>{{ product?.age }}</td>
           <td>{{ product?.first_name + " " + product?.last_name }}</td>
-          <td>{{ getVacancieById(product?.vacancy_id) }}</td>
+          <td>{{ product?.vacancieName }}</td>
           <td>{{ product?.applied_at }}</td>
           <td>{{ product?.email }}</td>
 
-          <td>
-            <div class="flex gap-2">
-              <div class="pi pi-eye view" (click)="viewDetail(product)"></div>
-              <div class="pi pi-user-edit edit"></div>
-              <div class="pi pi-trash delete" (click)="onDelete(product)"></div>
+          <td  *ngIf="activeRole !== 'viewer'" >
+            <div class="flex">
+              <p-button
+              icon="pi pi-eye"
+              (onClick)="viewDetail(product)"
+              [text]="true"
+            />
+            <p-button
+              icon="pi pi-pen-to-square"
+              (onClick)="editDetail(product)"
+              [text]="true"
+              severity="help"
+            />
+            <p-button
+              icon="pi pi-trash"
+              (onClick)="onDelete(product)"
+              [text]="true"
+              severity="danger"
+            />
+              <!-- <div class="pi pi-eye view" (click)="viewDetail(product)"></div>
+              <div class="pi pi-user-edit edit" (click)="editDetail(product)"></div>
+              <div class="pi pi-trash delete" (click)="onDelete(product)"></div> -->
             </div>
           </td>
         </tr>
@@ -64,7 +89,8 @@
     newApplicationFrom.reset();
     viewDetails = false;
     selectedRow = null;
-    vacancieName = ''
+    vacancieName = '';
+    isEdit = false;
   "
   [(visible)]="visible"
   [modal]="true"

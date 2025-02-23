@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { TableModule } from 'primeng/table';
+import { Table, TableModule } from 'primeng/table';
 import { Drawer, DrawerModule } from 'primeng/drawer';
 import { ButtonModule } from 'primeng/button';
 import { FieldsetModule } from 'primeng/fieldset';
@@ -20,6 +20,9 @@ import { SharedService } from '../Shared/services/shared.service';
 import { CommonService } from '../Shared/services/common.service';
 import { SkeletonModule } from 'primeng/skeleton';
 import { CustomToastService } from '../Shared/services/custom-toast.service';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
+import { Dialog } from 'primeng/dialog';
 
 @Component({
   selector: 'app-employees',
@@ -37,12 +40,16 @@ import { CustomToastService } from '../Shared/services/custom-toast.service';
     DatePickerModule,
     InputTextModule,
     SkeletonModule,
+    IconFieldModule,
+    InputIconModule,
+    Dialog
   ],
   templateUrl: './employees.component.html',
   styleUrl: './employees.component.scss',
 })
 export class EmployeesComponent implements OnInit {
   @ViewChild('drawerRef') drawerRef!: Drawer;
+  @ViewChild('dt2') dt2!: Table;
   products: any[] = [];
   visible: boolean = false;
   isPasswordVisible: boolean = false; // Add this property
@@ -52,6 +59,9 @@ export class EmployeesComponent implements OnInit {
   flags: any[] = [];
   formSubmit: boolean = false;
   userListloader: boolean = false;
+  selectedRow: any = null;
+  showDialoag: boolean = false;
+  deleteLoader: boolean = false;
 
   roleList: any[] = [];
   constructor(
@@ -77,6 +87,11 @@ export class EmployeesComponent implements OnInit {
     this.getEmployeeDetails();
   }
 
+  handelSearch(event: any) {
+    const value = event.target.value;
+    this.dt2.filterGlobal(value, 'contains');
+  }
+
   onSubmit(): void {
     if (this.newApplicationFrom.invalid) {
       this.newApplicationFrom.markAllAsTouched();
@@ -98,7 +113,7 @@ export class EmployeesComponent implements OnInit {
           this.getEmployeeDetails();
           this.toastS.setToast({
             show: true,
-            message: 'Mitarbeiter added successfully',
+            message: 'Datensatz erfolgreich hinzugefügt',
           });
           return;
         }
@@ -111,7 +126,6 @@ export class EmployeesComponent implements OnInit {
       },
       error: (error) => {
         this.formSubmit = false;
-      
       },
     });
   }
@@ -137,6 +151,43 @@ export class EmployeesComponent implements OnInit {
     });
   }
 
+
+  deleteRole(product: any): void {
+    this.selectedRow = product;
+    this.showDialoag = true;
+  }
+
+  onAccept(): void {
+    console.log(this.selectedRow);
+    
+    this.deleteLoader = true;
+    this.sharedS
+      .sendDeleteRequest(`users/${this.selectedRow.id}`)
+      .subscribe({
+        next: (response) => {
+          this.deleteLoader = false;
+          if (response.status === 200) {
+            this.products.findIndex((item, index) => {
+              if (item.id === this.selectedRow.id) {
+                this.products.splice(index, 1);
+                this.showDialoag = false;
+                this.selectedRow = null;
+                this.toastS.setToast({
+                  show: true,
+                  message: 'Datensatz erfolgreich gelöscht',
+                });
+                return;
+              }
+            });
+          }
+        },
+        error: (error) => {
+          this.deleteLoader = false;
+          console.log('error', error);
+        },
+      });
+  }
+
   closeCallback(e: any): void {
     this.drawerRef.close(e);
   }
@@ -145,4 +196,7 @@ export class EmployeesComponent implements OnInit {
   togglePasswordVisibility(): void {
     this.isPasswordVisible = !this.isPasswordVisible;
   }
+
+
+  
 }

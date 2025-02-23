@@ -13,7 +13,7 @@ export const routes: Routes = [
     path: '',
     component: LayoutComponent,
     canActivate: [authGuard],
-    data: { roles: ['admin'] },
+    data: { roles: ['admin','viewer' , 'agent'] },
     children: [
       {
         path: '',
@@ -22,7 +22,7 @@ export const routes: Routes = [
             (m) => m.DashboardComponent
           ),
         canActivate: [authGuard],
-        data: { roles: ['admin' ,'agent'] },
+        data: { roles: ['admin' ,'agent','viewer'] },
       },
       {
         path: 'employees',

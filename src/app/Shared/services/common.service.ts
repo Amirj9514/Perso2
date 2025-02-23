@@ -9,7 +9,9 @@ export class CommonService {
 
   private roles = [
     { label: 'Admin', value: 'admin' },
-    { label: 'Agent', value: 'agent' }
+    { label: 'Manager', value: 'agent' },
+    { label: 'Agent', value: 'viewer' },
+    
   ]
 
 
