@@ -7,11 +7,17 @@
   </div>
 
   <div class="mainCard">
-    <div class="px-2 py-3 border-bottom-1" style="background-color: #F8FAFC;">
+    <div class="px-2 py-3 border-bottom-1" style="background-color: #f8fafc">
       <p-iconfield>
         <p-inputicon styleClass="pi pi-search" />
-        <input (keyup)="handelSearch($event)" type="text" class="w-25rem" pInputText placeholder="Search" />
-    </p-iconfield>
+        <input
+          (keyup)="handelSearch($event)"
+          type="text"
+          class="w-25rem"
+          pInputText
+          placeholder="Search"
+        />
+      </p-iconfield>
     </div>
     <p-table
       #dt2
@@ -19,7 +25,14 @@
       [paginator]="true"
       stripedRows
       [rows]="10"
-      [globalFilterFields]="['age', 'first_name', 'last_name', 'applied_at' , 'email' , 'vacancieName']"
+      [globalFilterFields]="[
+        'age',
+        'first_name',
+        'last_name',
+        'applied_at',
+        'email',
+        'vacancieName'
+      ]"
       [tableStyle]="{ 'min-width': '50rem' }"
       [rowsPerPageOptions]="[10, 50, 100]"
     >
@@ -29,9 +42,9 @@
           <th style="width: 25%">Vor-Nachname</th>
           <th style="width: 25%">Position/Status</th>
           <th style="width: 25%">Arbeitgeber</th>
-          <th  style="width: 25%">Kontakt Info</th>
- 
-          <th >Bearbeiten</th>
+          <th style="width: 25%">Kontakt Info</th>
+
+          <th>Bearbeiten</th>
         </tr>
       </ng-template>
       <ng-template #body let-product>
@@ -42,7 +55,7 @@
           <td><p-skeleton /></td>
           <td><p-skeleton /></td>
           <td><p-skeleton /></td>
-          <td><p-skeleton   /></td>
+          <td><p-skeleton /></td>
         </tr>
         }@else{
         <tr>
@@ -52,27 +65,27 @@
           <td>{{ product?.applied_at }}</td>
           <td>{{ product?.email }}</td>
 
-          <td   >
+          <td>
             <div class="flex">
               <p-button
-              icon="pi pi-eye"
-              (onClick)="viewDetail(product)"
-              [text]="true"
-            />
-            <p-button
-            *ngIf="activeRole !== 'viewer'"
-              icon="pi pi-pen-to-square"
-              (onClick)="editDetail(product)"
-              [text]="true"
-              severity="help"
-            />
-            <p-button
-            *ngIf="activeRole !== 'viewer'"
-              icon="pi pi-trash"
-              (onClick)="onDelete(product)"
-              [text]="true"
-              severity="danger"
-            />
+                icon="pi pi-eye"
+                (onClick)="viewDetail(product)"
+                [text]="true"
+              />
+              <p-button
+                *ngIf="activeRole !== 'viewer'"
+                icon="pi pi-pen-to-square"
+                (onClick)="editDetail(product)"
+                [text]="true"
+                severity="help"
+              />
+              <p-button
+                *ngIf="activeRole !== 'viewer'"
+                icon="pi pi-trash"
+                (onClick)="onDelete(product)"
+                [text]="true"
+                severity="danger"
+              />
               <!-- <div class="pi pi-eye view" (click)="viewDetail(product)"></div>
               <div class="pi pi-user-edit edit" (click)="editDetail(product)"></div>
               <div class="pi pi-trash delete" (click)="onDelete(product)"></div> -->
@@ -92,7 +105,7 @@
     viewDetails = false;
     selectedRow = null;
     vacancieName = '';
-    isEdit = false;
+    isEdit = false
   "
   [(visible)]="visible"
   [modal]="true"
@@ -589,6 +602,199 @@
                         pTextarea
                       ></textarea>
                       <label for="on_label">Beschreibung</label>
+                    </p-floatlabel>
+                  </div>
+                </div>
+              </p-fieldset>
+            </div>
+
+            <div class="mt-3">
+              <p-fieldset legend="Additional Information">
+                <div class="grid pt-2">
+
+                  <div class="col-6">
+                    <p-floatlabel class="w-full" variant="on">
+                      <input
+                        type="text"
+                        pInputText
+                        class="w-full"
+                        formControlName="qualification"
+                      />
+                      <label for="on_label">Bildungsabschluss </label>
+                    </p-floatlabel>
+                  </div>
+
+                  <div class="col-6">
+                    <p-floatlabel class="w-full" variant="on">
+                      <input
+                        type="text"
+                        pInputText
+                        class="w-full"
+                        formControlName="numOfChildren"
+                      />
+                      <label for="on_label">Kinder Anzahl </label>
+                    </p-floatlabel>
+                  </div>
+
+                  <div class="col-6">
+                    <p-floatlabel class="w-full" variant="on">
+                      <input
+                        type="text"
+                        pInputText
+                        class="w-full"
+                        formControlName="occupation"
+                      />
+                      <label for="on_label">Beruf des Ehe Partners</label>
+                    </p-floatlabel>
+                  </div>
+
+                  <div class="col-6">
+                    <p-floatlabel class="w-full" variant="on">
+                      <input
+                        type="text"
+                        pInputText
+                        class="w-full"
+                        formControlName="fsb"
+                      />
+                      <label for="on_label">FSB</label>
+                    </p-floatlabel>
+                  </div>
+
+                  <div class="col-6">
+                    <p-floatlabel class="w-full" variant="on">
+                      <p-select
+                      formControlName="jobType"
+                      inputId="on_label"
+                      [options]="jobTypes"
+                      appendTo="body"
+                      [loading]="getApiLoader"
+                      optionLabel="name"
+                      styleClass="w-full"
+                    />
+                      <label for="on_label">Voll-Teil</label>
+                    </p-floatlabel>
+                  </div>
+
+                  <div class="col-6">
+                    <p-floatlabel class="w-full" variant="on">
+                      <input
+                        type="text"
+                        pInputText
+                        class="w-full"
+                        formControlName="approval"
+                      />
+                      <label for="on_label">Vorabzustimmung</label>
+                    </p-floatlabel>
+                  </div>
+
+                  <div class="col-6">
+                    <p-floatlabel class="w-full" variant="on">
+                      <input
+                        type="text"
+                        pInputText
+                        class="w-full"
+                        formControlName="applicationNo"
+                      />
+                      <label for="on_label">Antragnummer §81a</label>
+                    </p-floatlabel>
+                  </div>
+
+                  <div class="col-6">
+                    <p-floatlabel class="w-full" variant="on">
+                      <input
+                        type="text"
+                        pInputText
+                        class="w-full"
+                        formControlName="visa"
+                      />
+                      <label for="on_label">Visa</label>
+                    </p-floatlabel>
+                  </div>
+
+                  <div class="col-6">
+                    <p-floatlabel class="w-full" variant="on">
+                      <input
+                        type="text"
+                        pInputText
+                        class="w-full"
+                        formControlName="startofWork"
+                      />
+                      <label for="on_label">Arbeitsbeginn</label>
+                    </p-floatlabel>
+                  </div>
+
+                  <div class="col-6">
+                    <p-floatlabel class="w-full" variant="on">
+                      <input
+                        type="text"
+                        pInputText
+                        class="w-full"
+                        formControlName="contractCadidate"
+                      />
+                      <label for="on_label">Vertrag Kandidaten Pers2 / Koop</label>
+                    </p-floatlabel>
+                  </div>  
+
+                  <div class="col-6">
+                    <p-floatlabel class="w-full" variant="on">
+                      <input
+                        type="text"
+                        pInputText
+                        class="w-full"
+                        formControlName="dateOfContract"
+                      />
+                      <label for="on_label">Datum des Vertrags mit Perso 2</label>
+                    </p-floatlabel>
+                  </div>  
+
+                  <div class="col-6">
+                    <p-floatlabel class="w-full" variant="on">
+                      <input
+                        type="text"
+                        pInputText
+                        class="w-full"
+                        formControlName="employerContact"
+                      />
+                      <label for="on_label">Vertrag Arbeitgeber Direkt / Koop</label>
+                    </p-floatlabel>
+                  </div>
+
+                  <div class="col-6">
+                    <p-floatlabel class="w-full" variant="on">
+                      <input
+                        type="text"
+                        pInputText
+                        class="w-full"
+                        formControlName="certification"
+                      />
+                      <label for="on_label">Urkunde</label>
+                    </p-floatlabel>
+                  </div>
+
+                  <div class="col-6">
+                    <p-floatlabel class="w-full" variant="on">
+                      <p-select
+                      formControlName="langLvl"
+                      inputId="on_label"
+                      [options]="languagesLvl"
+                      appendTo="body"
+                      [loading]="getApiLoader"
+                      optionLabel="name"
+                      styleClass="w-full"
+                    />
+                      <label for="on_label">B1 / B2</label>
+                    </p-floatlabel>
+                  </div>
+
+                  <div class="col-6">
+                    <p-floatlabel class="w-full" variant="on">
+                      <input
+                        type="text"
+                        pInputText
+                        class="w-full"
+                        formControlName="status"
+                      />
+                      <label for="on_label">Status</label>
                     </p-floatlabel>
                   </div>
                 </div>

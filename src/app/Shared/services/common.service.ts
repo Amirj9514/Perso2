@@ -22,11 +22,60 @@ export class CommonService {
     // { id: 7, name: 'In a Relationship' }
   ];
 
+  private languagesLvl = [
+    // {
+    //   id: 1,
+    //   name: 'A1',
+    //   description: 'Beginner'
+    // },
+    // {
+    //   id: 2,
+    //   name: 'A2',
+    //   description: 'Elementary'
+    // },
+    {
+      id: 3,
+      name: 'B1',
+      description: 'Intermediate'
+    },
+    {
+      id: 4,
+      name: 'B2',
+      description: 'Upper Intermediate'
+    },
+    {
+      id: 5,
+      name: 'C1',
+      description: 'Advanced'
+    },
+    {
+      id: 6,
+      name: 'C2',
+      description: 'Proficient'
+    }
+  ]
+
+
+  private jobTypes = [
+    { id: 1, name: 'Full Time' },
+    { id: 2, name: 'Part Time' },
+  ]
+
+  
+
   getRoles() {
     return this.roles;
   }
 
   getMaritalStatusList() {
     return this.maritalStatusList;
+  }
+
+  getLanguagesLvl() {
+    return this.languagesLvl;
+  }
+
+  getJobTypes() {
+    return this.jobTypes;
   }
 }

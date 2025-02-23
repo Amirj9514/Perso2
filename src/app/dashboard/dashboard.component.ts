@@ -71,13 +71,16 @@ export class DashboardComponent implements OnInit {
   viewDetails: boolean = false;
   vacancieName: string = '';
   isEdit: boolean = false;
-  activeRole:string = ''; 
+  activeRole: string = '';
+
+  languagesLvl: any[] = [];
+  jobTypes: any[] = [];
 
   constructor(
     private commonS: CommonService,
     private sharedS: SharedService,
     private flagS: FlagsService,
-    private rolesS:RolesService,
+    private rolesS: RolesService,
     private toastS: CustomToastService
   ) {
     this.newApplicationFrom = new FormGroup({
@@ -93,26 +96,43 @@ export class DashboardComponent implements OnInit {
       country: new FormControl(null, [Validators.required]),
       dob: new FormControl('', [Validators.required]),
       description: new FormControl(''),
+
+      // additional fields
+      status: new FormControl(''),
+      qualification: new FormControl(''),
+      numOfChildren: new FormControl(''),
+      occupation: new FormControl(''),
+      fsb: new FormControl(''),
+      jobType: new FormControl(null),
+      approval: new FormControl(''),
+      applicationNo: new FormControl(''),
+      visa: new FormControl(''),
+      startofWork: new FormControl(''),
+      contractCadidate: new FormControl(''),
+      dateOfContract: new FormControl(''),
+      employerContact: new FormControl(''),
+      certification: new FormControl(''),
+      langLvl: new FormControl(null),
     });
 
     this.maritalStatus = this.commonS.getMaritalStatusList();
     this.countryList = this.flagS.getFlagsList();
+    this.languagesLvl = this.commonS.getLanguagesLvl();
+    this.jobTypes = this.commonS.getJobTypes();
   }
 
   ngOnInit(): void {
     this.getVacancies();
-    this.getApplicantDetails();
+    
 
     const roles = this.rolesS.getLoginUser();
     this.activeRole = roles?.role ?? '';
-    
   }
 
   handelSearch(event: any) {
     const value = event.target.value;
     this.dt2.filterGlobal(value, 'contains');
   }
-
 
   onSubmit(): void {
     if (this.newApplicationFrom.invalid) {
@@ -121,6 +141,27 @@ export class DashboardComponent implements OnInit {
     }
 
     const formValue = this.newApplicationFrom.value;
+
+    const additionalData = {
+      status: formValue.status,
+      qualification: formValue.qualification,
+      numOfChildren: formValue.numOfChildren,
+      occupation: formValue.occupation,
+      fsb: formValue.fsb,
+      jobType: formValue.jobType,
+      approval: formValue.approval,
+      applicationNo: formValue.applicationNo,
+      visa: formValue.visa,
+      startofWork: formValue.startofWork,
+      contractCadidate: formValue.contractCadidate,
+      dateOfContract: formValue.dateOfContract,
+      employerContact: formValue.employerContact,
+      certification: formValue.certification,
+      langLvl: formValue.langLvl,
+    };
+
+    const jsonString = JSON.stringify(additionalData);
+
     const apiParam = {
       applied_at: formValue.appledDate ?? '',
       vacancy_id: formValue.enrollment?.id ?? '',
@@ -135,6 +176,7 @@ export class DashboardComponent implements OnInit {
       // profession: formValue.profession,
       country: formValue.country.name ?? '',
       description: formValue.description ?? '',
+      additional_data: jsonString,
     };
     this.formSubmit = true;
 
@@ -193,11 +235,12 @@ export class DashboardComponent implements OnInit {
     this.sharedS.sendGetRequest(url).subscribe({
       next: (response) => {
         this.applicantsLoader = false;
+        this.products = [];
         if (response.status === 200) {
           const data: any = response?.body?.applications ?? [];
 
-          this.products = data.map((item: any) => {
-            return {
+          data.map((item: any) => {
+            const val = {
               id: item.id,
               applied_at: item.applied_at,
               vacancy_id: item.vacancy_id,
@@ -212,7 +255,9 @@ export class DashboardComponent implements OnInit {
               country: item.country,
               description: item.description,
               vacancieName: this.getVacancieById(item.vacancy_id),
+              additional_data: item.additional_data,
             };
+            this.products.push(val);
           });
         } else {
           this.products = [];
@@ -228,17 +273,21 @@ export class DashboardComponent implements OnInit {
     // ?first_name=${''}&last_name=${''}&email=${''}&user_name=${''}'
     const url = `vacancies`;
     this.getApiLoader = true;
+    this.applicantsLoader = true;
     this.sharedS.sendGetRequest(url).subscribe({
       next: (response) => {
         this.getApiLoader = false;
         if (response.status === 200) {
           this.vacancies = response?.body?.vacancies ?? [];
+          this.getApplicantDetails();
         } else {
           this.products = [];
+          this.applicantsLoader = false;
         }
       },
       error: (error) => {
         this.vacancies = [];
+        this.applicantsLoader = false;
         this.getApiLoader = false;
       },
     });
@@ -303,7 +352,9 @@ export class DashboardComponent implements OnInit {
     );
 
     const dob = new Date(product.date_of_birth);
-
+    const additionalData = product.additional_data
+      ? JSON.parse(product.additional_data)
+      : {};
     this.newApplicationFrom.patchValue({
       appledDate: product.applied_at,
       enrollment: vacance,
@@ -319,6 +370,7 @@ export class DashboardComponent implements OnInit {
       country: this.countryList.find((item) => item.name === product.country),
       dob: dob,
       description: product.description,
+      ...additionalData,
     });
   }
 }
