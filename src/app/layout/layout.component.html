@@ -1,19 +1,23 @@
 <div class="mainLayout">
+  @if (!isApplicent) {
   <div class="sidebarContainer">
     <app-sidebar></app-sidebar>
   </div>
-  <div class="mainContainer">
+  }
+
+  <div class="" [ngClass]="isApplicent?'':'mainContainer'">
+    @if (!isApplicent) {
     <div class="topHeader">
       <div class="flex align-items-center justify-content-end">
-        <div class="profileIcon">{{user?.firstLetter || 'N/A'}}</div>
+        <div class="profileIcon">{{ user?.firstLetter || "N/A" }}</div>
         <div class="pl-2">
-         <div class="text-sm font-semibold">{{user?.name || 'N/A'}}</div>
-         <div class="text-xs">{{user?.role || 'N/A'}}</div>
+          <div class="text-sm font-semibold">{{ user?.name || "N/A" }}</div>
+          <div class="text-xs">{{ user?.role || "N/A" }}</div>
         </div>
       </div>
-   
-    
     </div>
+    }
+
     <router-outlet></router-outlet>
   </div>
 </div>

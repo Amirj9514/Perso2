@@ -3,7 +3,6 @@ import { Component } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { RolesService } from '../../Shared/services/roles.service';
 import { SharedService } from '../../Shared/services/shared.service';
-
 @Component({
   selector: 'app-sidebar',
   standalone: true,
@@ -25,22 +24,12 @@ export class SidebarComponent {
       link: '/vacancies',
       role: ['admin', 'agent'],
     },
-    // {
-    //   title: 'Applications',
-    //   icon: 'pi-user',
-    //   link: '/applications',
-    // },
     {
       title: 'Mitarbeiter',
       icon: 'pi-users',
       link: '/employees',
       role: ['admin'],
     },
-    // {
-    //   title: 'Payroll',
-    //   icon: 'pi-users',
-    //   link: '/payroll',
-    // },
     {
       title: 'Calendar',
       icon: 'pi-calendar',
@@ -51,7 +40,11 @@ export class SidebarComponent {
 
   dropdownOpen = false;
 
-  constructor(private roleS: RolesService , private sharedS:SharedService , private router:Router) {}
+  constructor(
+    private roleS: RolesService,
+    private sharedS: SharedService,
+    private router: Router,
+  ) {}
 
   toggleDropdown(): void {
     this.dropdownOpen = !this.dropdownOpen;
@@ -65,10 +58,8 @@ export class SidebarComponent {
     return false;
   }
 
-
-  logout(){
+  logout() {
     this.sharedS.insertData({ key: 'token', val: null });
     this.router.navigateByUrl('/login');
   }
 }
-

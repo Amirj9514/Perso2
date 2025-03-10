@@ -25,6 +25,12 @@ export const routes: Routes = [
         data: { roles: ['admin' ,'agent','viewer'] },
       },
       {
+        path:'applicant/:id',
+        loadComponent:()=>import('./dashboard/user-profile/user-profile.component').then(m=>m.UserProfileComponent),
+        canActivate: [authGuard],
+        data: { roles: ['admin' ,'agent','viewer'] },
+      },
+      {
         path: 'employees',
         loadComponent: () =>
           import('./employees/employees.component').then(

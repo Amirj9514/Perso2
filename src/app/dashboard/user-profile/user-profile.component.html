@@ -1,0 +1,33 @@
+<div class="mainLayout">
+  <div class="sidebarContainer">
+    <app-tab-sidebar (activeTabEmitter)="toggleTab($event)"></app-tab-sidebar>
+  </div>
+
+  <div class="mainContainer">
+    @if (activeTab === 1) {
+    <app-prozessubersicht></app-prozessubersicht>
+    }@else if(activeTab === 2) {
+    <app-personliche-daten></app-personliche-daten>
+    }@else if(activeTab === 3) {
+    <app-vertrag-perso2></app-vertrag-perso2>
+    }@else if(activeTab === 4) {
+    <app-dokumente></app-dokumente>
+    }@else if(activeTab === 5) {
+    <app-vorstellungsgesrpach></app-vorstellungsgesrpach>
+    }@else if(activeTab === 6) {
+    <app-anerkennung></app-anerkennung>
+    }@else if(activeTab === 7) {
+    <app-s81a></app-s81a>
+    }@else if(activeTab === 8) {
+    <app-urkunde></app-urkunde>
+    }@else if(activeTab === 9) {
+    <app-unterkunft></app-unterkunft>
+    }@else if(activeTab === 10) {
+    <app-integration></app-integration>
+    }@else if(activeTab === 11) {
+    <app-buchhaltung></app-buchhaltung>
+    }@else if(activeTab === 12) {
+    <app-info-de></app-info-de>
+    }
+  </div>
+</div>

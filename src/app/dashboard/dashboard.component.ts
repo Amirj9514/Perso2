@@ -26,6 +26,7 @@ import { Dialog } from 'primeng/dialog';
 import { ViewDetailComponent } from './view-detail/view-detail.component';
 import { RolesService } from '../Shared/services/roles.service';
 import { CustomToastService } from '../Shared/services/custom-toast.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -81,7 +82,8 @@ export class DashboardComponent implements OnInit {
     private sharedS: SharedService,
     private flagS: FlagsService,
     private rolesS: RolesService,
-    private toastS: CustomToastService
+    private toastS: CustomToastService,
+    private router: Router
   ) {
     this.newApplicationFrom = new FormGroup({
       appledDate: new FormControl('', [Validators.required]),
@@ -123,7 +125,6 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.getVacancies();
-    
 
     const roles = this.rolesS.getLoginUser();
     this.activeRole = roles?.role ?? '';
@@ -372,5 +373,9 @@ export class DashboardComponent implements OnInit {
       description: product.description,
       ...additionalData,
     });
+  }
+
+  openDetail(row: any) {
+    this.router.navigateByUrl(`/applicant/${row.id}`);
   }
 }

@@ -1,0 +1,47 @@
+.mainLayout {
+    position: relative;
+    .sidebarContainer {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      width: 220px;
+      height: 100vh;
+      background-color: white;
+      box-shadow: rgba(25, 184, 157, 0.25) 0px 25px 50px -12px;
+      overflow: hidden;
+    }
+  
+    .mainContainer {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 220px;
+      width: calc(100% - 220px);
+      height: calc(100vh - 2px);
+      overflow: auto;
+  
+      .topHeader {
+        position: sticky;
+        top: 0;
+        z-index: 20;
+        background: #ffffff;
+        padding: 8px 10px;
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+  
+        .profileIcon {
+          width: 45px;
+          height: 45px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          border-radius: 50%;
+          overflow: hidden;
+          font-weight: 600;
+          background-color: #109F9D;
+          color: white;
+        }
+      }
+    }
+  }
+  

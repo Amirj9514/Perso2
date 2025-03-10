@@ -1,15 +1,25 @@
 /* You can add global styles to this file, and also import other style files */
-@import '../node_modules/primeflex/primeflex.min.css';
+@import "../node_modules/primeflex/primeflex.min.css";
 @import "../node_modules/primeicons/primeicons.css";
-@import './styles/components/input';
-@import './styles/color';
+@import "./styles/components/input";
+@import "./styles/color";
 
-$primary-color: #9233DF;
-$surface-100:#e7e7e8;
+$primary-color: #9233df;
+$surface-100: #e7e7e8;
 
-body{
-    margin: 0;
-    padding: 0;
-    background-color:rgba(0, 0, 0, 0.1);
-    font-family: 'Montserrat', sans-serif !important;
+body {
+  margin: 0;
+  padding: 0;
+  background-color: rgba(0, 0, 0, 0.1);
+  font-family: "Montserrat", sans-serif !important;
+}
+
+.border-black {
+  border: 1px solid gray !important;
+}
+
+.grid {
+  margin-right: 0;
+  margin-left: 0;
+  margin-top: 0;
 }

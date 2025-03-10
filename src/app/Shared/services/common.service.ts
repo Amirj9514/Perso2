@@ -59,6 +59,12 @@ export class CommonService {
   private jobTypes = [
     { id: 1, name: 'Full Time' },
     { id: 2, name: 'Part Time' },
+  ];
+
+  private colors =[
+    { id: 1, name: 'NEIN' , color: 'red'},
+    { id: 2, name: 'JA' , color: 'green'},
+    { id: 3, name: 'IN BEARBEITUNG' , color: 'orange'},
   ]
 
   
@@ -77,5 +83,9 @@ export class CommonService {
 
   getJobTypes() {
     return this.jobTypes;
+  }
+
+  getColors() {
+    return this.colors;
   }
 }

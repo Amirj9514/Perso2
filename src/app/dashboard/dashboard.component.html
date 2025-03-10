@@ -59,7 +59,7 @@
         </tr>
         }@else{
         <tr>
-          <td>{{ product?.age }}</td>
+          <td><span (click)="openDetail(product)" class="link">{{ product?.age }}</span></td>
           <td>{{ product?.first_name + " " + product?.last_name }}</td>
           <td>{{ product?.vacancieName }}</td>
           <td>{{ product?.applied_at }}</td>
