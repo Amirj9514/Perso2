@@ -42,6 +42,7 @@ export class ProzessubersichtComponent {
   ];
 
   overViewFormGoup!:FormGroup;
+  previousFormValue: any;
 
   isEdit: boolean = false;
 
@@ -80,11 +81,13 @@ export class ProzessubersichtComponent {
 
   actionTriger(action: string) {
     if (action === 'edit') {
+      this.previousFormValue = this.overViewFormGoup.value;
       this.isEdit = !this.isEdit;
     } else if (action === 'save') {
-      console.log(this.overViewFormGoup.value);
+      this.isEdit = !this.isEdit;
       
     } else if (action === 'back' && this.isEdit) {
+      this.overViewFormGoup.patchValue(this.previousFormValue);
       this.isEdit = !this.isEdit;
     } else {
       this.router.navigate(['/'])

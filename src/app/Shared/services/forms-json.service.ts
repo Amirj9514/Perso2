@@ -20,7 +20,7 @@ export class FormsJsonService {
         form: [
           {
             lable: 'Übersetzung',
-            formControl: 'ubersetzung',
+            formControl: 'bewUbersetzung',
             type: 'select',
             value: null,
             options: this.statusList,
@@ -30,7 +30,7 @@ export class FormsJsonService {
           },
           {
             lable: 'Leg/Beg',
-            formControl: 'legbeg',
+            formControl: 'bewLegbeg',
             type: 'select',
             value: null,
             options: this.statusList,
@@ -40,7 +40,7 @@ export class FormsJsonService {
           },
           {
             lable: 'Sprachniveo',
-            formControl: 'sprachniveo',
+            formControl: 'bewSprachniveo',
             type: 'select',
             value: null,
             options: [
@@ -54,7 +54,7 @@ export class FormsJsonService {
           },
           {
             lable: 'Sprachzertifikat',
-            formControl: 'sprachzertifikat',
+            formControl: 'bewSprachzertifikat',
             type: 'select',
             value: null,
             options: [
@@ -71,7 +71,7 @@ export class FormsJsonService {
 
           {
             lable: 'ZAB',
-            formControl: 'zab',
+            formControl: 'bewZab',
             type: 'select',
             value: null,
             options: this.statusList,
@@ -82,7 +82,7 @@ export class FormsJsonService {
 
           {
             lable: 'Bescheid',
-            formControl: 'bescheid',
+            formControl: 'bewBescheid',
             type: 'select',
             value: null,
             options: this.statusList,
@@ -97,7 +97,7 @@ export class FormsJsonService {
         form:[
           {
             lable: 'Arbeitsvertrag',
-            formControl: 'arbeitsvertrag',
+            formControl: 'proArbeitsvertrag',
             type: 'select',
             value: null,
             options: this.statusList,
@@ -107,7 +107,7 @@ export class FormsJsonService {
           },
           {
             lable: 'Anererkennung',
-            formControl: 'anererkennung',
+            formControl: 'proAnererkennung',
             type: 'select',
             value: null,
             options: this.statusList,
@@ -117,7 +117,7 @@ export class FormsJsonService {
           },
           {
             lable: 'Bescheid',
-            formControl: 'bescheid',
+            formControl: 'proBescheid',
             type: 'select',
             value: null,
             options: this.statusList,
@@ -127,7 +127,7 @@ export class FormsJsonService {
           },
           {
             lable: '§81a ',
-            formControl: 's81a',
+            formControl: 'proS81a',
             type: 'select',
             value: null,
             options: this.statusList,
@@ -137,7 +137,7 @@ export class FormsJsonService {
           },
           {
             lable: 'Vereinbarung',
-            formControl: 'vereinbarung',
+            formControl: 'proVereinbarung',
             type: 'select',
             value: null,
             options: this.statusList,
@@ -147,7 +147,7 @@ export class FormsJsonService {
           },
           {
             lable: 'VAZ',
-            formControl: 'vaz',
+            formControl: 'proVaz',
             type: 'select',
             value: null,
             options: this.statusList,
@@ -157,7 +157,7 @@ export class FormsJsonService {
           },
           {
             lable: 'Konsulat',
-            formControl: 'konsulat',
+            formControl: 'proKonsulat',
             type: 'text',
             value: null,
             options: this.statusList,
@@ -167,7 +167,7 @@ export class FormsJsonService {
           },
           {
             lable: 'Unterkunft',
-            formControl: 'unterkunft',
+            formControl: 'proUnterkunft',
             type: 'select',
             value: null,
             options: this.statusList,
@@ -177,7 +177,7 @@ export class FormsJsonService {
           },
           {
             lable: 'Visum',
-            formControl: 'visum',
+            formControl: 'proVisum',
             type: 'select',
             value: null,
             options: this.statusList,
@@ -192,7 +192,7 @@ export class FormsJsonService {
         form:[
           {
             lable: 'VAZ /AG',
-            formControl: 'vazag',
+            formControl: 'onbVazag',
             type: 'select',
             value: null,
             options: this.statusList,
@@ -202,7 +202,7 @@ export class FormsJsonService {
           },
           {
             lable: 'Versicherung',
-            formControl: 'versicherung',
+            formControl: 'onbVersicherung',
             type: 'select',
             value: null,
             options: this.statusList,
@@ -212,7 +212,7 @@ export class FormsJsonService {
           },
           {
             lable: 'Visa AG',
-            formControl: 'visaag',
+            formControl: 'onbVisaag',
             type: 'select',
             value: null,
             options: this.statusList,
@@ -222,7 +222,7 @@ export class FormsJsonService {
           },
           {
             lable: '3 Terminvorschläge',
-            formControl: 'threeTerminvorschlage',
+            formControl: 'onbThreeTerminvorschlage',
             type: 'text',
             value: null,
             options: this.statusList,
@@ -232,7 +232,7 @@ export class FormsJsonService {
           },
           {
             lable: 'Transfer',
-            formControl: 'transfer',
+            formControl: 'onbTransfer',
             type: 'text',
             value: null,
             options: this.statusList,
@@ -242,7 +242,7 @@ export class FormsJsonService {
           },
           {
             lable: '1 Arbeitstag',
-            formControl: 'oneArbeitstag',
+            formControl: 'onbOneArbeitstag',
             type: 'text',
             value: null,
             options: this.statusList,
@@ -252,7 +252,7 @@ export class FormsJsonService {
           },
           {
             lable: 'Wohnanmeldung',
-            formControl: 'wohnanmeldung',
+            formControl: 'onbWohnanmeldung',
             type: 'text',
             value: null,
             options: this.statusList,
@@ -262,7 +262,7 @@ export class FormsJsonService {
           },
           {
             lable: 'Bank',
-            formControl: 'bank',
+            formControl: 'onbBank',
             type: 'text',
             value: null,
             options: this.statusList,
@@ -272,7 +272,7 @@ export class FormsJsonService {
           },
           {
             lable: 'Ausländerbehörde',
-            formControl: 'auslanderbehorde',
+            formControl: 'onbOuslanderbehorde',
             type: 'text',
             value: null,
             options: this.statusList,
