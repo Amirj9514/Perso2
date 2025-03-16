@@ -5,29 +5,31 @@
 
   <div class="mainContainer">
     @if (activeTab === 1) {
-    <app-prozessubersicht></app-prozessubersicht>
+    <app-prozessubersicht [applicant]="applicant"></app-prozessubersicht>
     }@else if(activeTab === 2) {
     <app-personliche-daten></app-personliche-daten>
     }@else if(activeTab === 3) {
-    <app-vertrag-perso2></app-vertrag-perso2>
+    <app-vertrag-perso2 [applicant]="applicant"></app-vertrag-perso2>
     }@else if(activeTab === 4) {
-    <app-dokumente></app-dokumente>
+    <app-dokumente [applicant]="applicant"></app-dokumente>
     }@else if(activeTab === 5) {
-    <app-vorstellungsgesrpach></app-vorstellungsgesrpach>
+    <app-vorstellungsgesrpach
+      [applicant]="applicant"
+    ></app-vorstellungsgesrpach>
     }@else if(activeTab === 6) {
-    <app-anerkennung></app-anerkennung>
+    <app-anerkennung [applicant]="applicant"></app-anerkennung>
     }@else if(activeTab === 7) {
-    <app-s81a></app-s81a>
+    <app-s81a [applicant]="applicant"></app-s81a>
     }@else if(activeTab === 8) {
-    <app-urkunde></app-urkunde>
+    <app-urkunde [applicant]="applicant"></app-urkunde>
     }@else if(activeTab === 9) {
-    <app-unterkunft></app-unterkunft>
+    <app-unterkunft [applicant]="applicant"></app-unterkunft>
     }@else if(activeTab === 10) {
     <app-integration></app-integration>
     }@else if(activeTab === 11) {
-    <app-buchhaltung></app-buchhaltung>
+    <app-buchhaltung  [applicant]="applicant"></app-buchhaltung>
     }@else if(activeTab === 12) {
-    <app-info-de></app-info-de>
+    <app-info-de  [applicant]="applicant"></app-info-de>
     }
   </div>
 </div>

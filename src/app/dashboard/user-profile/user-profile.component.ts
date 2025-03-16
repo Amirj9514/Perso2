@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { TabsModule } from 'primeng/tabs';
 import { TabSidebarComponent } from './tab-sidebar/tab-sidebar.component';
 import { ProzessubersichtComponent } from './prozessubersicht/prozessubersicht.component';
@@ -13,6 +13,11 @@ import { VorstellungsgesrpachComponent } from './vorstellungsgesrpach/vorstellun
 import { S81aComponent } from './s81a/s81a.component';
 import { BuchhaltungComponent } from './buchhaltung/buchhaltung.component';
 import { InfoDeComponent } from './info-de/info-de.component';
+import { ApplicantService } from '../../Shared/services/applicant.service';
+import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { SharedService } from '../../Shared/services/shared.service';
+import { CustomToastService } from '../../Shared/services/custom-toast.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -36,11 +41,62 @@ import { InfoDeComponent } from './info-de/info-de.component';
   templateUrl: './user-profile.component.html',
   styleUrl: './user-profile.component.scss',
 })
-export class UserProfileComponent {
+export class UserProfileComponent implements OnInit, OnDestroy {
   activeTab: number = 1;
-  constructor() {}
+  applicant: any;
+  documentList: any[] = [];
+  private applicantSubscription!: Subscription;
+  constructor(
+    private applicantS: ApplicantService,
+    private router: Router,
+    private sharedS: SharedService,
+    private toastS: CustomToastService
+  ) {}
+
+  ngOnInit(): void {
+    this.applicantSubscription = this.applicantS
+      .getSelectedApplicant()
+      .subscribe((data: any) => {
+        if (!data) {
+          this.goBack();
+          return;
+        }
+        this.applicant = data;
+      });
+
+    this.getApplicantFileList();
+  }
+
+  getApplicantFileList() {
+    const url = `application-documents?application_id=${this.applicant.id}`;
+    this.sharedS.sendGetRequest(url).subscribe({
+      next: (res: any) => {
+        if (res.status === 200) {
+          this.documentList = res?.body?.application_documents ?? []; 
+          this.applicantS.updateDocumentList(this.documentList);
+        }
+      },
+      error: (err: any) => {
+        this.toastS.setToast({
+          severity: 'error',
+          show: true,
+          message: 'Error while fetching applicant documents',
+        });
+      },
+    });
+  }
 
   toggleTab(event: number) {
     this.activeTab = event;
+  }
+
+  goBack() {
+    this.router.navigate(['/']);
+  }
+
+  ngOnDestroy() {
+    if (this.applicantSubscription) {
+      this.applicantSubscription.unsubscribe();
+    }
   }
 }

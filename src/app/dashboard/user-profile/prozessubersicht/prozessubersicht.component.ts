@@ -1,4 +1,12 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { FloatLabelModule } from 'primeng/floatlabel';
@@ -8,6 +16,7 @@ import { CommonModule } from '@angular/common';
 import { InputTextModule } from 'primeng/inputtext';
 import { FormsJsonService } from '../../../Shared/services/forms-json.service';
 import { Router } from '@angular/router';
+import { UpdateApplicantDialogComponent } from '../../../Shared/components/update-applicant-dialog/update-applicant-dialog.component';
 
 @Component({
   selector: 'app-prozessubersicht',
@@ -20,13 +29,15 @@ import { Router } from '@angular/router';
     CommonModule,
     InputTextModule,
     ReactiveFormsModule,
+    UpdateApplicantDialogComponent,
   ],
   templateUrl: './prozessubersicht.component.html',
   styleUrl: './prozessubersicht.component.scss',
 })
-export class ProzessubersichtComponent {
+export class ProzessubersichtComponent implements OnChanges {
+  @Input() applicant: any;
   @Output() goBackTriger = new EventEmitter();
-  tab1FormJson: any[] = []
+  tab1FormJson: any[] = [];
   statusList: any[] = [];
   Sprachniveo: any[] = [
     { id: 1, name: 'A1', description: 'Beginner' },
@@ -41,41 +52,77 @@ export class ProzessubersichtComponent {
     { id: 5, name: 'NEIN', description: '' },
   ];
 
-  overViewFormGoup!:FormGroup;
+  overViewFormGoup!: FormGroup;
   previousFormValue: any;
-
+  tab1SaveValue: any;
   isEdit: boolean = false;
 
-  constructor(private commonS: CommonService , private formsJsonS: FormsJsonService , private router:Router) {
+  showUpdateDialog: { show: boolean; applicantData: any; data: any } | null =
+    null;
+
+  constructor(
+    private commonS: CommonService,
+    private formsJsonS: FormsJsonService,
+    private router: Router
+  ) {
     this.statusList = this.commonS.getColors();
-    const formJson = this.formsJsonS.createFormJson();
+    const formJson = this.formsJsonS.getTab1FormJson();
     this.createForm(formJson);
     this.tab1FormJson = this.formsJsonS.getTab1FormJson();
+  }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['applicant'].currentValue) {
+      this.tab1SaveValue = this.applicant.tab_1;
+      this.updateFromValue();
+    }
   }
 
   createForm(formJson: any) {
     this.overViewFormGoup = new FormGroup({});
     formJson.forEach((form: any) => {
       form.form.forEach((element: any) => {
-        this.overViewFormGoup.addControl(element.formControl, new FormControl(element.value));
+        this.overViewFormGoup.addControl(
+          element.formControl,
+          new FormControl(element.value)
+        );
       });
     });
   }
 
   returnFeildValue(feild: any) {
-    if(feild.type === 'select') {
+    if (feild.type === 'select') {
       return this.overViewFormGoup.get(feild?.formControl)?.value?.name;
-    }else{
-      return feild.value;
+    } else {
+      return this.overViewFormGoup.get(feild?.formControl)?.value;
     }
   }
 
   returnFeildBg(feild: any) {
-    if(feild.type === 'select') {
+    if (feild.type === 'select') {
       return this.overViewFormGoup.get(feild?.formControl)?.value?.color;
-    }else{
+    } else {
       return '';
+    }
+  }
+
+  onFormSubmit(formValue: any) {
+
+    const apiParams = {
+      id: this.applicant.id,
+      tab_1:JSON.stringify(formValue),
+    }
+    this.showUpdateDialog = {
+      show: true,
+      applicantData: this.applicant,
+      data: apiParams,
+    };
+  }
+
+
+  updateFromValue(){
+    if(this.tab1SaveValue){
+      this.overViewFormGoup.patchValue(JSON.parse(this.tab1SaveValue));
     }
   }
 
@@ -84,13 +131,13 @@ export class ProzessubersichtComponent {
       this.previousFormValue = this.overViewFormGoup.value;
       this.isEdit = !this.isEdit;
     } else if (action === 'save') {
+      this.onFormSubmit(this.overViewFormGoup.value);
       this.isEdit = !this.isEdit;
-      
     } else if (action === 'back' && this.isEdit) {
       this.overViewFormGoup.patchValue(this.previousFormValue);
       this.isEdit = !this.isEdit;
     } else {
-      this.router.navigate(['/'])
+      this.router.navigate(['/']);
       // this.goBackTriger.emit();
     }
   }

@@ -40,7 +40,9 @@
               <div class="lable">{{ feild?.lable }}</div>
               <div
                 class="font-semibold border-round-md"
-                [ngClass]="returnFeildBg(feild) ?'px-1 py-1 text-xs text-light':''"
+                [ngClass]="
+                  returnFeildBg(feild) ? 'px-1 py-1 text-xs text-light' : ''
+                "
                 [ngStyle]="{
                   'background-color': returnFeildBg(feild),
                 
@@ -114,3 +116,10 @@
     }
   </form>
 </div>
+
+@if (showUpdateDialog) {
+<app-update-applicant-dialog
+  [showUpdateDialog]="showUpdateDialog"
+  (closeDialog)="showUpdateDialog = null"
+></app-update-applicant-dialog>
+}

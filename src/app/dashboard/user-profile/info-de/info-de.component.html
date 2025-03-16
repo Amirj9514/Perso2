@@ -1,1 +1,152 @@
-<p>info-de works!</p>
+<div class="mx-3 pt-3 relative h-full">
+    <div
+      class="flex justify-content-between align-items-center mb-3 w-full p-3 header"
+    >
+      <div class="text-2xl font-semibold primary-text">INFO DE</div>
+      <div class="flex gap-3">
+        <p-button
+          styleClass="border-black"
+          (onClick)="actionTriger('back')"
+          variant="outlined"
+          [label]="isEdit ? 'Cancel' : 'Back'"
+          [icon]="isEdit ? '' : 'pi pi-arrow-left'"
+        />
+  
+        @if(isEdit){
+        <p-button
+          (onClick)="actionTriger('save')"
+          label="Update"
+          icon="pi pi-save"
+        />
+        }@else {
+        <p-button
+          (onClick)="actionTriger('edit')"
+          label="Edit"
+          icon="pi pi-pencil"
+        />
+        }
+      </div>
+    </div>
+  
+    <form [formGroup]="overViewFormGoup" class="body h-full">
+      @for (section of tab1FormJson; track $index) {
+      <div class="cardSection mb-5">
+        <div class="title">{{ section?.title }}</div>
+        <div class="content">
+          <div class="grid">
+            @for (feild of section.form; track $index) { @if(!isEdit){ @if
+            (feild.type !== 'file') {
+            <div class="col-4">
+              <div class="disableFeild">
+                <div class="lable">{{ feild?.lable }}</div>
+                <div
+                  class="font-semibold border-round-md"
+                  [ngClass]="
+                    returnFeildBg(feild) ? 'px-1 py-1 text-xs text-light' : ''
+                  "
+                  [ngStyle]="{
+                              'background-color': returnFeildBg(feild),
+                            
+                            }"
+                >
+                  {{ returnFeildValue(feild) || "--" }}
+                </div>
+              </div>
+            </div>
+            }@else {
+            <div class="col-12 md:col-4">
+              <app-file-input
+                [disabled]="true"
+                [applicatanData]="applicant"
+                [controlName]="feild.formControl"
+                [lable]="feild.lable"
+              ></app-file-input>
+            </div>
+            } }@else{ @if (feild.type === 'select') {
+            <div class="col-4" id="overviewSelect">
+              <p-floatlabel class="w-full md:w-56" variant="on">
+                <p-select
+                  inputId="on_label"
+                  [options]="feild.options"
+                  [formControlName]="feild.formControl"
+                  appendTo="body"
+                  [optionLabel]="feild.optionLabel"
+                  styleClass="w-full"
+                >
+                  <ng-template #selectedItem let-selectedOption>
+                    @if (selectedOption) {
+                    <div class="flex items-center gap-2">
+                      <div
+                        class="w-full border-round-md px-2 flex align-items-center text-xs"
+                        [ngStyle]="{
+                                'background-color': selectedOption.color,
+                                color: selectedOption.color ? '#fff' : '',
+                                height:'20px',
+                              }"
+                      >
+                        {{ selectedOption.name }}
+                      </div>
+                    </div>
+                    }
+                  </ng-template>
+                  <ng-template let-option #item>
+                    <div class="flex items-center gap-2 w-full">
+                      <div
+                        class="w-full border-round-md px-2 py-1"
+                        [ngStyle]="{
+                          'background-color': option.color,
+                          color: option.color ? '#fff' : ''
+                        }"
+                      >
+                        {{ option.name }}
+                      </div>
+                    </div>
+                  </ng-template></p-select
+                >
+                <label for="on_label">{{ feild?.lable }}</label>
+              </p-floatlabel>
+            </div>
+            }@else if(feild.type === 'date'){
+            <div class="col-4">
+              <app-date-input
+                [label]="feild?.lable"
+                [formControlName]="feild.formControl"
+              ></app-date-input>
+            </div>
+            } @else if (feild.type === 'file') {
+            <div class="col-12 md:col-4">
+              <app-file-input
+                [controlName]="feild.formControl"
+                [lable]="feild.lable"
+                [applicatanData]="applicant"
+              ></app-file-input>
+            </div>
+  
+            } @else {
+            <div class="col-4">
+              <p-floatlabel class="w-full" variant="on">
+                <input
+                  type="text"
+                  [formControlName]="feild.formControl"
+                  pInputText
+                  class="w-full"
+                  style="padding: 12px"
+                />
+                <label for="on_label">{{ feild?.lable }}</label>
+              </p-floatlabel>
+            </div>
+            } } }
+          </div>
+        </div>
+      </div>
+      }
+    </form>
+  </div>
+  
+  @if (showUpdateDialog) {
+  <app-update-applicant-dialog
+    [showUpdateDialog]="showUpdateDialog"
+    (closeDialog)="showUpdateDialog = null"
+  ></app-update-applicant-dialog>
+  }
+  

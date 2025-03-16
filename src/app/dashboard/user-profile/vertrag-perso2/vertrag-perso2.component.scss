@@ -1,0 +1,24 @@
+.header{
+    background-color:#c2c2c2;
+    border-radius: 10px;
+    position: absolute;
+}
+
+.body{
+    padding-top: 95px;
+    overflow: auto;
+
+    .cardSection{
+        background-color: #ffffff;
+        border-radius: 10px;
+        overflow: hidden;
+        padding: 10px;
+
+        .title{
+            font-size: 20px;
+            font-weight: bold;
+        }
+    }
+
+ 
+}

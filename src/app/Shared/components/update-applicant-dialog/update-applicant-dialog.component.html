@@ -1,0 +1,11 @@
+<p-dialog
+  [modal]="true"
+  [dismissableMask]="false"
+  maskStyleClass="backdrop-blur-sm"
+  [style]="{ width: '35rem' }"
+  [(visible)]="showDialog"
+>
+  <ng-template #headless>
+    <p-progress-spinner ariaLabel="loading" />
+  </ng-template>
+</p-dialog>

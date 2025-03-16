@@ -1,0 +1,133 @@
+<div>
+  <label class="textClr-500 pb-1 text-sm" for="app-file-input">{{
+    lable
+  }}</label>
+
+  @if(selectedFile){
+
+
+    <div
+    class="file-upload flex align-items-center justify-content-between"
+    id="app-file-input"
+  >
+    <div class="file-select">
+      <div class="flex gap-2 align-items-center">
+        <div class="iconBox2" [ngClass]="{ activeBox: file }">
+          <i class="pi pi-file"></i>
+        </div>
+
+        <div>
+          <div class="text-sm font-semibold" id="fileName">
+            {{ selectedFile ? selectedFile?.additional_data?.name : "Choose File" }}
+          </div>
+          @if(selectedFile){
+          <div
+            class="font-semibold textClr-400 pt-1 align-items-center flex gap-1 actionBtn"
+          >
+            {{ calFileSize(selectedFile?.additional_data?.size) }}
+          </div>
+          }@else {
+          <div class="text-xs textClr-400" id="noFile">No file chosen</div>
+          }
+        </div>
+      </div>
+    </div>
+    @if(!selectedFile){
+    <div class="uploadBtn" [ngClass]="{ disabledBtn: disabled }">
+      <p-fileupload
+        mode="basic"
+        name="demo[]"
+        chooseIcon="pi pi-upload"
+        (onSelect)="onBasicUploadAuto($event)"
+        [auto]="true"
+        chooseLabel="Upload"
+      />
+    </div>
+    }@else {
+    <div class="uploadBtn gap-2">
+      <div class="iconBox" (click)="downloadFile()">
+        <i class="pi pi-download"></i>
+      </div>
+      <div
+        class="iconBox"
+        [ngClass]="{ disabledBtn: disabled }"
+        (click)="deleteFileHandler()"
+      >
+        <i class="pi pi-trash"></i>
+      </div>
+    </div>
+    }
+  </div>
+
+  }@else {
+    <div
+    class="file-upload flex align-items-center justify-content-between"
+    id="app-file-input"
+  >
+    <div class="file-select">
+      <div class="flex gap-2 align-items-center">
+        <div class="iconBox2" [ngClass]="{ activeBox: file }">
+          <i class="pi pi-file"></i>
+        </div>
+
+        <div>
+          <div class="text-sm font-semibold" id="fileName">
+            {{ file ? file.name : "Choose File" }}
+          </div>
+          @if(file){
+          <div
+            class="font-semibold textClr-400 pt-1 align-items-center flex gap-1 actionBtn"
+          >
+            {{ calFileSize(file.size) }}
+          </div>
+          }@else {
+          <div class="text-xs textClr-400" id="noFile">No file chosen</div>
+          }
+        </div>
+      </div>
+    </div>
+    @if(!file){
+    <div class="uploadBtn" [ngClass]="{ disabledBtn: disabled }">
+      <p-fileupload
+        mode="basic"
+        name="demo[]"
+        chooseIcon="pi pi-upload"
+        (onSelect)="onBasicUploadAuto($event)"
+        [auto]="true"
+        chooseLabel="Upload"
+      />
+    </div>
+    }@else {
+    <div class="uploadBtn gap-2">
+      <div class="iconBox" (click)="downloadFile()">
+        <i class="pi pi-download"></i>
+      </div>
+      <div
+        class="iconBox"
+        [ngClass]="{ disabledBtn: disabled }"
+        (click)="deleteFileHandler()"
+      >
+        <i class="pi pi-trash"></i>
+      </div>
+    </div>
+    }
+  </div>
+  }
+ 
+</div>
+
+
+<p-dialog
+  [modal]="true"
+  [dismissableMask]="false"
+  maskStyleClass="backdrop-blur-sm"
+  [style]="{ width: '25rem' }"
+  [(visible)]="showDialog"
+>
+  <ng-template #headless>
+    <div class="flex justify-content-center align-items-center my-4">
+      <p-progress-spinner ariaLabel="loading" [style]="{ width: '150px', height: '150px' }" />
+    </div>
+    
+  </ng-template>
+</p-dialog>

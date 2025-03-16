@@ -27,6 +27,7 @@ import { ViewDetailComponent } from './view-detail/view-detail.component';
 import { RolesService } from '../Shared/services/roles.service';
 import { CustomToastService } from '../Shared/services/custom-toast.service';
 import { Router } from '@angular/router';
+import { ApplicantService } from '../Shared/services/applicant.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -83,7 +84,8 @@ export class DashboardComponent implements OnInit {
     private flagS: FlagsService,
     private rolesS: RolesService,
     private toastS: CustomToastService,
-    private router: Router
+    private router: Router,
+    private applicantS: ApplicantService
   ) {
     this.newApplicationFrom = new FormGroup({
       appledDate: new FormControl('', [Validators.required]),
@@ -257,6 +259,17 @@ export class DashboardComponent implements OnInit {
               description: item.description,
               vacancieName: this.getVacancieById(item.vacancy_id),
               additional_data: item.additional_data,
+              tab_1: item.tab_1,
+              tab_2: item.tab_2,
+              tab_3: item.tab_3,
+              tab_4: item.tab_4,
+              tab_5: item.tab_5,
+              tab_6: item.tab_6,
+              tab_7: item.tab_7,
+              tab_8: item.tab_8,
+              tab_9: item.tab_9,
+              tab_10: item.tab_10,
+              tab_11: item.tab_11,
             };
             this.products.push(val);
           });
@@ -376,6 +389,7 @@ export class DashboardComponent implements OnInit {
   }
 
   openDetail(row: any) {
+    this.applicantS.updateSelectedApplicant(row);
     this.router.navigateByUrl(`/applicant/${row.id}`);
   }
 }

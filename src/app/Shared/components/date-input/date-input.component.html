@@ -1,0 +1,19 @@
+<div>
+  <p-floatlabel>
+    <input
+      pInputText
+      id="over_label"
+      autocomplete="off"
+      class="w-full"
+      style="padding: 12px"
+      [value]="value"
+      (input)="formatDate($event)"
+    />
+    <label for="over_label">{{ label }}</label>
+  </p-floatlabel>
+  @if (dateError) {
+  <small class="dangerClr">{{ dateError }}</small>
+  }@else {
+  <small class="textClr-400">Date format: DD-MM-YYYY</small>
+  }
+</div>

@@ -1,0 +1,56 @@
+.file-upload{
+    background-color: #F3F5F7;
+    border-radius: 10px;
+    padding: 6px;
+    overflow: hidden;
+    position: relative;
+
+    .actionBtn{
+        font-size: 10px;
+        padding-left:3px 
+    }
+    .uploadBtn{
+        position: absolute;
+        right: 5px;
+        display: flex;
+        align-items: center;
+
+       
+    }
+
+    .iconBox{
+        background-color: #fff;
+        border-radius: 8px;
+        width: 35px;
+        height: 35px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid rgb(219, 211, 211);
+        cursor: pointer;
+    }
+    .iconBox2{
+        background-color: silver;
+        color: #fff;
+        border-radius: 8px;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+    }
+
+    .activeBox{
+        background-color: #109F9D !important;
+        color: #fff !important;
+    }
+
+    .disabledBtn{
+        background-color: #F7F7F7;
+        color: #BDBDBD;
+        cursor: not-allowed;
+        opacity: 0.3;
+        pointer-events: none;
+    }
+}
