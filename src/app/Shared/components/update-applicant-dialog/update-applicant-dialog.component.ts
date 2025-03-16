@@ -3,6 +3,7 @@ import { Dialog } from 'primeng/dialog';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { SharedService } from '../../services/shared.service';
 import { CustomToastService } from '../../services/custom-toast.service';
+import { ApplicantService } from '../../services/applicant.service';
 
 @Component({
   selector: 'app-update-applicant-dialog',
@@ -25,7 +26,8 @@ export class UpdateApplicantDialogComponent implements OnInit {
 
   constructor(
     private sharedS: SharedService,
-    private toastS: CustomToastService
+    private toastS: CustomToastService,
+    private applicantS: ApplicantService
   ) {}
 
   ngOnInit(): void {
@@ -44,6 +46,10 @@ export class UpdateApplicantDialogComponent implements OnInit {
     this.sharedS.sendPutRequest(url, this.updateData).subscribe({
       next: (response) => {
         if (response.status === 200) {
+          const applicant = response.body.application;
+          if(applicant){
+            this.applicantS.updateSelectedApplicant(applicant);
+          }          
           this.toastS.setToast({
             show: true,
             message: 'Datensatz erfolgreich hinzugefügt',
