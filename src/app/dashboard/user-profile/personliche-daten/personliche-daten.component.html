@@ -1,1 +1,661 @@
-<div class=""></div>
+<div class="mx-3 pt-3 relative h-full">
+  <div
+    class="flex justify-content-between align-items-center mb-3 w-full p-3 header"
+  >
+    <div class="text-2xl font-semibold primary-text">Prozessübersicht</div>
+    <div class="flex gap-3">
+      <p-button
+        styleClass="border-black"
+        (onClick)="actionTriger('back')"
+        variant="outlined"
+        [label]="isEdit ? 'Cancel' : 'Back'"
+        [icon]="isEdit ? '' : 'pi pi-arrow-left'"
+      />
+    </div>
+  </div>
+
+  <div class="flex flex-col body h-full pb-6">
+    <div class="w-full ">
+      <form [formGroup]="newApplicationFrom" class="pl-4 pr-3 mt-3 draweBody">
+        <p-fieldset legend="Basic Information">
+          <div class="grid pt-2">
+            <div class="col-6">
+              <p-floatlabel class="w-full md:w-56" variant="on">
+                <p-select
+                  formControlName="enrollment"
+                  inputId="on_label"
+                  [options]="vacancies"
+                  appendTo="body"
+                  [loading]="getApiLoader"
+                  optionLabel="role"
+                  styleClass="w-full"
+                />
+                <label for="on_label"
+                  >Position
+                  <span
+                    class="text-red-600"
+                    *ngIf="
+                      newApplicationFrom.get('enrollment')?.touched &&
+                      newApplicationFrom.get('enrollment')?.invalid
+                    "
+                    >*</span
+                  >
+                </label>
+              </p-floatlabel>
+              <span
+                class="text-sm"
+                *ngIf="
+                  (newApplicationFrom.get('enrollment')?.touched ||
+                    formSubmit) &&
+                  newApplicationFrom.get('enrollment')?.errors
+                "
+              >
+                <span
+                  class="text-red-600"
+                  *ngIf="
+                    newApplicationFrom.get('enrollment')?.hasError('required')
+                  "
+                  >Position date Pflichtfeld</span
+                >
+              </span>
+            </div>
+
+            <div class="col-6">
+              <p-floatlabel class="w-full" variant="on">
+                <input
+                  type="text"
+                  pInputText
+                  class="w-full"
+                  formControlName="appledDate"
+                />
+                <label for="on_label"
+                  >Arbeitgeber
+                  <span
+                    class="text-red-600"
+                    *ngIf="
+                      newApplicationFrom.get('appledDate')?.touched &&
+                      newApplicationFrom.get('appledDate')?.invalid
+                    "
+                    >*</span
+                  >
+                </label>
+              </p-floatlabel>
+              <span
+                class="text-sm"
+                *ngIf="
+                  (newApplicationFrom.get('appledDate')?.touched ||
+                    formSubmit) &&
+                  newApplicationFrom.get('appledDate')?.errors
+                "
+              >
+                <span
+                  class="text-red-600"
+                  *ngIf="
+                    newApplicationFrom.get('appledDate')?.hasError('required')
+                  "
+                  >Arbeitgeber Pflichtfeld</span
+                >
+              </span>
+            </div>
+          </div>
+        </p-fieldset>
+
+        <div class="mt-3">
+          <p-fieldset legend="Personal Information">
+            <div class="grid pt-2">
+              <div class="col-6">
+                <p-floatlabel class="w-full md:w-56" variant="on">
+                  <input
+                    type="text"
+                    pInputText
+                    class="w-full"
+                    formControlName="firstName"
+                  />
+                  <label for="on_label"
+                    >Vorname
+                    <span
+                      class="text-red-600"
+                      *ngIf="
+                        newApplicationFrom.get('firstName')?.touched &&
+                        newApplicationFrom.get('firstName')?.invalid
+                      "
+                      >*</span
+                    >
+                  </label>
+                </p-floatlabel>
+                <span
+                  class="text-sm"
+                  *ngIf="
+                    (newApplicationFrom.get('firstName')?.touched ||
+                      formSubmit) &&
+                    newApplicationFrom.get('firstName')?.errors
+                  "
+                >
+                  <span
+                    class="text-red-600"
+                    *ngIf="
+                      newApplicationFrom.get('firstName')?.hasError('required')
+                    "
+                    >Vorname Pflichtfeld</span
+                  >
+                </span>
+              </div>
+              <div class="col-6">
+                <p-floatlabel class="w-full md:w-56" variant="on">
+                  <input
+                    type="text"
+                    class="w-full"
+                    pInputText
+                    formControlName="lastName"
+                  />
+                  <label for="on_label"
+                    >Nachname
+                    <span
+                      class="text-red-600"
+                      *ngIf="
+                        newApplicationFrom.get('lastName')?.touched &&
+                        newApplicationFrom.get('lastName')?.invalid
+                      "
+                      >*</span
+                    >
+                  </label>
+                </p-floatlabel>
+                <span
+                  class="text-sm"
+                  *ngIf="
+                    (newApplicationFrom.get('lastName')?.touched ||
+                      formSubmit) &&
+                    newApplicationFrom.get('lastName')?.errors
+                  "
+                >
+                  <span
+                    class="text-red-600"
+                    *ngIf="
+                      newApplicationFrom.get('lastName')?.hasError('required')
+                    "
+                    >Nachname Pflichtfeld</span
+                  >
+                </span>
+              </div>
+
+              <div class="col-6">
+                <p-floatlabel class="w-full md:w-56" variant="on">
+                  <input
+                    type="text"
+                    pInputText
+                    class="w-full"
+                    formControlName="phone"
+                  />
+                  <label for="on_label"
+                    >Rufnummer
+                    <span
+                      class="text-red-600"
+                      *ngIf="
+                        newApplicationFrom.get('phone')?.touched &&
+                        newApplicationFrom.get('phone')?.invalid
+                      "
+                      >*</span
+                    >
+                  </label>
+                  <span
+                    class="text-sm"
+                    *ngIf="
+                      (newApplicationFrom.get('phone')?.touched ||
+                        formSubmit) &&
+                      newApplicationFrom.get('phone')?.errors
+                    "
+                  >
+                    <span
+                      class="text-red-600"
+                      *ngIf="
+                        newApplicationFrom.get('phone')?.hasError('required')
+                      "
+                      >Rufnummer Pflichtfeld</span
+                    >
+                  </span>
+                </p-floatlabel>
+              </div>
+              <div class="col-6">
+                <p-floatlabel class="w-full md:w-56" variant="on">
+                  <input
+                    type="text"
+                    class="w-full"
+                    pInputText
+                    formControlName="age"
+                  />
+                  <label for="on_label"
+                    >Aktennummer
+                    <span
+                      class="text-red-600"
+                      *ngIf="
+                        newApplicationFrom.get('age')?.touched &&
+                        newApplicationFrom.get('age')?.invalid
+                      "
+                      >*</span
+                    >
+                  </label>
+                </p-floatlabel>
+                <span
+                  class="text-sm"
+                  *ngIf="
+                    (newApplicationFrom.get('age')?.touched || formSubmit) &&
+                    newApplicationFrom.get('age')?.errors
+                  "
+                >
+                  <span
+                    class="text-red-600"
+                    *ngIf="newApplicationFrom.get('age')?.hasError('required')"
+                    >Aktennummer Pflichtfeld</span
+                  >
+                </span>
+              </div>
+
+              <div class="col-6">
+                <p-floatlabel class="w-full md:w-56" variant="on">
+                  <input
+                    type="email"
+                    class="w-full"
+                    pInputText
+                    formControlName="email"
+                  />
+                  <label for="on_label"
+                    >Email
+                    <span
+                      class="text-red-600"
+                      *ngIf="
+                        newApplicationFrom.get('email')?.touched &&
+                        newApplicationFrom.get('email')?.invalid
+                      "
+                      >*</span
+                    >
+                  </label>
+                </p-floatlabel>
+                <span
+                  class="text-sm"
+                  *ngIf="
+                    (newApplicationFrom.get('email')?.touched || formSubmit) &&
+                    newApplicationFrom.get('email')?.errors
+                  "
+                >
+                  <span
+                    class="text-red-600"
+                    *ngIf="
+                      newApplicationFrom.get('email')?.hasError('required')
+                    "
+                    >Email Address Pflichtfeld</span
+                  >
+                  <span
+                    class="text-red-600"
+                    *ngIf="newApplicationFrom.get('email')?.hasError('email')"
+                    >Ungültige E-Mail Adresse</span
+                  >
+                </span>
+              </div>
+              <div class="col-6 pb-3">
+                <p-floatlabel class="w-full md:w-56" variant="on">
+                  <p-select
+                    formControlName="country"
+                    inputId="on_label"
+                    [options]="countryList"
+                    optionLabel="name"
+                    appendTo="body"
+                    styleClass="w-full"
+                    [filter]="true"
+                    filterBy="name"
+                  />
+                  <label for="on_label"
+                    >Nationalität
+                    <span
+                      class="text-red-600"
+                      *ngIf="
+                        newApplicationFrom.get('country')?.touched &&
+                        newApplicationFrom.get('country')?.invalid
+                      "
+                      >*</span
+                    >
+                  </label>
+                </p-floatlabel>
+                <span
+                  class="text-sm"
+                  *ngIf="
+                    (newApplicationFrom.get('country')?.touched ||
+                      formSubmit) &&
+                    newApplicationFrom.get('country')?.errors
+                  "
+                >
+                  <span
+                    class="text-red-600"
+                    *ngIf="
+                      newApplicationFrom.get('country')?.hasError('required')
+                    "
+                    >Nationalität Pflichtfeld</span
+                  >
+                </span>
+              </div>
+
+              <div class="col-6">
+                <p-floatlabel class="w-full md:w-56" variant="on">
+                  <p-select
+                    formControlName="maritalStatus"
+                    inputId="on_label"
+                    [options]="maritalStatus"
+                    optionLabel="name"
+                    appendTo="body"
+                    styleClass="w-full"
+                  />
+                  <label for="on_label"
+                    >Familienstand
+                    <span
+                      class="text-red-600"
+                      *ngIf="
+                        newApplicationFrom.get('maritalStatus')?.touched &&
+                        newApplicationFrom.get('maritalStatus')?.invalid
+                      "
+                      >*</span
+                    >
+                  </label>
+                </p-floatlabel>
+                <span
+                  class="text-sm"
+                  *ngIf="
+                    (newApplicationFrom.get('maritalStatus')?.touched ||
+                      formSubmit) &&
+                    newApplicationFrom.get('maritalStatus')?.errors
+                  "
+                >
+                  <span
+                    class="text-red-600"
+                    *ngIf="
+                      newApplicationFrom
+                        .get('maritalStatus')
+                        ?.hasError('required')
+                    "
+                    >Familienstand Pflichtfeld</span
+                  >
+                </span>
+              </div>
+              <div class="col-6">
+                <p-floatlabel class="w-full" variant="on">
+                  <p-datepicker
+                    styleClass="w-full"
+                    appendTo="body"
+                    formControlName="dob"
+                  />
+                  <label for="on_label"
+                    >Geburtsdatum
+                    <span
+                      class="text-red-600"
+                      *ngIf="
+                        newApplicationFrom.get('dob')?.touched &&
+                        newApplicationFrom.get('dob')?.invalid
+                      "
+                      >*</span
+                    >
+                  </label>
+                </p-floatlabel>
+                <span
+                  class="text-sm"
+                  *ngIf="
+                    (newApplicationFrom.get('dob')?.touched || formSubmit) &&
+                    newApplicationFrom.get('dob')?.errors
+                  "
+                >
+                  <span
+                    class="text-red-600"
+                    *ngIf="newApplicationFrom.get('dob')?.hasError('required')"
+                    >Geburtsdatum Pflichtfeld</span
+                  >
+                </span>
+              </div>
+
+              <div class="col-12">
+                <p-floatlabel class="w-full md:w-56" variant="on">
+                  <input
+                    type="text"
+                    class="w-full"
+                    pInputText
+                    formControlName="address"
+                  />
+                  <label for="on_label"
+                    >Addresse
+                    <span
+                      class="text-red-600"
+                      *ngIf="
+                        newApplicationFrom.get('address')?.touched &&
+                        newApplicationFrom.get('address')?.invalid
+                      "
+                      >*</span
+                    >
+                  </label>
+                </p-floatlabel>
+                <span
+                  class="text-sm"
+                  *ngIf="
+                    (newApplicationFrom.get('address')?.touched ||
+                      formSubmit) &&
+                    newApplicationFrom.get('address')?.errors
+                  "
+                >
+                  <span
+                    class="text-red-600"
+                    *ngIf="
+                      newApplicationFrom.get('address')?.hasError('required')
+                    "
+                    >Addresse Pflichtfeld</span
+                  >
+                </span>
+              </div>
+
+              <div class="col-12 pb-3">
+                <p-floatlabel class="w-full" variant="on">
+                  <textarea
+                    rows="5"
+                    cols="30"
+                    class="w-full"
+                    formControlName="description"
+                    pTextarea
+                  ></textarea>
+                  <label for="on_label">Beschreibung</label>
+                </p-floatlabel>
+              </div>
+            </div>
+          </p-fieldset>
+        </div>
+
+        <div class="mt-3">
+          <p-fieldset legend="Additional Information">
+            <div class="grid pt-2">
+              <div class="col-6">
+                <p-floatlabel class="w-full" variant="on">
+                  <input
+                    type="text"
+                    pInputText
+                    class="w-full"
+                    formControlName="qualification"
+                  />
+                  <label for="on_label">Bildungsabschluss </label>
+                </p-floatlabel>
+              </div>
+
+              <div class="col-6">
+                <p-floatlabel class="w-full" variant="on">
+                  <input
+                    type="text"
+                    pInputText
+                    class="w-full"
+                    formControlName="numOfChildren"
+                  />
+                  <label for="on_label">Kinder Anzahl </label>
+                </p-floatlabel>
+              </div>
+
+              <div class="col-6">
+                <p-floatlabel class="w-full" variant="on">
+                  <input
+                    type="text"
+                    pInputText
+                    class="w-full"
+                    formControlName="occupation"
+                  />
+                  <label for="on_label">Beruf des Ehe Partners</label>
+                </p-floatlabel>
+              </div>
+
+              <div class="col-6">
+                <p-floatlabel class="w-full" variant="on">
+                  <input
+                    type="text"
+                    pInputText
+                    class="w-full"
+                    formControlName="fsb"
+                  />
+                  <label for="on_label">FSB</label>
+                </p-floatlabel>
+              </div>
+
+              <div class="col-6">
+                <p-floatlabel class="w-full" variant="on">
+                  <p-select
+                    formControlName="jobType"
+                    inputId="on_label"
+                    [options]="jobTypes"
+                    appendTo="body"
+                    [loading]="getApiLoader"
+                    optionLabel="name"
+                    styleClass="w-full"
+                  />
+                  <label for="on_label">Voll-Teil</label>
+                </p-floatlabel>
+              </div>
+
+              <div class="col-6">
+                <p-floatlabel class="w-full" variant="on">
+                  <input
+                    type="text"
+                    pInputText
+                    class="w-full"
+                    formControlName="approval"
+                  />
+                  <label for="on_label">Vorabzustimmung</label>
+                </p-floatlabel>
+              </div>
+
+              <div class="col-6">
+                <p-floatlabel class="w-full" variant="on">
+                  <input
+                    type="text"
+                    pInputText
+                    class="w-full"
+                    formControlName="applicationNo"
+                  />
+                  <label for="on_label">Antragnummer §81a</label>
+                </p-floatlabel>
+              </div>
+
+              <div class="col-6">
+                <p-floatlabel class="w-full" variant="on">
+                  <input
+                    type="text"
+                    pInputText
+                    class="w-full"
+                    formControlName="visa"
+                  />
+                  <label for="on_label">Visa</label>
+                </p-floatlabel>
+              </div>
+
+              <div class="col-6">
+                <p-floatlabel class="w-full" variant="on">
+                  <input
+                    type="text"
+                    pInputText
+                    class="w-full"
+                    formControlName="startofWork"
+                  />
+                  <label for="on_label">Arbeitsbeginn</label>
+                </p-floatlabel>
+              </div>
+
+              <div class="col-6">
+                <p-floatlabel class="w-full" variant="on">
+                  <input
+                    type="text"
+                    pInputText
+                    class="w-full"
+                    formControlName="contractCadidate"
+                  />
+                  <label for="on_label">Vertrag Kandidaten Pers2 / Koop</label>
+                </p-floatlabel>
+              </div>
+
+              <div class="col-6">
+                <p-floatlabel class="w-full" variant="on">
+                  <input
+                    type="text"
+                    pInputText
+                    class="w-full"
+                    formControlName="dateOfContract"
+                  />
+                  <label for="on_label">Datum des Vertrags mit Perso 2</label>
+                </p-floatlabel>
+              </div>
+
+              <div class="col-6">
+                <p-floatlabel class="w-full" variant="on">
+                  <input
+                    type="text"
+                    pInputText
+                    class="w-full"
+                    formControlName="employerContact"
+                  />
+                  <label for="on_label"
+                    >Vertrag Arbeitgeber Direkt / Koop</label
+                  >
+                </p-floatlabel>
+              </div>
+
+              <div class="col-6">
+                <p-floatlabel class="w-full" variant="on">
+                  <input
+                    type="text"
+                    pInputText
+                    class="w-full"
+                    formControlName="certification"
+                  />
+                  <label for="on_label">Urkunde</label>
+                </p-floatlabel>
+              </div>
+
+              <div class="col-6">
+                <p-floatlabel class="w-full" variant="on">
+                  <p-select
+                    formControlName="langLvl"
+                    inputId="on_label"
+                    [options]="languagesLvl"
+                    appendTo="body"
+                    [loading]="getApiLoader"
+                    optionLabel="name"
+                    styleClass="w-full"
+                  />
+                  <label for="on_label">B1 / B2</label>
+                </p-floatlabel>
+              </div>
+
+              <div class="col-6">
+                <p-floatlabel class="w-full" variant="on">
+                  <input
+                    type="text"
+                    pInputText
+                    class="w-full"
+                    formControlName="status"
+                  />
+                  <label for="on_label">Status</label>
+                </p-floatlabel>
+              </div>
+            </div>
+          </p-fieldset>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

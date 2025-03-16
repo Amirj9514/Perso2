@@ -7,7 +7,7 @@
     @if (activeTab === 1) {
     <app-prozessubersicht [applicant]="applicant"></app-prozessubersicht>
     }@else if(activeTab === 2) {
-    <app-personliche-daten></app-personliche-daten>
+    <app-personliche-daten [applicant]="applicant"></app-personliche-daten>
     }@else if(activeTab === 3) {
     <app-vertrag-perso2 [applicant]="applicant"></app-vertrag-perso2>
     }@else if(activeTab === 4) {
