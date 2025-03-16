@@ -64,8 +64,8 @@ export class PersonlicheDatenComponent {
       phone: new FormControl({ value: '', disabled: true }, [Validators.required]),
       age: new FormControl({ value: '', disabled: true }, [Validators.required]),
       address: new FormControl({ value: '', disabled: true }, [Validators.required]),
-      maritalStatus: new FormControl(null, [Validators.required]),
-      country: new FormControl(null, [Validators.required]),
+      maritalStatus: new FormControl({ value: null, disabled: true }, [Validators.required]),
+      country: new FormControl({ value: null, disabled: true }, [Validators.required]),
       dob: new FormControl({ value: '', disabled: true }, [Validators.required]),
       description: new FormControl({ value: '', disabled: true }),
 
