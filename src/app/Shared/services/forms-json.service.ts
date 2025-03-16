@@ -28,7 +28,7 @@ export class FormsJsonService {
     this.tab7FormJson = this.createTab7FormJson();
     this.tab8FormJson = this.createTab8FormJson();
     this.tab9FormJson = this.createTab9FormJson();
-    // this.tab10FormJson = this.createTab10FormJson();
+    this.tab10FormJson = this.createTab10FormJson();
     this.tab11FormJson = this.createTab11FormJson();
     this.tab12FormJson = this.createTab12FormJson();
   }
@@ -1182,6 +1182,209 @@ export class FormsJsonService {
           {
             lable: 'Rechnung',
             formControl: 'tab9Rechnung',  
+            type: 'file',
+            value: null,
+          },
+        ]
+      }
+    ]
+  }
+
+    // ==============================================================================
+  //       Tab 10 Form Json
+  // ==============================================================================
+
+  private createTab10FormJson() {
+    return [
+      {
+        title:'Krankenhaus Pdh',
+        form:[
+          {
+            lable: '1 Sitzung (+Familie Planung)',
+            formControl: 'tab10Sitzung1R1',
+            type: 'text',
+            value: null,
+            optionLable: 'name',
+            isRequired: true,
+            disable: false,
+          },
+          {
+            lable: '2. Sitzung',
+            formControl: 'tab10Sitzung2R1',
+            type: 'text',
+            value: null,
+            optionLable: 'name',
+            isRequired: true,
+            disable: false,
+          },
+
+          {
+            lable: '3. Sitzung',
+            formControl: 'tab10Sitzung3R1',
+            type: 'text',
+            value: null,
+            optionLable: 'name',
+            isRequired: true,
+            disable: false,
+          },
+          {
+            lable: '4. Sitzung',
+            formControl: 'tab10Sitzung4R1',
+            type: 'text',
+            value: null,
+            optionLable: 'name',
+            isRequired: true,
+            disable: false,
+          },
+          {
+            lable: 'Datein',
+            formControl: 'tab10DateinR1',  
+            type: 'file',
+            value: null,
+          },
+        ]
+      },
+
+      {
+        title:'Fachsprache Pdh',
+        form:[
+          {
+            lable: '1 Sitzung (+Familie Planung)',
+            formControl: 'tab10Sitzung1R2',
+            type: 'text',
+            value: null,
+            optionLable: 'name',
+            isRequired: true,
+            disable: false,
+          },
+          {
+            lable: '2. Sitzung',
+            formControl: 'tab10Sitzung2R2',
+            type: 'text',
+            value: null,
+            optionLable: 'name',
+            isRequired: true,
+            disable: false,
+          },
+
+          {
+            lable: '3. Sitzung',
+            formControl: 'tab10Sitzung3R2',
+            type: 'text',
+            value: null,
+            optionLable: 'name',
+            isRequired: true,
+            disable: false,
+          },
+          {
+            lable: '4. Sitzung',
+            formControl: 'tab10Sitzung4R2',
+            type: 'text',
+            value: null,
+            optionLable: 'name',
+            isRequired: true,
+            disable: false,
+          },
+          {
+            lable: 'Datein',
+            formControl: 'tab10DateinR2',  
+            type: 'file',
+            value: null,
+          },
+        ]
+      },
+      {
+        title:'Atabak',
+        form:[
+          {
+            lable: '1 Sitzung (+Familie Planung)',
+            formControl: 'tab10Sitzung1R3',
+            type: 'text',
+            value: null,
+            optionLable: 'name',
+            isRequired: true,
+            disable: false,
+          },
+          {
+            lable: '2. Sitzung',
+            formControl: 'tab10Sitzung2R3',
+            type: 'text',
+            value: null,
+            optionLable: 'name',
+            isRequired: true,
+            disable: false,
+          },
+
+          {
+            lable: '3. Sitzung',
+            formControl: 'tab10Sitzung3R3',
+            type: 'text',
+            value: null,
+            optionLable: 'name',
+            isRequired: true,
+            disable: false,
+          },
+          {
+            lable: '4. Sitzung',
+            formControl: 'tab10Sitzung4R3',
+            type: 'text',
+            value: null,
+            optionLable: 'name',
+            isRequired: true,
+            disable: false,
+          },
+          {
+            lable: 'Datein',
+            formControl: 'tab10DateinR3',  
+            type: 'file',
+            value: null,
+          },
+        ]
+      },
+      {
+        title:'Atabak',
+        form:[
+          {
+            lable: '1 Sitzung (+Familie Planung)',
+            formControl: 'tab10Sitzung1R4',
+            type: 'text',
+            value: null,
+            optionLable: 'name',
+            isRequired: true,
+            disable: false,
+          },
+          {
+            lable: '2. Sitzung',
+            formControl: 'tab10Sitzung2R4',
+            type: 'text',
+            value: null,
+            optionLable: 'name',
+            isRequired: true,
+            disable: false,
+          },
+
+          {
+            lable: '3. Sitzung',
+            formControl: 'tab10Sitzung3R4',
+            type: 'text',
+            value: null,
+            optionLable: 'name',
+            isRequired: true,
+            disable: false,
+          },
+          {
+            lable: '4. Sitzung',
+            formControl: 'tab10Sitzung4R4',
+            type: 'text',
+            value: null,
+            optionLable: 'name',
+            isRequired: true,
+            disable: false,
+          },
+
+          {
+            lable: 'Datein',
+            formControl: 'tab10DateinR4',  
             type: 'file',
             value: null,
           },
