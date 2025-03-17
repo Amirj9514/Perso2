@@ -22,6 +22,7 @@ import { CustomToastService } from '../Shared/services/custom-toast.service';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { Dialog } from 'primeng/dialog';
+import { CommonService } from '../Shared/services/common.service';
 @Component({
   selector: 'app-vacancies',
   standalone: true,
@@ -53,6 +54,8 @@ export class VacanciesComponent implements OnInit {
 
   newApplicationFrom!: FormGroup;
   flags: any[] = [];
+  enrollmentList: any[] = [];
+  subCategoryList: any[] = [];
   formSubmit: boolean | undefined;
   getApiLoader: boolean = false;
   selectedRow: any = null;
@@ -62,7 +65,8 @@ export class VacanciesComponent implements OnInit {
   constructor(
     private flagS: FlagsService,
     private sharedS: SharedService,
-    private toastS: CustomToastService
+    private toastS: CustomToastService,
+    private commonS:CommonService
   ) {
     this.newApplicationFrom = new FormGroup({
       role: new FormControl(null, [Validators.required]),
@@ -70,6 +74,8 @@ export class VacanciesComponent implements OnInit {
       country: new FormControl(null),
       description: new FormControl(null),
     });
+
+    this.enrollmentList  = this.commonS.getEnrollmentCategories();
   }
 
   ngOnInit(): void {
@@ -79,8 +85,6 @@ export class VacanciesComponent implements OnInit {
 
   handelSearch(event: any) {
     const value = event.target.value;
-    console.log(value);
-
     this.dt2.filterGlobal(value, 'contains');
   }
 
@@ -115,13 +119,15 @@ export class VacanciesComponent implements OnInit {
 
     const apiParam = {
       ...formValue,
+      
+      title: JSON.stringify(formValue?.role) ?? '',
+      category: formValue?.role.name ?? '',
+      role: formValue?.company.name ?? '',
       location: formValue?.country?.name ?? '',
-      title: formValue?.role ?? '',
-      category: formValue?.company ?? '',
-      country: formValue?.country?.name ?? '',
-      description: formValue?.description ?? '',
+      description: JSON.stringify(formValue?.company) ?? '',
     };
     this.formSubmit = true;
+
     this.sharedS.sendPostRequest('vacancies', apiParam).subscribe({
       next: (response) => {
         this.formSubmit = false;
@@ -173,5 +179,9 @@ export class VacanciesComponent implements OnInit {
 
   closeCallback(e: any): void {
     this.drawerRef.close(e);
+  }
+
+  onEnroolmentChange(event: any): void {
+    this.subCategoryList = event?.subCategories ?? []; 
   }
 }

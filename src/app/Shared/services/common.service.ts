@@ -67,6 +67,166 @@ export class CommonService {
     { id: 3, name: 'IN BEARBEITUNG' , color: 'orange'},
   ]
 
+
+  private enrollmentCategories = [
+    {
+      id:1,
+      name: 'Gesundheitswesen',
+      subCatCode:'healthcare',
+      subCategories: [
+        {
+          id:'healthcare_1',
+          name: 'Pflege',
+        },
+        {
+          id: 'healthcare_2',
+          name: 'OTA'
+        },
+        {
+          id: 'healthcare_3',
+          name: 'ATA'
+        },
+        {
+          id: 'healthcare_4',
+          name: 'MTRA'
+        },
+        {
+          id: 'healthcare_5',
+          name: 'MTLA'
+        },
+        {
+          id: 'healthcare_6',
+          name: 'MPhiysiotherapeutenFA'
+        },
+        {
+          id: 'healthcare_7',
+          name: 'ZFA / MFA',
+        },
+        {
+          id: 'healthcare_8',
+          name: 'Hebammen'
+        },
+        {
+          id: 'healthcare_9',
+          name: 'Sportwissenschaften',
+        },
+       
+      ]
+    },
+    {
+      id:2,
+      name: 'Facharbeiter',
+      subCatCode:'worker',
+      subCategories: [
+        {
+          id:'worker_1',
+          name: 'Elektriker / Elekromechaniker',
+        },
+        {
+          id: 'worker_2',
+          name: 'Mechaniker/ Mechatroniker Arbeit'
+        },
+        {
+          id: 'worker_3',
+          name: 'Bauarbeiter'
+        },
+        {
+          id: 'worker_4',
+          name: 'Fahrer / Spedition'
+        },
+        {
+          id: 'worker_5',
+          name: 'Kälte / Wärme'
+        },
+        {
+          id: 'worker_6',
+          name: 'Logistiker'
+        },
+        {
+          id: 'worker_7',
+          name: 'Koch / Gastonomie'
+        },
+        {
+          id: 'worker_8',
+          name: 'Hotel'
+        },
+      ]
+    },
+    {
+      id:3,
+      name:'Fachkraft',
+      subCatCode:'professional',
+      subCategories: [
+        {
+          id:'professional_1',
+          name: 'Erlektroigeneur'
+        },
+        {
+          id: 'professional_2',
+          name: 'Maschienenbauigeneuere'
+        },
+        {
+          id: 'professional_3',
+          name: 'IT'
+        },
+        {
+          id: 'professional_4',
+          name: 'Bauingeneur'
+        },
+        {
+          id: 'professional_5',
+          name: 'Industrie'
+        },
+        {
+          id: 'professional_6',
+          name: 'Erziehungswissenschaft'
+        },
+      ]
+    },
+    {
+      id:4,
+      name:'Auszubildenen',
+      subCatCode:'trainee',
+      subCategories: [
+        {
+          id:'trainee_1',
+          name: 'Pflegefachkraft'
+        },
+        {
+          id: 'trainee_2',
+          name: 'Pflegehelfer'
+        },
+        {
+          id:'trainee_3',
+          name: 'ZFA'
+        },
+        {
+          id: 'trainee_4',
+          name: 'MFA'
+        },
+        {
+          id:'trainee_5',
+          name: 'Physiotherapie'
+        },
+        {
+          id: 'trainee_6',
+          name: 'Ehrzieher'
+        },
+        {
+          id:'trainee_7',
+          name: 'Fahrer'
+        },
+        {
+          id: 'trainee_8',
+          name: 'Gastronomie'
+        },
+        {
+          id: 'trainee_9',
+          name: 'Hotel'
+        },
+      ]
+    }
+  ]
   
 
   getRoles() {
@@ -87,5 +247,9 @@ export class CommonService {
 
   getColors() {
     return this.colors;
+  }
+
+  getEnrollmentCategories() {
+    return this.enrollmentCategories;
   }
 }

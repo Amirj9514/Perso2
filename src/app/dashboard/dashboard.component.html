@@ -147,14 +147,15 @@
                     <p-select
                       formControlName="enrollment"
                       inputId="on_label"
-                      [options]="vacancies"
+                      (ngModelChange)="onEnrollmentChange($event)"
+                      [options]="enrollmentCategory"
                       appendTo="body"
                       [loading]="getApiLoader"
-                      optionLabel="role"
+                      optionLabel="name"
                       styleClass="w-full"
                     />
                     <label for="on_label"
-                      >Position
+                      >Category
                       <span
                         class="text-red-600"
                         *ngIf="
@@ -178,6 +179,48 @@
                       *ngIf="
                         newApplicationFrom
                           .get('enrollment')
+                          ?.hasError('required')
+                      "
+                      >Category date Pflichtfeld</span
+                    >
+                  </span>
+                </div>
+                <div class="col-6">
+                  <p-floatlabel class="w-full md:w-56" variant="on">
+                    <p-select
+                      formControlName="sub_category"
+                      inputId="on_label"
+                      [options]="selectedSubCategory"
+                      appendTo="body"
+                      [loading]="getApiLoader"
+                      optionLabel="name"
+                      styleClass="w-full"
+                    />
+                    <label for="on_label"
+                      >Position
+                      <span
+                        class="text-red-600"
+                        *ngIf="
+                          newApplicationFrom.get('sub_category')?.touched &&
+                          newApplicationFrom.get('sub_category')?.invalid
+                        "
+                        >*</span
+                      >
+                    </label>
+                  </p-floatlabel>
+                  <span
+                    class="text-sm"
+                    *ngIf="
+                      (newApplicationFrom.get('sub_category')?.touched ||
+                        formSubmit) &&
+                      newApplicationFrom.get('sub_category')?.errors
+                    "
+                  >
+                    <span
+                      class="text-red-600"
+                      *ngIf="
+                        newApplicationFrom
+                          .get('sub_category')
                           ?.hasError('required')
                       "
                       >Position date Pflichtfeld</span

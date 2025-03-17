@@ -76,7 +76,11 @@ export class DashboardComponent implements OnInit {
   activeRole: string = '';
 
   languagesLvl: any[] = [];
+  enrollmentCategory: any[] = [];
+
   jobTypes: any[] = [];
+
+  selectedSubCategory: any = null;
 
   constructor(
     private commonS: CommonService,
@@ -90,6 +94,7 @@ export class DashboardComponent implements OnInit {
     this.newApplicationFrom = new FormGroup({
       appledDate: new FormControl('', [Validators.required]),
       enrollment: new FormControl(null, [Validators.required]),
+      sub_category: new FormControl(null, [Validators.required]),
       firstName: new FormControl('', [Validators.required]),
       lastName: new FormControl('', [Validators.required]),
       email: new FormControl('', [Validators.required, Validators.email]),
@@ -123,6 +128,7 @@ export class DashboardComponent implements OnInit {
     this.countryList = this.flagS.getFlagsList();
     this.languagesLvl = this.commonS.getLanguagesLvl();
     this.jobTypes = this.commonS.getJobTypes();
+    this.enrollmentCategory = this.commonS.getEnrollmentCategories();
   }
 
   ngOnInit(): void {
@@ -138,6 +144,8 @@ export class DashboardComponent implements OnInit {
   }
 
   onSubmit(): void {
+
+   
     if (this.newApplicationFrom.invalid) {
       this.newApplicationFrom.markAllAsTouched(); // Ensure all validation errors appear
       return;
@@ -167,7 +175,7 @@ export class DashboardComponent implements OnInit {
 
     const apiParam = {
       applied_at: formValue.appledDate ?? '',
-      vacancy_id: formValue.enrollment?.id ?? '',
+      vacancy_id: 7,
       first_name: formValue.firstName ?? '',
       last_name: formValue.lastName ?? '',
       email: formValue.email ?? '',
@@ -180,8 +188,16 @@ export class DashboardComponent implements OnInit {
       country: formValue.country.name ?? '',
       description: formValue.description ?? '',
       additional_data: jsonString,
+      sub_category:JSON.stringify ({
+        catId: formValue.enrollment?.id ?? '',
+        cat_name: formValue.enrollment?.name ?? '',
+        subCatId: formValue.sub_category?.id ?? '',
+        sub_cat_name: formValue.sub_category?.name ?? '',
+      }),
     };
     this.formSubmit = true;
+
+    console.log('this.newApplicationFrom', apiParam);
 
     let url = `applications`;
     if (this.isEdit) {
@@ -243,6 +259,11 @@ export class DashboardComponent implements OnInit {
           const data: any = response?.body?.applications ?? [];
 
           data.map((item: any) => {
+            let category = null
+            if(item.sub_category){
+              category = JSON.parse(item.sub_category)
+            }
+           
             const val = {
               id: item.id,
               applied_at: item.applied_at,
@@ -257,6 +278,8 @@ export class DashboardComponent implements OnInit {
               date_of_birth: item.date_of_birth,
               country: item.country,
               description: item.description,
+              sub_category:item.sub_category,
+              category: category,
               vacancieName: this.getVacancieById(item.vacancy_id),
               additional_data: item.additional_data,
               tab_1: item.tab_1,
@@ -270,7 +293,7 @@ export class DashboardComponent implements OnInit {
               tab_9: item.tab_9,
               tab_10: item.tab_10,
               tab_11: item.tab_11,
-            };
+            }; 
             this.products.push(val);
           });
         } else {
@@ -305,6 +328,29 @@ export class DashboardComponent implements OnInit {
         this.getApiLoader = false;
       },
     });
+  }
+
+  getCategoryById(id: number) {
+    let selectedEnrolment:any =  null
+    for (const enrollment of this.enrollmentCategory) {
+      if(enrollment.id === id){
+        selectedEnrolment = enrollment;
+        break;
+      };   
+    }
+
+    return selectedEnrolment;
+  }
+
+  getSubcategoryById( id:any) {
+    let selectedSubCategory:any = null;
+    for (const subCategory of this.selectedSubCategory) {
+      if(subCategory.id === id){
+        selectedSubCategory = subCategory;
+        break;
+      }
+    }
+    return selectedSubCategory;
   }
 
   getVacancieById(id: number) {
@@ -357,13 +403,22 @@ export class DashboardComponent implements OnInit {
   }
 
   editDetail(product: any) {
+    console.log(product);
+    
     this.viewDetails = false;
+
     this.isEdit = true;
     this.visible = true;
     this.selectedRow = product;
-    const vacance = this.vacancies.find(
-      (item) => item.id === product.vacancy_id
-    );
+    const category = this.selectedRow.category;
+
+    
+   const selectedEnrol = this.getCategoryById(category.catId);
+   this.selectedSubCategory = selectedEnrol?.subCategories ?? [];
+   const selectedSubCategory = this.getSubcategoryById(category.subCatId);
+
+   console.log('product',selectedSubCategory );
+    // const category = this.getCategoryById()
 
     const dob = new Date(product.date_of_birth);
     const additionalData = product.additional_data
@@ -371,7 +426,8 @@ export class DashboardComponent implements OnInit {
       : {};
     this.newApplicationFrom.patchValue({
       appledDate: product.applied_at,
-      enrollment: vacance,
+      enrollment: selectedEnrol,
+      sub_category: selectedSubCategory,
       firstName: product.first_name,
       lastName: product.last_name,
       email: product.email,
@@ -391,5 +447,9 @@ export class DashboardComponent implements OnInit {
   openDetail(row: any) {
     this.applicantS.updateSelectedApplicant(row);
     this.router.navigateByUrl(`/applicant/${row.id}`);
+  }
+
+  onEnrollmentChange(event: any) {
+   this.selectedSubCategory = event?.subCategories ?? []
   }
 }

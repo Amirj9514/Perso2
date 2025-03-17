@@ -31,6 +31,7 @@
     >
       <ng-template #header>
         <tr>
+          <th style="width: 25%">Category</th>
           <th style="width: 25%">Position</th>
           <!-- <th style="width: 25%">Arbeitgeber</th>
           <th style="width: 25%">Stadt</th>
@@ -43,18 +44,21 @@
         <tr>
           <td><p-skeleton /></td>
           <td><p-skeleton /></td>
+          <td><p-skeleton /></td>
           <!-- <td><p-skeleton /></td>
           <td><p-skeleton /></td>
           <td><p-skeleton /></td> -->
         </tr>
         }@else{
         <tr>
-          <td style="width: 80%">{{ product.role }}</td>
+          <td>{{ product?.category || 'N/A' }}</td>
+          <td>{{ product.role }}</td>
           <!-- <td>{{ product.category }}</td>
           <td>{{ product.location }}</td>
           <td>{{ product.description }}</td> -->
           <td style="width: 130px">
             <p-button
+            [disabled]="product.id <8"
               icon="pi pi-trash"
               (onClick)="deleteRole(product)"
               [text]="true"
@@ -102,6 +106,90 @@
               <div class="grid pt-2">
                 <div class="col-12 pb-3">
                   <p-floatlabel class="w-full md:w-56" variant="on">
+                    <p-select
+                      formControlName="role"
+                      inputId="on_label"
+                      [options]="enrollmentList"
+                      (ngModelChange)="onEnroolmentChange($event)"
+                      appendTo="body"
+                      optionLabel="name"
+                      styleClass="w-full"
+                      [filter]="true"
+                      filterBy="name"
+                    />
+                    <label for="on_label"
+                      >Category
+                      <span
+                        class="text-red-600"
+                        *ngIf="
+                          newApplicationFrom.get('role')?.touched &&
+                          newApplicationFrom.get('role')?.invalid
+                        "
+                        >*</span
+                      >
+                    </label>
+                  </p-floatlabel>
+                  <span
+                    class="text-sm"
+                    *ngIf="
+                      (newApplicationFrom.get('role')?.touched ||
+                        formSubmit) &&
+                      newApplicationFrom.get('role')?.errors
+                    "
+                  >
+                    <span
+                      class="text-red-600"
+                      *ngIf="
+                        newApplicationFrom.get('role')?.hasError('required')
+                      "
+                      >Category Pflichtfeld</span
+                    >
+                  </span>
+                </div>
+
+                <div class="col-12 pb-3">
+                  <p-floatlabel class="w-full md:w-56" variant="on">
+                    <p-select
+                      formControlName="company"
+                      inputId="on_label"
+                      [options]="subCategoryList"
+                      appendTo="body"
+                      optionLabel="name"
+                      styleClass="w-full"
+                      [filter]="true"
+                      filterBy="name"
+                    />
+                    <label for="on_label"
+                      >Position  
+                      <span
+                        class="text-red-600"
+                        *ngIf="
+                          newApplicationFrom.get('company')?.touched &&
+                          newApplicationFrom.get('company')?.invalid
+                        "
+                        >*</span
+                      >
+                    </label>
+                  </p-floatlabel>
+                  <span
+                    class="text-sm"
+                    *ngIf="
+                      (newApplicationFrom.get('company')?.touched ||
+                        formSubmit) &&
+                      newApplicationFrom.get('company')?.errors
+                    "
+                  >
+                    <span
+                      class="text-red-600"
+                      *ngIf="
+                        newApplicationFrom.get('company')?.hasError('required')
+                      "
+                      >Position Pflichtfeld</span
+                    >
+                  </span>
+                </div>
+                <!-- <div class="col-12 pb-3">
+                  <p-floatlabel class="w-full md:w-56" variant="on">
                     <input
                       type="text"
                       pInputText
@@ -135,7 +223,7 @@
                       >Position Pflichtfeld</span
                     >
                   </span>
-                </div>
+                </div> -->
                 <!-- <div class="col-12 pb-3">
                   <p-floatlabel class="w-full md:w-56" variant="on">
                     <input
