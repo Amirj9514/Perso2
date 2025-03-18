@@ -30,25 +30,31 @@
 
   <div class="body h-full">
     @for (tabSection of tab2FormJson; track $index) {
-    <div class="cardSection">
-      <div class="title">{{ tabSection?.title }}</div>
-      <div class="text-500 text-sm pt-1">{{tabSection?.discription}}</div>
-      <div class="content mt-5">
-        <div class="grid">
-          @for (feild of tabSection.form; track $index) {
-          <div class="col-12 md:col-4">
-            <app-file-input
-              [controlName]="feild.formControl"
-              [lable]="feild.lable"
-              [applicatanData]="applicant"
-              (uploadFile)="onFileUpload($event)"
-              (deleteFile)="onFileDelete($event)"
-            ></app-file-input>
+
+      @if (includeTheRole(tabSection)) {
+        <div class="cardSection">
+          <div class="title">{{ tabSection?.title }}</div>
+          <div class="text-500 text-sm pt-1">{{tabSection?.discription}}</div>
+          <div class="content mt-5">
+            <div class="grid">
+              @for (feild of tabSection.form; track $index) {
+                @if (includeTheRole(feild)) {
+                  <div class="col-12 md:col-4">
+                    <app-file-input
+                      [controlName]="feild.formControl"
+                      [lable]="feild.lable"
+                      [applicatanData]="applicant"
+                      (uploadFile)="onFileUpload($event)"
+                      (deleteFile)="onFileDelete($event)"
+                    ></app-file-input>
+                  </div>
+                }   
+              }
+            </div>
           </div>
-          }
         </div>
-      </div>
-    </div>
+      }
+   
     }
   </div>
 </div>

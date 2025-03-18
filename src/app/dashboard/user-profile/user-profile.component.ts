@@ -45,6 +45,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   activeTab: number = 1;
   applicant: any;
   documentList: any[] = [];
+
+  categoory:string = 'healthcare';
   private applicantSubscription!: Subscription;
   constructor(
     private applicantS: ApplicantService,
@@ -62,6 +64,13 @@ export class UserProfileComponent implements OnInit, OnDestroy {
           return;
         }
         this.applicant = data;
+
+        if(data.sub_category){
+          const sub_category = JSON.parse(data.sub_category);
+          const cat = sub_category.subCatId;
+          const parts = cat.split("_");
+          this.categoory = parts[0] ?? 'healthcare';
+        }        
       });
 
     this.getApplicantFileList();

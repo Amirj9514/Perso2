@@ -37,6 +37,7 @@ import { Router } from '@angular/router';
 })
 export class PersonlicheDatenComponent {
   @Input() applicant: any;
+  @Input() categoory: string = 'healthcare';
   maritalStatus: any[] = [];
   countryList: any[] = [];
   languagesLvl: any[] = [];

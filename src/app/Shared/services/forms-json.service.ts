@@ -50,6 +50,7 @@ export class FormsJsonService {
             optionLable: 'name',
             isRequired: true,
             disable: false,
+            activeIn:['healthcare','worker' , 'professional' , 'trainee'],
           },
           {
             lable: 'Leg/Beg',
@@ -60,6 +61,7 @@ export class FormsJsonService {
             optionLable: 'name',
             isRequired: true,
             disable: false,
+            activeIn:['healthcare','worker' , 'professional' , 'trainee'],
           },
           {
             lable: 'Sprachniveo',
@@ -74,6 +76,7 @@ export class FormsJsonService {
             optionLable: 'name',
             isRequired: true,
             disable: false,
+            activeIn:['healthcare','worker' , 'professional' , 'trainee'],
           },
           {
             lable: 'Sprachzertifikat',
@@ -90,6 +93,7 @@ export class FormsJsonService {
             optionLable: 'name',
             isRequired: true,
             disable: false,
+            activeIn:['healthcare','worker' , 'professional' , 'trainee'],
           },
 
           {
@@ -101,6 +105,7 @@ export class FormsJsonService {
             optionLable: 'name',
             isRequired: true,
             disable: false,
+            activeIn:['healthcare','worker' , 'professional'],
           },
 
           {
@@ -112,6 +117,29 @@ export class FormsJsonService {
             optionLable: 'name',
             isRequired: true,
             disable: false,
+            activeIn:['healthcare'],
+          },
+          {
+            lable: 'IHK/HWK',
+            formControl: 'bewIhkhwk',
+            type: 'text',
+            value: null,
+            options: this.statusList,
+            optionLable: 'name',
+            isRequired: true,
+            disable: false,
+            activeIn:['worker'],
+          },
+          {
+            lable: 'Anerkennung',
+            formControl: 'bewAnerkennung',
+            type: 'select',
+            value: null,
+            options: this.statusList,
+            optionLable: 'name',
+            isRequired: true,
+            disable: false,
+            activeIn:['trainee'],
           },
         ],
       },
@@ -127,6 +155,7 @@ export class FormsJsonService {
             optionLable: 'name',
             isRequired: true,
             disable: false,
+            activeIn:['healthcare','worker' , 'professional' , 'trainee'],
           },
           {
             lable: 'Anererkennung',
@@ -137,6 +166,40 @@ export class FormsJsonService {
             optionLable: 'name',
             isRequired: true,
             disable: false,
+            activeIn:['healthcare'],
+          },
+          {
+            lable: 'Anerkennung',
+            formControl: 'proAnerkennung',
+            type: 'select',
+            value: null,
+            options: this.statusList,
+            optionLable: 'name',
+            isRequired: true,
+            disable: false,
+            activeIn:['trainee'],
+          },
+          {
+            lable: 'ZAB',
+            formControl: 'proZAB',
+            type: 'select',
+            value: null,
+            options: this.statusList,
+            optionLable: 'name',
+            isRequired: true,
+            disable: false,
+            activeIn:['worker','professional'],
+          },
+          {
+            lable: 'IHK/HWK',
+            formControl: 'proIHKHWK',
+            type: 'text',
+            value: null,
+            options: this.statusList,
+            optionLable: 'name',
+            isRequired: true,
+            disable: false,
+            activeIn:['worker' , 'professional'],
           },
           {
             lable: 'Bescheid',
@@ -147,6 +210,7 @@ export class FormsJsonService {
             optionLable: 'name',
             isRequired: true,
             disable: false,
+            activeIn:['healthcare' , 'worker' , 'professional' , 'trainee'],
           },
           {
             lable: '§81a ',
@@ -157,6 +221,7 @@ export class FormsJsonService {
             optionLable: 'name',
             isRequired: true,
             disable: false,
+            activeIn:['healthcare','worker' ,'professional' , 'trainee'],
           },
           {
             lable: 'Vereinbarung',
@@ -167,6 +232,7 @@ export class FormsJsonService {
             optionLable: 'name',
             isRequired: true,
             disable: false,
+            activeIn:['healthcare' , 'worker' , 'professional' , 'trainee'],
           },
           {
             lable: 'VAZ',
@@ -177,6 +243,7 @@ export class FormsJsonService {
             optionLable: 'name',
             isRequired: true,
             disable: false,
+            activeIn:['healthcare' , 'worker', 'professional' , 'trainee'],
           },
           {
             lable: 'Konsulat',
@@ -187,6 +254,7 @@ export class FormsJsonService {
             optionLable: 'name',
             isRequired: true,
             disable: false,
+            activeIn:['healthcare' , 'worker' , 'professional' , 'trainee'],
           },
           {
             lable: 'Unterkunft',
@@ -197,6 +265,7 @@ export class FormsJsonService {
             optionLable: 'name',
             isRequired: true,
             disable: false,
+            activeIn:['healthcare' , 'worker', 'professional' , 'trainee'],
           },
           {
             lable: 'Visum',
@@ -207,6 +276,7 @@ export class FormsJsonService {
             optionLable: 'name',
             isRequired: true,
             disable: false,
+            activeIn:['healthcare' , 'worker', 'professional' , 'trainee'],
           },
         ],
       },
@@ -222,6 +292,7 @@ export class FormsJsonService {
             optionLable: 'name',
             isRequired: true,
             disable: false,
+            activeIn:['healthcare','worker' , 'professional' , 'trainee'],
           },
           {
             lable: 'Versicherung',
@@ -232,6 +303,7 @@ export class FormsJsonService {
             optionLable: 'name',
             isRequired: true,
             disable: false,
+            activeIn:['healthcare' , 'worker' , 'professional', 'trainee'],
           },
           {
             lable: 'Visa AG',
@@ -242,6 +314,7 @@ export class FormsJsonService {
             optionLable: 'name',
             isRequired: true,
             disable: false,
+            activeIn:['healthcare', 'worker', 'professional', 'trainee'],
           },
           {
             lable: '3 Terminvorschläge',
@@ -252,6 +325,7 @@ export class FormsJsonService {
             optionLable: 'name',
             isRequired: true,
             disable: false,
+            activeIn:['healthcare', 'worker', 'professional', 'trainee'],
           },
           {
             lable: 'Transfer',
@@ -262,6 +336,7 @@ export class FormsJsonService {
             optionLable: 'name',
             isRequired: true,
             disable: false,
+            activeIn:['healthcare', 'worker', 'professional', 'trainee'],
           },
           {
             lable: '1 Arbeitstag',
@@ -272,6 +347,7 @@ export class FormsJsonService {
             optionLable: 'name',
             isRequired: true,
             disable: false,
+            activeIn:['healthcare', 'worker', 'professional', 'trainee'],
           },
           {
             lable: 'Wohnanmeldung',
@@ -282,6 +358,7 @@ export class FormsJsonService {
             optionLable: 'name',
             isRequired: true,
             disable: false,
+            activeIn:['healthcare', 'worker', 'professional', 'trainee'],
           },
           {
             lable: 'Bank',
@@ -292,6 +369,7 @@ export class FormsJsonService {
             optionLable: 'name',
             isRequired: true,
             disable: false,
+            activeIn:['healthcare', 'worker', 'professional', 'trainee'],
           },
           {
             lable: 'Ausländerbehörde',
@@ -302,9 +380,10 @@ export class FormsJsonService {
             optionLable: 'name',
             isRequired: true,
             disable: false,
+            activeIn:['healthcare', 'worker', 'professional', 'trainee'],
           },
         ],
-      },
+      }
     ];
   }
 
@@ -324,24 +403,28 @@ export class FormsJsonService {
             formControl: 'vertragPerso2',
             type: 'file',
             value: null,
+            activeIn:['healthcare','worker' , 'professional' , 'trainee'],
           },
           {
             lable: 'Garantie',
             formControl: 'garantie',
             type: 'file',
             value: null,
+            activeIn:['healthcare','worker' , 'professional' , 'trainee'],
           },
           {
             lable: 'Datenschutzerklärung',
             formControl: 'datenschutzerklarung',
             type: 'file',
             value: null,
+            activeIn:['healthcare','worker' , 'professional' , 'trainee'],
           },
           {
             lable: 'Optionale Leistung',
             formControl: 'optionaleLeistung',
             type: 'file',
             value: null,
+            activeIn:['healthcare','worker' , 'professional' , 'trainee'],
           },
         ],
       },
@@ -595,6 +678,7 @@ export class FormsJsonService {
             optionLable: 'name',
             isRequired: true,
             disable: false,
+            activeIn:['healthcare','worker' , 'professional' , 'trainee'],
           },
           {
             lable: 'Ergebnis',
@@ -604,6 +688,7 @@ export class FormsJsonService {
             optionLable: 'name',
             isRequired: true,
             disable: false,
+            activeIn:['healthcare','worker' , 'professional' , 'trainee'],
           },
           {
             lable: 'Ü.1',
@@ -613,6 +698,7 @@ export class FormsJsonService {
             optionLable: 'name',
             isRequired: true,
             disable: false,
+            activeIn:['healthcare','worker' , 'professional' , 'trainee'],
           },
           {
             lable: 'Ü.2',
@@ -622,6 +708,7 @@ export class FormsJsonService {
             optionLable: 'name',
             isRequired: true,
             disable: false,
+            activeIn:['healthcare','worker' , 'professional' , 'trainee'],
           },
           {
             lable: 'Ü.3',
@@ -631,6 +718,7 @@ export class FormsJsonService {
             optionLable: 'name',
             isRequired: true,
             disable: false,
+            activeIn:['healthcare','worker' , 'professional' , 'trainee'],
           },
           {
             lable: 'CV an AG',
@@ -640,6 +728,7 @@ export class FormsJsonService {
             optionLable: 'name',
             isRequired: true,
             disable: false,
+            activeIn:['healthcare','worker' , 'professional' , 'trainee'],
           },
           {
             lable: 'Vorauswahl',
@@ -649,6 +738,7 @@ export class FormsJsonService {
             optionLable: 'name',
             isRequired: true,
             disable: false,
+            activeIn:['healthcare','worker' , 'professional' , 'trainee'],
           },
           {
             lable: 'Datum VG',
@@ -658,6 +748,7 @@ export class FormsJsonService {
             optionLable: 'name',
             isRequired: true,
             disable: false,
+            activeIn:['healthcare','worker' , 'professional' , 'trainee'],
           },
           {
             lable: 'ERGEBNIS',
@@ -667,6 +758,7 @@ export class FormsJsonService {
             optionLable: 'name',
             isRequired: true,
             disable: false,
+            activeIn:['healthcare','worker' , 'professional' , 'trainee'],
           },
         ],
       },
@@ -690,6 +782,17 @@ export class FormsJsonService {
             optionLable: 'name',
             isRequired: true,
             disable: false,
+            activeIn:['healthcare'],
+          },
+          {
+            lable: 'Behörde ',
+            formControl: 'tab6Behorde',
+            type: 'text',
+            value: null,
+            optionLable: 'name',
+            isRequired: true,
+            disable: false,
+            activeIn:['worker' , 'professional' , 'trainee'],
           },
           {
             lable: 'Antrag',
@@ -709,6 +812,7 @@ export class FormsJsonService {
             optionLable: 'name',
             isRequired: true,
             disable: false,
+            activeIn:['healthcare','worker' , 'professional' , 'trainee'],
           },
           {
             lable: 'Antragsdatum',
@@ -718,6 +822,7 @@ export class FormsJsonService {
             optionLable: 'name',
             isRequired: true,
             disable: false,
+            activeIn:['healthcare','worker' , 'professional' , 'trainee'],
           },
           {
             lable: 'Fehlende Unterlagen',
@@ -728,6 +833,7 @@ export class FormsJsonService {
             optionLable: 'name',
             isRequired: true,
             disable: false,
+            activeIn:['healthcare','worker' , 'professional' , 'trainee'],
           },
           {
             lable: 'FU Eingereicht',
@@ -738,6 +844,7 @@ export class FormsJsonService {
             optionLable: 'name',
             isRequired: true,
             disable: false,
+            activeIn:['healthcare','worker' , 'professional' , 'trainee'],
           },
           {
             lable: 'Vollständig',
@@ -748,58 +855,67 @@ export class FormsJsonService {
             optionLable: 'name',
             isRequired: true,
             disable: false,
+            activeIn:['healthcare','worker' , 'professional' , 'trainee'],
           },
-
+  
           {
             lable: 'Antragsformular',
             formControl: 'tab6Antragsformular',
             type: 'file',
             value: null,
+            activeIn:['healthcare','worker' , 'professional' , 'trainee'],
           },
-
+  
           {
             lable: 'Vollmacht',
             formControl: 'tab6Vollmacht',
             type: 'file',
             value: null,
+            activeIn:['healthcare','worker' , 'professional' , 'trainee'],
           },
-
+  
           {
             lable: 'Umschreibung',
             formControl: 'tab6Umschreibung',
             type: 'file',
             value: null,
+            activeIn:['healthcare'],
           },
-
+  
           {
             lable: 'Verzicht',
             formControl: 'tab6Verzicht',
             type: 'file',
             value: null,
+            activeIn:['healthcare'],
           },
           {
             lable: 'Goodstanding',
             formControl: 'tab6Goodstanding',
             type: 'file',
             value: null,
+            activeIn:['healthcare'],
           },
           {
             lable: 'Gesundheitszeugnis',
             formControl: 'tab6Gesundheitszeugnis',
             type: 'file',
             value: null,
+            activeIn:['healthcare'],
           },
           {
             lable: 'Führungszeugnis',
             formControl: 'tab6Fuhrungszeugnis',
             type: 'file',
             value: null,
+            activeIn:['healthcare'],
           },
           {
             lable: 'Bescheid',
             formControl: 'tab6Bescheid',
             type: 'file',
             value: null,
+            activeIn:['healthcare','worker' , 'professional' , 'trainee'],
           },
         ],
       },
@@ -823,6 +939,7 @@ export class FormsJsonService {
             optionLable: 'name',
             isRequired: true,
             disable: false,
+            activeIn:['healthcare','worker' , 'professional' , 'trainee'],
           },
   
           {
@@ -833,6 +950,7 @@ export class FormsJsonService {
             optionLable: 'name',
             isRequired: true,
             disable: false,
+            activeIn:['healthcare','worker', 'professional' , 'trainee'],
           },
           {
             lable: 'Fehlende Unterlagen',
@@ -842,6 +960,7 @@ export class FormsJsonService {
             optionLable: 'name',
             isRequired: true,
             disable: false,
+            activeIn:['healthcare','worker', 'professional' , 'trainee'],
           },
           {
             lable: 'FU Eingereicht',
@@ -851,6 +970,7 @@ export class FormsJsonService {
             optionLable: 'name',
             isRequired: true,
             disable: false,
+            activeIn:['healthcare','worker', 'professional' , 'trainee'],
           },
           {
             lable: 'Vollständig',
@@ -861,6 +981,7 @@ export class FormsJsonService {
             optionLable: 'name',
             isRequired: true,
             disable: false,
+            activeIn:['healthcare','worker', 'professional' , 'trainee'],
           },
           {
             lable: 'Vereinbarung',
@@ -871,6 +992,7 @@ export class FormsJsonService {
             optionLable: 'name',
             isRequired: true,
             disable: false,
+            activeIn:['healthcare','worker', 'professional' , 'trainee'],
           },
           {
             lable: 'VAZ',
@@ -881,88 +1003,102 @@ export class FormsJsonService {
             optionLable: 'name',
             isRequired: true,
             disable: false,
+            activeIn:['healthcare','worker', 'professional' , 'trainee'],
           },
-
-
+  
+  
           {
             lable: 'Arbeitsvertrag',
             formControl: 'tab7Arbeitsvertrag',
             type: 'file',
             value: null,
+            activeIn:['healthcare','worker', 'professional' , 'trainee'],
           },
           {
             lable: 'VollmachtFachkraft',
             formControl: 'tab7VollmachtFachkraft',
             type: 'file',
             value: null,
+            activeIn:['healthcare','worker', 'professional', 'trainee' ],
           },
           {
             lable: 'Untervollmacht',
             formControl: 'tab7Untervollmacht',
             type: 'file',
             value: null,
+            activeIn:['healthcare','worker', 'professional' , 'trainee'],
           },
           {
             lable: 'ErklärungVisa',
             formControl: 'tab7ErklarungVisa',
             type: 'file',
             value: null,
+            activeIn:['healthcare','worker', 'professional' , 'trainee'],
           },
           {
             lable: 'EzB (Teil) ',
             formControl: 'tab7EzbTeil',
             type: 'file',
             value: null,
+            activeIn:['healthcare','worker', 'professional' , 'trainee'],
           }, {
             lable: 'EzB (voll)',
             formControl: 'tab7EzbVoll',
             type: 'file',
             value: null,
+            activeIn:['healthcare','worker', 'professional' , 'trainee'],
           },
           {
             lable: 'Zusatzblatt A',
             formControl: 'tab7ZusatzblattA',
             type: 'file',
             value: null,
+            activeIn:['healthcare','worker', 'professional' , 'trainee'],
           },
           {
             lable: 'VollmachtEhepartner',
             formControl: 'tab7VollmachtEhepartner',
             type: 'file',
             value: null,
+            activeIn:['healthcare','worker', 'professional' , 'trainee'],
           },
           {
             lable: 'VollmachtKinder',
             formControl: 'tab7VollmachtKinder',
             type: 'file',
             value: null,
+            activeIn:['healthcare','worker', 'professional' , 'trainee'],
           },
           {
             lable: 'Vereinbarung',
             formControl: 'tab7Vereinbarung2',
             type: 'file',
             value: null,
+            activeIn:['healthcare','worker', 'professional' , 'trainee'],
           },
           {
             lable: 'VAZ',
             formControl: 'tab7Vaz212',
             type: 'file',
             value: null,
+            activeIn:['healthcare','worker', 'professional' , 'trainee'],
           },
           {
             lable: 'VISA',
             formControl: 'tab7Visa',
             type: 'file',
             value: null,
+            activeIn:['healthcare','worker', 'professional', 'trainee' ],
           },
           {
             lable: 'Einreiseplan',
             formControl: 'tab7Einreiseplan',
             type: 'file',
             value: null,
+            activeIn:['healthcare','worker', 'professional' , 'trainee'],
           },
         ],
-      },
+      }, 
     ];
   }
 
@@ -983,6 +1119,7 @@ export class FormsJsonService {
             optionLable: 'name',
             isRequired: true,
             disable: false,
+            activeIn:['healthcare','worker' , 'professional' , 'trainee'],
           },
   
           {
@@ -993,6 +1130,7 @@ export class FormsJsonService {
             optionLable: 'name',
             isRequired: true,
             disable: false,
+            activeIn:['healthcare','worker', 'professional' , 'trainee']
           },
           {
             lable: 'Fehlende Unterlagen',
@@ -1003,8 +1141,9 @@ export class FormsJsonService {
             optionLable: 'name',
             isRequired: true,
             disable: false,
+            activeIn:['healthcare','worker', 'professional' , 'trainee']
           },
-
+  
           {
             lable: 'FU Eingereicht',
             formControl: 'tab8FUEingereicht',
@@ -1014,8 +1153,9 @@ export class FormsJsonService {
             optionLable: 'name',
             isRequired: true,
             disable: false,
+            activeIn:['healthcare','worker', 'professional' , 'trainee']
           },
-
+  
           {
             lable: 'Vollständig',
             formControl: 'tab8Vollstandig',
@@ -1025,8 +1165,9 @@ export class FormsJsonService {
             optionLable: 'name',
             isRequired: true,
             disable: false,
+            activeIn:['healthcare','worker', 'professional' , 'trainee']
           },
-
+  
           {
             lable: 'UrkundePDF',
             formControl: 'tab8UrkundePDF',
@@ -1036,8 +1177,9 @@ export class FormsJsonService {
             optionLable: 'name',
             isRequired: true,
             disable: false,
+            activeIn:['healthcare','worker', 'professional' , 'trainee']
           },
-
+  
           {
             lable: 'Urkunde Orginal',
             formControl: 'tab8UrkundeOrginal',
@@ -1047,57 +1189,65 @@ export class FormsJsonService {
             optionLable: 'name',
             isRequired: true,
             disable: false,
+            activeIn:['healthcare','worker', 'professional' , 'trainee']
           },
           {
             lable: 'Arbeitsvertrag',
             formControl: 'tab8Arbeitsvertrag',
             type: 'file',
             value: null,
+            activeIn:['healthcare','worker', 'professional' , 'trainee']
           },
           {
             lable: 'Lebenslauf',
             formControl: 'tab8Lebenslauf',
             type: 'file',
             value: null,
+            activeIn:['healthcare','worker', 'professional' , 'trainee']
           },
           {
             lable: 'Bescheid',
             formControl: 'tab8Bescheid',
             type: 'file',
             value: null,
+            activeIn:['healthcare','worker', 'professional' , 'trainee']
           },
           {
             lable: 'B2',
             formControl: 'tab8B2',
             type: 'file',
             value: null,
+            activeIn:['healthcare','worker', 'professional' , 'trainee']
           },
           {
             lable: 'Vollmacht',
             formControl: 'tab8Vollmacht',
             type: 'file',
             value: null,
+            activeIn:['healthcare','worker', 'professional' , 'trainee']
           },
           {
             lable: 'Führungszeugnis',
             formControl: 'tab8Fuhrungszeugnis',
             type: 'file',
             value: null,
+            activeIn:['healthcare','worker', 'professional' , 'trainee']
           },
           {
             lable: 'Gesundheitszeugnis',
             formControl: 'tab8Gesundheitszeugnis',
             type: 'file',
             value: null,
+            activeIn:['healthcare','worker', 'professional' , 'trainee' ]
           },
           {
-            lable: 'Gesundheitszeugnis',
-            formControl: 'tab8Gesundheitszeugnis',  
+            lable: 'Ausweißbeglaubigung',
+            formControl: 'tab8Ausweissbeglaubigung',  
             type: 'file',
             value: null,
+            activeIn:['healthcare','worker', 'professional' , 'trainee']
           },
         ]
-
       }
     ]
   }
@@ -1129,6 +1279,7 @@ export class FormsJsonService {
             optionLable: 'name',
             isRequired: true,
             disable: false,
+            activeIn:['healthcare','worker', 'professional' , 'trainee']
           },
           {
             lable: 'Suche',
@@ -1139,8 +1290,9 @@ export class FormsJsonService {
             optionLable: 'name',
             isRequired: true,
             disable: false,
+            activeIn:['healthcare','worker', 'professional', 'trainee']
           },
-
+  
           {
             lable: 'Kaution',
             formControl: 'tab9Kaution',
@@ -1150,8 +1302,9 @@ export class FormsJsonService {
             optionLable: 'name',
             isRequired: true,
             disable: false,
+            activeIn:['healthcare','worker', 'professional', 'trainee']
           },
-
+  
           {
             lable: '1.Miete',
             formControl: 'tab9Miete1',
@@ -1161,8 +1314,9 @@ export class FormsJsonService {
             optionLable: 'name',
             isRequired: true,
             disable: false,
+            activeIn:['healthcare','worker', 'professional', 'trainee']
           },
-
+  
           {
             lable: 'Wohngeberbescheinigung',
             formControl: 'tab9Wohngeberbescheinigung',
@@ -1172,18 +1326,21 @@ export class FormsJsonService {
             optionLable: 'name',
             isRequired: true,
             disable: false,
+            activeIn:['healthcare','worker', 'professional', 'trainee']
           },
           {
             lable: 'Mietvertrag',
             formControl: 'tab9Mietvertrag',
             type: 'file',
             value: null,
+            activeIn:['healthcare','worker', 'professional', 'trainee']
           },
           {
             lable: 'Rechnung',
             formControl: 'tab9Rechnung',  
             type: 'file',
             value: null,
+            activeIn:['healthcare','worker', 'professional', 'trainee']
           },
         ]
       }
@@ -1198,6 +1355,7 @@ export class FormsJsonService {
     return [
       {
         title:'Krankenhaus Pdh',
+        activeIn:['healthcare'],
         form:[
           {
             lable: '1 Sitzung (+Familie Planung)',
@@ -1247,6 +1405,7 @@ export class FormsJsonService {
 
       {
         title:'Fachsprache Pdh',
+        activeIn:['healthcare'],
         form:[
           {
             lable: '1 Sitzung (+Familie Planung)',
@@ -1295,6 +1454,7 @@ export class FormsJsonService {
       },
       {
         title:'Atabak',
+        activeIn:['healthcare'],
         form:[
           {
             lable: '1 Sitzung (+Familie Planung)',
@@ -1342,7 +1502,107 @@ export class FormsJsonService {
         ]
       },
       {
-        title:'Atabak',
+        title:'Ingeborg/Neda',
+        activeIn:['healthcare'],
+        form:[
+          {
+            lable: '1 Sitzung (+Familie Planung)',
+            formControl: 'tab10Sitzung1R4',
+            type: 'text',
+            value: null,
+            optionLable: 'name',
+            isRequired: true,
+            disable: false,
+          },
+          {
+            lable: '2. Sitzung',
+            formControl: 'tab10Sitzung2R4',
+            type: 'text',
+            value: null,
+            optionLable: 'name',
+            isRequired: true,
+            disable: false,
+          },
+
+          {
+            lable: '3. Sitzung',
+            formControl: 'tab10Sitzung3R4',
+            type: 'text',
+            value: null,
+            optionLable: 'name',
+            isRequired: true,
+            disable: false,
+          },
+          {
+            lable: '4. Sitzung',
+            formControl: 'tab10Sitzung4R4',
+            type: 'text',
+            value: null,
+            optionLable: 'name',
+            isRequired: true,
+            disable: false,
+          },
+
+          {
+            lable: 'Datein',
+            formControl: 'tab10DateinR4',  
+            type: 'file',
+            value: null,
+          },
+        ]
+      },
+      {
+        title:'Fachsprache PDF',
+        activeIn:['worker', 'professional' , 'trainee'],
+        form:[
+          {
+            lable: '1 Sitzung (+Familie Planung)',
+            formControl: 'tab10Sitzung1R3',
+            type: 'text',
+            value: null,
+            optionLable: 'name',
+            isRequired: true,
+            disable: false,
+          },
+          {
+            lable: '2. Sitzung',
+            formControl: 'tab10Sitzung2R3',
+            type: 'text',
+            value: null,
+            optionLable: 'name',
+            isRequired: true,
+            disable: false,
+          },
+
+          {
+            lable: '3. Sitzung',
+            formControl: 'tab10Sitzung3R3',
+            type: 'text',
+            value: null,
+            optionLable: 'name',
+            isRequired: true,
+            disable: false,
+          },
+          {
+            lable: '4. Sitzung',
+            formControl: 'tab10Sitzung4R3',
+            type: 'text',
+            value: null,
+            optionLable: 'name',
+            isRequired: true,
+            disable: false,
+          },
+          {
+            lable: 'Datein',
+            formControl: 'tab10DateinR3',  
+            type: 'file',
+            value: null,
+          },
+        ]
+      },
+      {
+        title:'Perso2',
+        activeIn:['worker', 'professional' , 'trainee'],
         form:[
           {
             lable: '1 Sitzung (+Familie Planung)',
@@ -1410,6 +1670,7 @@ export class FormsJsonService {
             optionLable: 'name',
             isRequired: true,
             disable: false,
+            activeIn:['healthcare','worker', 'professional' , 'trainee']
           },
           {
             lable: 'DE GESAMT',
@@ -1419,6 +1680,7 @@ export class FormsJsonService {
             optionLable: 'name',
             isRequired: true,
             disable: false,
+            activeIn:['healthcare','worker', 'professional' , 'trainee']
           },
           {
             lable: '1 Rate',
@@ -1428,6 +1690,7 @@ export class FormsJsonService {
             optionLable: 'name',
             isRequired: true,
             disable: false,
+            activeIn:['healthcare','worker', 'professional' , 'trainee']
           },
           {
             lable: '2 Rate',
@@ -1437,6 +1700,7 @@ export class FormsJsonService {
             optionLable: 'name',
             isRequired: true,
             disable: false,
+            activeIn:['healthcare','worker', 'professional' , 'trainee']
           },
           {
             lable: '3 Rate',
@@ -1446,6 +1710,7 @@ export class FormsJsonService {
             optionLable: 'name',
             isRequired: true,
             disable: false,
+            activeIn:['healthcare','worker', 'professional' , 'trainee']
           },
           {
             lable: '4 Rate',
@@ -1455,6 +1720,7 @@ export class FormsJsonService {
             optionLable: 'name',
             isRequired: true,
             disable: false,
+            activeIn:['healthcare','worker', 'professional' , 'trainee']
           },
           {
             lable: '411€',
@@ -1464,6 +1730,7 @@ export class FormsJsonService {
             optionLable: 'name',
             isRequired: true,
             disable: false,
+            activeIn:['healthcare','worker', 'professional' , 'trainee']
           },
           {
             lable: 'Anerkennung',
@@ -1473,45 +1740,102 @@ export class FormsJsonService {
             optionLable: 'name',
             isRequired: true,
             disable: false,
+            activeIn:['healthcare','worker', 'professional' , 'trainee']
+          },
+          {
+            lable: 'Urkunde',
+            formControl: 'tab11Urkunde',
+            type: 'text',
+            value: null,
+            optionLable: 'name',
+            isRequired: true,
+            disable: false,
+            activeIn:['healthcare','worker', 'professional' , 'trainee']
+          },
+          {
+            lable: 'Unterkunft',
+            formControl: 'tab11Unterkunft',
+            type: 'text',
+            value: null,
+            optionLable: 'name',
+            isRequired: true,
+            disable: false,
+            activeIn:['healthcare','worker', 'professional' , 'trainee']
+          },
+          {
+            lable: 'Familie',
+            formControl: 'tab11Familie',
+            type: 'text',
+            value: null,
+            optionLable: 'name',
+            isRequired: true,
+            disable: false,
+            activeIn:['healthcare','worker', 'professional' , 'trainee']
+          },
+          {
+            lable: 'Fahrt',
+            formControl: 'tab11Fahrt',
+            type: 'text',
+            value: null,
+            optionLable: 'name',
+            isRequired: true,
+            disable: false,
+            activeIn:['healthcare','worker', 'professional' , 'trainee']
+          },
+          {
+            lable: 'B2 Prüfung',
+            formControl: 'tab11B2Prufung',
+            type: 'text',
+            value: null,
+            optionLable: 'name',
+            isRequired: true,
+            disable: false,
+            activeIn:['healthcare','worker', 'professional' , 'trainee']
           },
           {
             lable: 'UPLOAD 1',
             formControl: 'tab11Upload1',  
             type: 'file',
             value: null,
+            activeIn:['healthcare','worker', 'professional' , 'trainee']
           },
           {
             lable: 'UPLOAD 2',
             formControl: 'tab11Upload2',  
             type: 'file',
             value: null,
+            activeIn:['healthcare','worker', 'professional' , 'trainee']
           },
           {
             lable: 'UPLOAD 3',
             formControl: 'tab11Upload3',  
             type: 'file',
             value: null,
+            activeIn:['healthcare','worker', 'professional' , 'trainee']
           },
           {
             lable: 'UPLOAD 4',
             formControl: 'tab11Upload4',  
             type: 'file',
             value: null,
+            activeIn:['healthcare','worker', 'professional' , 'trainee']
           },
           {
             lable: 'UPLOAD 5',
             formControl: 'tab11Upload5',  
             type: 'file',
             value: null,
+            activeIn:['healthcare','worker', 'professional' , 'trainee']
           },
           {
             lable: 'UPLOAD 6',
             formControl: 'tab11Upload6',  
             type: 'file',
             value: null,
+            activeIn:['healthcare','worker', 'professional' , 'trainee']
           },
         ]
-      }
+      } 
     ]
   }
 
@@ -1532,6 +1856,7 @@ export class FormsJsonService {
             optionLable: 'name',
             isRequired: true,
             disable: false,
+            activeIn:['healthcare','worker', 'professional' , 'trainee']
           },
           {
             lable: 'Adresse DE',
@@ -1541,6 +1866,7 @@ export class FormsJsonService {
             optionLable: 'name',
             isRequired: true,
             disable: false,
+            activeIn:['healthcare','worker', 'professional' , 'trainee']
           },
           {
             lable: 'Versicherung',
@@ -1550,6 +1876,7 @@ export class FormsJsonService {
             optionLable: 'name',
             isRequired: true,
             disable: false,
+            activeIn:['healthcare','worker', 'professional' , 'trainee']
           },
           {
             lable: 'Versicherungsnummer',
@@ -1559,6 +1886,7 @@ export class FormsJsonService {
             optionLable: 'name',
             isRequired: true,
             disable: false,
+            activeIn:['healthcare','worker', 'professional' , 'trainee']
           },
         ]
       }

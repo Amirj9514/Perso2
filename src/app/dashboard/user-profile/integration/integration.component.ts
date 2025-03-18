@@ -40,6 +40,7 @@ import { FileInputComponent } from '../../../Shared/components/file-input/file-i
 })
 export class IntegrationComponent {
   @Input() applicant: any;
+  @Input() categoory: string = 'healthcare';
   @Output() goBackTriger = new EventEmitter();
 
   tab1FormJson: any[] = [];
@@ -123,6 +124,7 @@ export class IntegrationComponent {
     };
   }
 
+
   updateFromValue() {
     if (this.tab1SaveValue) {
       this.overViewFormGoup.patchValue(JSON.parse(this.tab1SaveValue));
@@ -144,6 +146,13 @@ export class IntegrationComponent {
       this.router.navigate(['/']);
       // this.goBackTriger.emit();
     }
+  }
+
+  includeTheRole(row:any){
+    const data = this.categoory;
+    if(!row?.activeIn) return true;
+    if(row?.activeIn.includes(data)) return true;
+    return false;
   }
 }
 

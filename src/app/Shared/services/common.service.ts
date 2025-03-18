@@ -5,7 +5,9 @@ import { Injectable } from '@angular/core';
 })
 export class CommonService {
 
-  constructor() { }
+  constructor() { 
+    // let data =    
+  }
 
   private roles = [
     { label: 'Admin', value: 'admin' },
@@ -16,7 +18,7 @@ export class CommonService {
 
 
   private maritalStatusList = [
-    { id: 1, name: 'ledig' },
+    { id: 1, name: 'ledig' }, 
     { id: 2, name: 'verheiratet' },
     { id: 3, name: 'Geschieden' },
     // { id: 7, name: 'In a Relationship' }
@@ -227,7 +229,7 @@ export class CommonService {
       ]
     }
   ]
-  
+
 
   getRoles() {
     return this.roles;

@@ -28,6 +28,7 @@ import { UpdateApplicantDialogComponent } from "../../../Shared/components/updat
 })
 export class VorstellungsgesrpachComponent {
   @Input() applicant: any;
+  @Input() categoory: string = 'healthcare';
   @Output() goBackTriger = new EventEmitter();
   tab1FormJson: any[] = [];
   statusList: any[] = [];
@@ -130,5 +131,12 @@ export class VorstellungsgesrpachComponent {
       this.router.navigate(['/']);
       // this.goBackTriger.emit();
     }
+  }
+
+  includeTheRole(row:any){
+    const data = this.categoory;
+    if(!row?.activeIn) return true;
+    if(row?.activeIn.includes(data)) return true;
+    return false;
   }
 }

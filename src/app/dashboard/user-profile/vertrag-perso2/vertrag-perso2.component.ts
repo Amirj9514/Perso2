@@ -12,6 +12,7 @@ import { FormsJsonService } from '../../../Shared/services/forms-json.service';
 })
 export class VertragPerso2Component implements OnInit {
   @Input() applicant: any;
+  @Input() categoory: string = 'healthcare';
   @Output() goBackTriger = new EventEmitter();
   isEdit: boolean = false;
   tab2FormJson: any[] = [];
@@ -43,5 +44,12 @@ export class VertragPerso2Component implements OnInit {
     } else {
       this.goBackTriger.emit();
     }
+  }
+  
+  includeTheRole(row:any){
+    const data = this.categoory;
+    if(!row?.activeIn) return true;
+    if(row?.activeIn.includes(data)) return true;
+    return false;
   }
 }

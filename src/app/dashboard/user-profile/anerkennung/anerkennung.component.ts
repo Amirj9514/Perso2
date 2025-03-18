@@ -40,6 +40,7 @@ import { FileInputComponent } from '../../../Shared/components/file-input/file-i
 })
 export class AnerkennungComponent implements OnChanges {
   @Input() applicant: any;
+  @Input() categoory: string = 'healthcare';
   @Output() goBackTriger = new EventEmitter();
 
   tab1FormJson: any[] = [];
@@ -144,5 +145,12 @@ export class AnerkennungComponent implements OnChanges {
       this.router.navigate(['/']);
       // this.goBackTriger.emit();
     }
+  }
+
+  includeTheRole(row:any){
+    const data = this.categoory;
+    if(!row?.activeIn) return true;
+    if(row?.activeIn.includes(data)) return true;
+    return false;
   }
 }

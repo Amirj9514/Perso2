@@ -12,6 +12,7 @@ import { FormsJsonService } from '../../../Shared/services/forms-json.service';
 })
 export class DokumenteComponent {
   @Input() applicant: any;
+  @Input() categoory: string = 'healthcare';
   @Output() goBackTriger = new EventEmitter();
   isEdit: boolean = false;
   tab2FormJson: any[] = [];
