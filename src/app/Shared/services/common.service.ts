@@ -5,9 +5,7 @@ import { Injectable } from '@angular/core';
 })
 export class CommonService {
 
-  constructor() { 
-    // let data =    
-  }
+  constructor() { }
 
   private roles = [
     { label: 'Admin', value: 'admin' },

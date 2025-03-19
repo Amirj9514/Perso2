@@ -1,30 +1,37 @@
 <div class="mx-3 pt-3 relative h-full">
-  <div
-    class="flex justify-content-between align-items-center mb-3 w-full p-3 header"
-  >
-    <div class="text-2xl font-semibold primary-text">Integration</div>
-    <div class="flex gap-3">
-      <p-button
-        styleClass="border-black"
-        (onClick)="actionTriger('back')"
-        variant="outlined"
-        [label]="isEdit ? 'Cancel' : 'Back'"
-        [icon]="isEdit ? '' : 'pi pi-arrow-left'"
-      />
 
-      @if(isEdit){
-      <p-button
-        (onClick)="actionTriger('save')"
-        label="Update"
-        icon="pi pi-save"
-      />
-      }@else {
-      <p-button
-        (onClick)="actionTriger('edit')"
-        label="Edit"
-        icon="pi pi-pencil"
-      />
-      }
+  <div class="mb-3 w-full p-3 header">
+    <div class="flex justify-content-between align-items-center w-full">
+      <div class="text-2xl font-semibold primary-text">Integration</div>
+      <div class="flex gap-3">
+        <p-button
+          styleClass="border-black"
+          (onClick)="actionTriger('back')"
+          variant="outlined"
+          [label]="isEdit ? 'Cancel' : 'Back'"
+          [icon]="isEdit ? '' : 'pi pi-arrow-left'"
+        />
+
+        @if(isEdit){
+        <p-button
+          (onClick)="actionTriger('save')"
+          label="Update"
+          icon="pi pi-save"
+        />
+        }@else {
+        <p-button
+          (onClick)="actionTriger('edit')"
+          label="Edit"
+          icon="pi pi-pencil"
+        />
+        }
+      </div>
+    </div>
+    <div>
+      <div>Aktennummer : {{ applicant?.age || "-" }}</div>
+      <div>
+        Vor-Nachname : {{ applicant?.first_name + " " + applicant?.last_name }}
+      </div>
     </div>
   </div>
 

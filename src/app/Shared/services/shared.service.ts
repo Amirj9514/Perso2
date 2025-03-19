@@ -136,4 +136,40 @@ export class SharedService {
       .put<any>(environment.apiUrl + target, data, httpOptions)
       .pipe(catchError((error) => this.handleError(error)));
   }
+
+  public sendDownloadRequest(target: string) {
+    let token = this.getToken();
+    // const headers_object = new HttpHeaders({
+    //   Authorization: `Bearer ${token}`,
+    //   'Content-Type': 'application/octet-stream'
+    // });
+
+    // const httpOptions:any = {
+    //   headers: headers_object,
+    //   responseType: 'blob'
+    // };
+
+    // return this.httpClient
+    //   .get<any>(target, httpOptions)
+    //   .pipe(catchError((error) => this.handleError(error)));
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/octet-stream'
+    });
+
+    this.httpClient.get(target, { headers, responseType: 'blob' }).subscribe(blob => {
+      const a = document.createElement('a');
+      const objectUrl = URL.createObjectURL(blob);
+      a.href = objectUrl;
+      a.download = 'downloaded_file.png'; // Change filename as needed
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(objectUrl);
+    }, error => {
+      console.error('Download error:', error);
+    });
+  
+  }
+
+
 }

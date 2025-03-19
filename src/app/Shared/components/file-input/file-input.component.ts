@@ -132,6 +132,28 @@ export class FileInputComponent implements OnChanges {
       link.download = this.file.name;
       link.click();
     }
+    else{
+      const url = `application-documents/${this.selectedFile.id}/url`
+      this.sharedS.sendGetRequest(url).subscribe({
+        next:(res:any)=>{
+          if(res.status === 200){
+            const fileUrl = res.body.url;
+            window.open(fileUrl, '_blank');
+            // this.sharedS.sendDownloadRequest(fileUrl);
+          }
+          console.log(res);
+          
+        },error:(err:any)=>{
+          this.toastS.setToast({
+            show: true,
+            severity: 'error',
+            message: 'Error in deleting file.',
+          });
+        }
+      })
+      console.log(this.selectedFile);
+      
+    }
   }
 
   uploadNewFile() {

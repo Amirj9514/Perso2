@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { FileInputComponent } from "../../../Shared/components/file-input/file-input.component";
 import { FormsJsonService } from '../../../Shared/services/forms-json.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-vertrag-perso2',
@@ -18,7 +19,7 @@ export class VertragPerso2Component implements OnInit {
   tab2FormJson: any[] = [];
   
 
-  constructor(private formsJsonS:FormsJsonService) {}
+  constructor(private formsJsonS:FormsJsonService , private router:Router){}
 
   ngOnInit(): void {
     this.tab2FormJson = this.formsJsonS.getTab3FormJson();
@@ -42,6 +43,7 @@ export class VertragPerso2Component implements OnInit {
     } else if (action === 'back' && this.isEdit) {
       this.isEdit = !this.isEdit;
     } else {
+      this.router.navigate(['/']);
       this.goBackTriger.emit();
     }
   }
