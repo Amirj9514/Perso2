@@ -1,4 +1,10 @@
-import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { FloatLabelModule } from 'primeng/floatlabel';
@@ -8,7 +14,9 @@ import { CommonModule } from '@angular/common';
 import { InputTextModule } from 'primeng/inputtext';
 import { FormsJsonService } from '../../../Shared/services/forms-json.service';
 import { Router } from '@angular/router';
-import { UpdateApplicantDialogComponent } from "../../../Shared/components/update-applicant-dialog/update-applicant-dialog.component";
+import { UpdateApplicantDialogComponent } from '../../../Shared/components/update-applicant-dialog/update-applicant-dialog.component';
+import { DateInputComponent } from '../../../Shared/components/date-input/date-input.component';
+import { FileInputComponent } from '../../../Shared/components/file-input/file-input.component';
 
 @Component({
   selector: 'app-vorstellungsgesrpach',
@@ -21,8 +29,10 @@ import { UpdateApplicantDialogComponent } from "../../../Shared/components/updat
     CommonModule,
     InputTextModule,
     ReactiveFormsModule,
-    UpdateApplicantDialogComponent
-],
+    UpdateApplicantDialogComponent,
+    DateInputComponent,
+    FileInputComponent,
+  ],
   templateUrl: './vorstellungsgesrpach.component.html',
   styleUrl: './vorstellungsgesrpach.component.scss',
 })
@@ -133,10 +143,10 @@ export class VorstellungsgesrpachComponent {
     }
   }
 
-  includeTheRole(row:any){
+  includeTheRole(row: any) {
     const data = this.categoory;
-    if(!row?.activeIn) return true;
-    if(row?.activeIn.includes(data)) return true;
+    if (!row?.activeIn) return true;
+    if (row?.activeIn.includes(data)) return true;
     return false;
   }
 }

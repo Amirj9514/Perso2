@@ -8,20 +8,20 @@
             styleClass="border-black"
             (onClick)="actionTriger('back')"
             variant="outlined"
-            [label]="isEdit ? 'Cancel' : 'Back'"
+            [label]="isEdit ? 'Abbrechen' : 'Zurück'"
             [icon]="isEdit ? '' : 'pi pi-arrow-left'"
           />
   
           @if(isEdit){
           <p-button
             (onClick)="actionTriger('save')"
-            label="Update"
+            label="Speichern"
             icon="pi pi-save"
           />
           }@else {
           <p-button
             (onClick)="actionTriger('edit')"
-            label="Edit"
+            label="Bearbeiten"
             icon="pi pi-pencil"
           />
           }
@@ -55,14 +55,17 @@
                           <div
                             class="font-semibold border-round-md"
                             [ngClass]="
-                              returnFeildBg(feild) ? 'px-1 py-1 text-xs text-light' : ''
+                              returnFeildBg(feild) ? 'px-1 py-1 text-sm text-light' : ''
                             "
                             [ngStyle]="{
                                         'background-color': returnFeildBg(feild),
                                       
                                       }"
                           >
+                          <div [ngStyle]="{'visibility':returnFeildBg(feild)?'hidden':''}">
                             {{ returnFeildValue(feild) || "--" }}
+                          </div>
+                            
                           </div>
                         </div>
                       </div>
@@ -79,43 +82,47 @@
                       <div class="col-4" id="overviewSelect">
                         <p-floatlabel class="w-full md:w-56" variant="on">
                           <p-select
-                            inputId="on_label"
-                            [options]="feild.options"
-                            [formControlName]="feild.formControl"
-                            appendTo="body"
-                            [optionLabel]="feild.optionLabel"
-                            styleClass="w-full"
-                          >
-                            <ng-template #selectedItem let-selectedOption>
-                              @if (selectedOption) {
-                              <div class="flex items-center gap-2">
-                                <div
-                                  class="w-full border-round-md px-2 flex align-items-center text-xs"
-                                  [ngStyle]="{
-                                          'background-color': selectedOption.color,
-                                          color: selectedOption.color ? '#fff' : '',
-                                          height:'20px',
-                                        }"
-                                >
-                                  {{ selectedOption.name }}
-                                </div>
+                          inputId="on_label"
+                          [options]="feild.options"
+                          [formControlName]="feild.formControl"
+                          appendTo="body"
+                          [optionLabel]="feild.optionLabel"
+                          styleClass="w-full"
+                        >
+                          <ng-template #selectedItem let-selectedOption>
+                            @if (selectedOption) {
+                            <div class="flex items-center gap-2">
+                              <div
+                                class="w-full border-round-md px-2 flex align-items-center text-xs"
+                                [ngStyle]="{
+                                                'background-color': selectedOption.color,
+                                                color: selectedOption.color ? '#fff' : '',
+                                                height:'20px',
+                                              }"
+                              >
+                                {{ selectedOption?.color ? "" : selectedOption.name }}
                               </div>
-                              }
-                            </ng-template>
-                            <ng-template let-option #item>
-                              <div class="flex items-center gap-2 w-full">
+                            </div>
+                            }
+                          </ng-template>
+                          <ng-template let-option #item>
+                            <div class="flex items-center gap-2 w-full">
+                              <div
+                                class="w-full border-round-md px-2 py-1"
+                                [ngStyle]="{
+                                  'background-color': option.color,
+                                  color: option.color ? '#fff' : ''
+                                }"
+                              >
                                 <div
-                                  class="w-full border-round-md px-2 py-1"
-                                  [ngStyle]="{
-                                    'background-color': option.color,
-                                    color: option.color ? '#fff' : ''
-                                  }"
+                                  [ngStyle]="{ visibility: option.color ? 'hidden' : '' }"
                                 >
                                   {{ option.name }}
                                 </div>
                               </div>
-                            </ng-template></p-select
-                          >
+                            </div>
+                          </ng-template>
+                        </p-select>
                           <label for="on_label">{{ feild?.lable }}</label>
                         </p-floatlabel>
                       </div>

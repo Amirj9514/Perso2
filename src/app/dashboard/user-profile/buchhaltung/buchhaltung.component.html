@@ -7,20 +7,20 @@
           styleClass="border-black"
           (onClick)="actionTriger('back')"
           variant="outlined"
-          [label]="isEdit ? 'Cancel' : 'Back'"
+          [label]="isEdit ? 'Abbrechen' : 'Zurück'"
           [icon]="isEdit ? '' : 'pi pi-arrow-left'"
         />
 
         @if(isEdit){
         <p-button
           (onClick)="actionTriger('save')"
-          label="Update"
+          label="Speichern"
           icon="pi pi-save"
         />
         }@else {
         <p-button
           (onClick)="actionTriger('edit')"
-          label="Edit"
+          label="Bearbeiten"
           icon="pi pi-pencil"
         />
         }
@@ -49,14 +49,20 @@
               <div
                 class="font-semibold border-round-md"
                 [ngClass]="
-                  returnFeildBg(feild) ? 'px-1 py-1 text-xs text-light' : ''
+                  returnFeildBg(feild) ? 'px-1 py-1 text-sm text-light' : ''
                 "
                 [ngStyle]="{
-                                        'background-color': returnFeildBg(feild),
-                                      
-                                      }"
+                            'background-color': returnFeildBg(feild),
+                          
+                          }"
               >
-                {{ returnFeildValue(feild) || "--" }}
+                <div
+                  [ngStyle]="{
+                    visibility: returnFeildBg(feild) ? 'hidden' : ''
+                  }"
+                >
+                  {{ returnFeildValue(feild) || "--" }}
+                </div>
               </div>
             </div>
           </div>
@@ -86,12 +92,12 @@
                     <div
                       class="w-full border-round-md px-2 flex align-items-center text-xs"
                       [ngStyle]="{
-                                          'background-color': selectedOption.color,
-                                          color: selectedOption.color ? '#fff' : '',
-                                          height:'20px',
-                                        }"
+                                      'background-color': selectedOption.color,
+                                      color: selectedOption.color ? '#fff' : '',
+                                      height:'20px',
+                                    }"
                     >
-                      {{ selectedOption.name }}
+                      {{ selectedOption?.color ? "" : selectedOption.name }}
                     </div>
                   </div>
                   }
@@ -105,11 +111,15 @@
                         color: option.color ? '#fff' : ''
                       }"
                     >
-                      {{ option.name }}
+                      <div
+                        [ngStyle]="{ visibility: option.color ? 'hidden' : '' }"
+                      >
+                        {{ option.name }}
+                      </div>
                     </div>
                   </div>
-                </ng-template></p-select
-              >
+                </ng-template>
+              </p-select>
               <label for="on_label">{{ feild?.lable }}</label>
             </p-floatlabel>
           </div>
