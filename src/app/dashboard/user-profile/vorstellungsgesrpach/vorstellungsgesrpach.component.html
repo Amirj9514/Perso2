@@ -50,12 +50,9 @@
               <div
                 class="font-semibold border-round-md"
                 [ngClass]="
-                  returnFeildBg(feild) ? 'px-1 py-1 text-sm text-light' : ''
+                  returnFeildBg(feild) ? 'px-1 py-1  text-light' : ''
                 "
-                [ngStyle]="{
-                                      'background-color': returnFeildBg(feild),
-                                    
-                                    }"
+                [ngStyle]="{'background-color': returnFeildBg(feild)}"
               >
                 <div
                   [ngStyle]="{

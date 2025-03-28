@@ -39,7 +39,7 @@
 .secondaryClr {
   color: #475569;
 }
-.text-light{
+.text-light {
   color: #ffffff;
 }
 
@@ -82,10 +82,18 @@
   border-color: gray;
 }
 
-
-
-.disableBtn{
+.disableBtn {
   cursor: not-allowed;
   opacity: 0.3;
   pointer-events: none;
+}
+
+.gradientBg {
+  background: hsla(264, 68%, 63%, 1);
+
+  background: linear-gradient(0deg, hsla(264, 68%, 63%, 1) 0%, hsla(263, 69%, 72%, 1) 100%);
+  
+  background: -moz-linear-gradient(0deg, hsla(264, 68%, 63%, 1) 0%, hsla(263, 69%, 72%, 1) 100%);
+  
+  background: -webkit-linear-gradient(0deg, hsla(264, 68%, 63%, 1) 0%, hsla(263, 69%, 72%, 1) 100%);
 }

@@ -8,7 +8,7 @@ $border-color: #ddd;
 
 
 .sidebar {
-    background: $primary-color;
+    // background: $primary-color;
  
     height: 100%;
     transition: all 0.4s ease;
@@ -156,7 +156,7 @@ $border-color: #ddd;
     .sidebar-footer{
         position: absolute;
         bottom: 0;
-        background-color: #006867;
+        background-color: #935FDF;
         width: 100%;
         color: #ffffff;
 
@@ -164,7 +164,8 @@ $border-color: #ddd;
 }
 .activeNav{
     color: #ffffff !important;
-    background:#006867;
+    background: #935FDF;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
 .nav-items{
@@ -175,7 +176,9 @@ $border-color: #ddd;
     text-decoration: none;
     transition: 0.4s ease;
     &:hover {
-        color: black;
-        background:rgb(77, 243, 188);
+        // color: black;
+        // background:rgb(77, 243, 188);
+        background: #935FDF;
+        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     }
 }
