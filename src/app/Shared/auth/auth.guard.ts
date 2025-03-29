@@ -15,8 +15,6 @@ export const authGuard: CanActivateFn = (route, state) => {
 
   const userRole = roles.getRoles();
   const requiredRoles = route.data?.['roles'] as string[];
-  console.log('requiredRoles', requiredRoles);
-  
   if (requiredRoles && !requiredRoles.includes(userRole)) {
     router.navigate(['/unauthorized']); // Redirect if the user lacks the role
     return false;

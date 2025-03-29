@@ -40,9 +40,11 @@ import { FileInputComponent } from '../../../Shared/components/file-input/file-i
 })
 export class UrkundeComponent {
   @Input() applicant: any;
+  @Input() userDetail: any = null;
   @Input() categoory: string = 'healthcare';
   @Output() goBackTriger = new EventEmitter();
 
+  onlyView: boolean = false;
   tab1FormJson: any[] = [];
   statusList: any[] = [];
   Sprachniveo: any[] = [
@@ -81,6 +83,9 @@ export class UrkundeComponent {
     if (changes['applicant'].currentValue) {
       this.tab1SaveValue = this.applicant.tab_8;
       this.updateFromValue();
+    }
+    if (changes['userDetail'].currentValue) {
+      this.onlyView = this.userDetail?.role === 'viewer' ? true : false;
     }
   }
 

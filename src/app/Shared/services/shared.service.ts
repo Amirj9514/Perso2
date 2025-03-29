@@ -166,7 +166,7 @@ export class SharedService {
       document.body.removeChild(a);
       URL.revokeObjectURL(objectUrl);
     }, error => {
-      console.error('Download error:', error);
+      
     });
   
   }

@@ -18,6 +18,7 @@ import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { SharedService } from '../../Shared/services/shared.service';
 import { CustomToastService } from '../../Shared/services/custom-toast.service';
+import { RolesService } from '../../Shared/services/roles.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -45,6 +46,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   activeTab: number = 1;
   applicant: any;
   documentList: any[] = [];
+  userDetail: any = null;
 
   categoory:string = 'healthcare';
   private applicantSubscription!: Subscription;
@@ -52,11 +54,13 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     private applicantS: ApplicantService,
     private router: Router,
     private sharedS: SharedService,
-    private toastS: CustomToastService
+    private toastS: CustomToastService,
+    private roleS: RolesService,
   ) {}
 
   ngOnInit(): void {
     this.applicantSubscription = this.applicantS
+   
       .getSelectedApplicant()
       .subscribe((data: any) => {
         if (!data) {
@@ -72,7 +76,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
           this.categoory = parts[0] ?? 'healthcare';
         }        
       });
-
+      this.userDetail = this.roleS.getLoginUser() ?? null;
     this.getApplicantFileList();
   }
 

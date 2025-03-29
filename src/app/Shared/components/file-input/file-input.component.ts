@@ -141,8 +141,7 @@ export class FileInputComponent implements OnChanges {
             window.open(fileUrl, '_blank');
             // this.sharedS.sendDownloadRequest(fileUrl);
           }
-          console.log(res);
-          
+
         },error:(err:any)=>{
           this.toastS.setToast({
             show: true,
@@ -151,8 +150,6 @@ export class FileInputComponent implements OnChanges {
           });
         }
       })
-      console.log(this.selectedFile);
-      
     }
   }
 

@@ -39,9 +39,11 @@ import { FileInputComponent } from '../../../Shared/components/file-input/file-i
 })
 export class InfoDeComponent {
  @Input() applicant: any;
+ @Input() userDetail: any = null;
  @Input() categoory: string = 'healthcare';
   @Output() goBackTriger = new EventEmitter();
 
+  onlyView: boolean = false;
   tab1FormJson: any[] = [];
   statusList: any[] = [];
   Sprachniveo: any[] = [
@@ -82,7 +84,11 @@ export class InfoDeComponent {
       this.tab1SaveValue = this.applicant.tab_2;
       this.updateFromValue();
     }
+    if (changes['userDetail'].currentValue) {
+      this.onlyView = this.userDetail?.role === 'viewer' ? true : false;
+    }
   }
+
 
   createForm(formJson: any) {
     this.overViewFormGoup = new FormGroup({});

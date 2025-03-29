@@ -1,8 +1,9 @@
 <div class="mx-3 pt-3 relative h-full">
-  
   <div class="mb-3 w-full p-3 header">
     <div class="flex justify-content-between align-items-center w-full">
-      <div class="text-2xl font-semibold primary-text">Vorstellungsgesrpäch</div>
+      <div class="text-2xl font-semibold primary-text">
+        Vorstellungsgesrpäch
+      </div>
       <div class="flex gap-3">
         <p-button
           styleClass="border-black"
@@ -12,7 +13,7 @@
           [icon]="isEdit ? '' : 'pi pi-arrow-left'"
         />
 
-        @if(isEdit){
+        @if(!onlyView){ @if(isEdit){
         <p-button
           (onClick)="actionTriger('save')"
           label="Speichern"
@@ -24,7 +25,7 @@
           label="Bearbeiten"
           icon="pi pi-pencil"
         />
-        }
+        } }
       </div>
     </div>
     <div>
@@ -35,7 +36,7 @@
     </div>
   </div>
 
-    <form [formGroup]="overViewFormGoup" class="body h-full">
+  <form [formGroup]="overViewFormGoup" class="body h-full">
     @for (section of tab1FormJson; track $index) { @if(includeTheRole(section)){
     <div class="cardSection mb-5">
       <div class="title">{{ section?.title }}</div>
@@ -49,10 +50,8 @@
               <div class="lable">{{ feild?.lable }}</div>
               <div
                 class="font-semibold border-round-md"
-                [ngClass]="
-                  returnFeildBg(feild) ? 'px-1 py-1  text-light' : ''
-                "
-                [ngStyle]="{'background-color': returnFeildBg(feild)}"
+                [ngClass]="returnFeildBg(feild) ? 'px-1 py-1  text-light' : ''"
+                [ngStyle]="{ 'background-color': returnFeildBg(feild) }"
               >
                 <div
                   [ngStyle]="{

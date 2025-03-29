@@ -77,6 +77,7 @@ export class EmployeesComponent implements OnInit {
       user_name: new FormControl('', [Validators.required]),
       role_code: new FormControl(null, [Validators.required]),
       password: new FormControl(null, [Validators.required]),
+      company: new FormControl({value: null, disabled: true}),
     });
 
     this.flags = this.flagsS.getFlagsList();
@@ -158,8 +159,6 @@ export class EmployeesComponent implements OnInit {
   }
 
   onAccept(): void {
-    console.log(this.selectedRow);
-    
     this.deleteLoader = true;
     this.sharedS
       .sendDeleteRequest(`users/${this.selectedRow.id}`)
@@ -183,7 +182,7 @@ export class EmployeesComponent implements OnInit {
         },
         error: (error) => {
           this.deleteLoader = false;
-          console.log('error', error);
+     
         },
       });
   }
@@ -197,6 +196,18 @@ export class EmployeesComponent implements OnInit {
     this.isPasswordVisible = !this.isPasswordVisible;
   }
 
-
+  onRoleChange(event:any){
+    this.newApplicationFrom.controls['company'].setValue(null);
+    if(event.value === 'viewer'){   
+      this.newApplicationFrom.controls['company'].enable();
+      this.newApplicationFrom.controls['company'].setValidators([Validators.required]);
+      this.newApplicationFrom.controls['company'].updateValueAndValidity();
+    }else{
+      this.newApplicationFrom.controls['company'].disable();
+      
+      this.newApplicationFrom.controls['company'].removeValidators([Validators.required]);
+      this.newApplicationFrom.controls['company'].updateValueAndValidity();
+    }
+  }
   
 }

@@ -38,6 +38,7 @@ import { FileInputComponent } from '../../../Shared/components/file-input/file-i
 })
 export class VorstellungsgesrpachComponent {
   @Input() applicant: any;
+  @Input() userDetail: any = null;
   @Input() categoory: string = 'healthcare';
   @Output() goBackTriger = new EventEmitter();
   tab1FormJson: any[] = [];
@@ -54,7 +55,7 @@ export class VorstellungsgesrpachComponent {
     { id: 4, name: 'TEIL B2', description: '' },
     { id: 5, name: 'NEIN', description: '' },
   ];
-
+  onlyView: boolean = false;
   overViewFormGoup!: FormGroup;
   previousFormValue: any;
   tab1SaveValue: any;
@@ -78,6 +79,10 @@ export class VorstellungsgesrpachComponent {
     if (changes['applicant'].currentValue) {
       this.tab1SaveValue = this.applicant.tab_5;
       this.updateFromValue();
+    }
+
+    if (changes['userDetail'].currentValue) {
+      this.onlyView = this.userDetail?.role === 'viewer' ? true : false;
     }
   }
 

@@ -1,9 +1,12 @@
 <div class="mx-4 mt-3">
   <div class="flex align-items-center justify-content-between py-2 w-full">
     <div class="text-xl font-semibold">Kandidaten</div>
-    <div>
-      <p-button (onClick)="visible = !visible" label="Add  Kandidaten" />
-    </div>
+    @if(!onlyView){
+      <div>
+        <p-button (onClick)="visible = !visible" label="Add  Kandidaten" />
+      </div>
+    }
+  
   </div>
 
   <div class="mainCard">

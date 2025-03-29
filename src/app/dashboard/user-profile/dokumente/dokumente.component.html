@@ -46,6 +46,7 @@
           (includeTheRole(feild)) {
           <div class="col-12 md:col-4">
             <app-file-input
+              [disabled]="onlyView"
               [controlName]="feild.formControl"
               [lable]="feild.lable"
               [applicatanData]="applicant"

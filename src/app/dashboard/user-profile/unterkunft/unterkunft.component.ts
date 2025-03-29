@@ -41,8 +41,10 @@ export class UnterkunftComponent {
 
  @Input() applicant: any;
  @Input() categoory: string = 'healthcare';
+ @Input() userDetail: any = null;
   @Output() goBackTriger = new EventEmitter();
 
+  onlyView: boolean = false;
   tab1FormJson: any[] = [];
   statusList: any[] = [];
   Sprachniveo: any[] = [
@@ -81,6 +83,9 @@ export class UnterkunftComponent {
     if (changes['applicant'].currentValue) {
       this.tab1SaveValue = this.applicant.tab_9;
       this.updateFromValue();
+    }
+    if (changes['userDetail'].currentValue) {
+      this.onlyView = this.userDetail?.role === 'viewer' ? true : false;
     }
   }
 

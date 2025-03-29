@@ -59,7 +59,6 @@ formSubmit: boolean|undefined;
     alert('Date clicked: ' + arg.dateStr);
   }
   handleEventClick(arg: any) {
-    console.log(arg);
     this.clickedEventObj={
       title: arg.event.title,
       timeStart: arg.event.start
@@ -141,8 +140,6 @@ formSubmit: boolean|undefined;
       this.newApplicationFrom.markAllAsTouched(); // Ensure all validation errors appear
       return;
     }
-  
-    console.log('Form Submitted:', this.newApplicationFrom.value);
     this.visible = false;
   }
 

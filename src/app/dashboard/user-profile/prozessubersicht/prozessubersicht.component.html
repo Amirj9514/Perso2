@@ -11,7 +11,7 @@
           [icon]="isEdit ? '' : 'pi pi-arrow-left'"
         />
 
-        @if(isEdit){
+        @if(!onlyView){ @if(isEdit){
         <p-button
           (onClick)="actionTriger('save')"
           label="Speichern"
@@ -23,7 +23,7 @@
           label="Bearbeiten"
           icon="pi pi-pencil"
         />
-        }
+        } }
       </div>
     </div>
     <div>

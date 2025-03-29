@@ -77,7 +77,8 @@ export class DashboardComponent implements OnInit {
 
   languagesLvl: any[] = [];
   enrollmentCategory: any[] = [];
-
+  userDetail: any = null;
+  onlyView: boolean = false;
   jobTypes: any[] = [];
 
   selectedSubCategory: any = null;
@@ -132,6 +133,10 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.userDetail = this.rolesS.getLoginUser() ?? null;
+    if(this.userDetail.role === 'viewer') {
+      this.onlyView = true;
+    }
     this.getVacancies();
 
     const roles = this.rolesS.getLoginUser();
@@ -144,8 +149,6 @@ export class DashboardComponent implements OnInit {
   }
 
   onSubmit(): void {
-
-   
     if (this.newApplicationFrom.invalid) {
       this.newApplicationFrom.markAllAsTouched(); // Ensure all validation errors appear
       return;
@@ -188,7 +191,7 @@ export class DashboardComponent implements OnInit {
       country: formValue.country.name ?? '',
       description: formValue.description ?? '',
       additional_data: jsonString,
-      sub_category:JSON.stringify ({
+      sub_category: JSON.stringify({
         catId: formValue.enrollment?.id ?? '',
         cat_name: formValue.enrollment?.name ?? '',
         subCatId: formValue.sub_category?.id ?? '',
@@ -196,9 +199,6 @@ export class DashboardComponent implements OnInit {
       }),
     };
     this.formSubmit = true;
-
-    console.log('this.newApplicationFrom', apiParam);
-
     let url = `applications`;
     if (this.isEdit) {
       url = `applications/${this.selectedRow.id}`;
@@ -259,11 +259,11 @@ export class DashboardComponent implements OnInit {
           const data: any = response?.body?.applications ?? [];
 
           data.map((item: any) => {
-            let category = null
-            if(item.sub_category){
-              category = JSON.parse(item.sub_category)
+            let category = null;
+            if (item.sub_category) {
+              category = JSON.parse(item.sub_category);
             }
-           
+
             const val = {
               id: item.id,
               applied_at: item.applied_at,
@@ -278,7 +278,7 @@ export class DashboardComponent implements OnInit {
               date_of_birth: item.date_of_birth,
               country: item.country,
               description: item.description,
-              sub_category:item.sub_category,
+              sub_category: item.sub_category,
               category: category,
               vacancieName: this.getVacancieById(item.vacancy_id),
               additional_data: item.additional_data,
@@ -293,8 +293,15 @@ export class DashboardComponent implements OnInit {
               tab_9: item.tab_9,
               tab_10: item.tab_10,
               tab_11: item.tab_11,
-            }; 
-            this.products.push(val);
+            };
+
+            if (this.userDetail.role === 'viewer') {
+              if (val.applied_at === this.userDetail.company) {
+                this.products.push(val);
+              }
+            } else {
+              this.products.push(val);
+            }
           });
         } else {
           this.products = [];
@@ -331,21 +338,21 @@ export class DashboardComponent implements OnInit {
   }
 
   getCategoryById(id: number) {
-    let selectedEnrolment:any =  null
+    let selectedEnrolment: any = null;
     for (const enrollment of this.enrollmentCategory) {
-      if(enrollment.id === id){
+      if (enrollment.id === id) {
         selectedEnrolment = enrollment;
         break;
-      };   
+      }
     }
 
     return selectedEnrolment;
   }
 
-  getSubcategoryById( id:any) {
-    let selectedSubCategory:any = null;
+  getSubcategoryById(id: any) {
+    let selectedSubCategory: any = null;
     for (const subCategory of this.selectedSubCategory) {
-      if(subCategory.id === id){
+      if (subCategory.id === id) {
         selectedSubCategory = subCategory;
         break;
       }
@@ -390,7 +397,6 @@ export class DashboardComponent implements OnInit {
         },
         error: (error) => {
           this.deleteLoader = false;
-          console.log('error', error);
         },
       });
   }
@@ -403,8 +409,7 @@ export class DashboardComponent implements OnInit {
   }
 
   editDetail(product: any) {
-    console.log(product);
-    
+
     this.viewDetails = false;
 
     this.isEdit = true;
@@ -412,13 +417,9 @@ export class DashboardComponent implements OnInit {
     this.selectedRow = product;
     const category = this.selectedRow.category;
 
-    
-   const selectedEnrol = this.getCategoryById(category.catId);
-   this.selectedSubCategory = selectedEnrol?.subCategories ?? [];
-   const selectedSubCategory = this.getSubcategoryById(category.subCatId);
-
-   console.log('product',selectedSubCategory );
-    // const category = this.getCategoryById()
+    const selectedEnrol = this.getCategoryById(category.catId);
+    this.selectedSubCategory = selectedEnrol?.subCategories ?? [];
+    const selectedSubCategory = this.getSubcategoryById(category.subCatId);
 
     const dob = new Date(product.date_of_birth);
     const additionalData = product.additional_data
@@ -450,6 +451,6 @@ export class DashboardComponent implements OnInit {
   }
 
   onEnrollmentChange(event: any) {
-   this.selectedSubCategory = event?.subCategories ?? []
+    this.selectedSubCategory = event?.subCategories ?? [];
   }
 }

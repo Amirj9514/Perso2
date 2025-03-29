@@ -37,8 +37,6 @@ export class AuthComponent {
 
   onSubmit(form: FormGroup): void {
     this.formSubmit = true;
-    console.log(form.value);
-
     if (form.valid) {
       const formValue = form.value;
       const apiParams: any = {

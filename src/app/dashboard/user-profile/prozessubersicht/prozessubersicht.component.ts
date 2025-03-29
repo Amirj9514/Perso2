@@ -37,7 +37,10 @@ import { UpdateApplicantDialogComponent } from '../../../Shared/components/updat
 export class ProzessubersichtComponent implements OnChanges {
   @Input() applicant: any;
   @Input() categoory: string = 'healthcare';
+  @Input() userDetail: any = null;
   @Output() goBackTriger = new EventEmitter();
+
+  
   tab1FormJson: any[] = [];
   statusList: any[] = [];
   Sprachniveo: any[] = [
@@ -57,6 +60,7 @@ export class ProzessubersichtComponent implements OnChanges {
   previousFormValue: any;
   tab1SaveValue: any;
   isEdit: boolean = false;
+  onlyView: boolean = false;
 
   showUpdateDialog: { show: boolean; applicantData: any; data: any } | null =
     null;
@@ -76,6 +80,9 @@ export class ProzessubersichtComponent implements OnChanges {
     if (changes['applicant'].currentValue) {
       this.tab1SaveValue = this.applicant.tab_1;
       this.updateFromValue();
+    }
+    if (changes['userDetail'].currentValue) {
+      this.onlyView = this.userDetail?.role === 'viewer' ? true : false;
     }
   }
 

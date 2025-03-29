@@ -145,7 +145,7 @@ export class VacanciesComponent implements OnInit {
       error: (error) => {
         this.formSubmit = false;
         this.visible = false;
-        console.log('error', error);
+      
       },
     });
   }
@@ -172,7 +172,7 @@ export class VacanciesComponent implements OnInit {
           }
         },
         error: (error) => {
-          console.log('error', error);
+    
         },
       });
   }

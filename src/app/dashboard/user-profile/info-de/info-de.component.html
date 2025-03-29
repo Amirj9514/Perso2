@@ -10,19 +10,20 @@
           [label]="isEdit ? 'Abbrechen' : 'Zurück'"
           [icon]="isEdit ? '' : 'pi pi-arrow-left'"
         />
-
-        @if(isEdit){
-        <p-button
-          (onClick)="actionTriger('save')"
-          label="Speichern"
-          icon="pi pi-save"
-        />
-        }@else {
-        <p-button
-          (onClick)="actionTriger('edit')"
-          label="Bearbeiten"
-          icon="pi pi-pencil"
-        />
+        @if(!onlyView){
+          @if(isEdit){
+            <p-button
+              (onClick)="actionTriger('save')"
+              label="Speichern"
+              icon="pi pi-save"
+            />
+            }@else {
+            <p-button
+              (onClick)="actionTriger('edit')"
+              label="Bearbeiten"
+              icon="pi pi-pencil"
+            />
+            }
         }
       </div>
     </div>

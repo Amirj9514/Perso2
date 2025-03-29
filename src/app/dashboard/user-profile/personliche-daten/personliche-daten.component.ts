@@ -37,7 +37,9 @@ import { Router } from '@angular/router';
 })
 export class PersonlicheDatenComponent {
   @Input() applicant: any;
+  @Input() userDetail: any = null;
   @Input() categoory: string = 'healthcare';
+  onlyView: boolean = false;
   maritalStatus: any[] = [];
   countryList: any[] = [];
   languagesLvl: any[] = [];
@@ -96,6 +98,10 @@ export class PersonlicheDatenComponent {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['applicant'].currentValue) {
       this.getVacancies();
+    }
+
+    if (changes['userDetail'].currentValue) {
+      this.onlyView = this.userDetail?.role === 'viewer' ? true : false;
     }
   }
 
