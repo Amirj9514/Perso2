@@ -263,7 +263,6 @@ export class DashboardComponent implements OnInit {
             if (item.sub_category) {
               category = JSON.parse(item.sub_category);
             }
-
             const val = {
               id: item.id,
               applied_at: item.applied_at,
@@ -282,6 +281,7 @@ export class DashboardComponent implements OnInit {
               category: category,
               vacancieName: this.getVacancieById(item.vacancy_id),
               additional_data: item.additional_data,
+              tab1_parse:this.parseData(item.tab_1),
               tab_1: item.tab_1,
               tab_2: item.tab_2,
               tab_3: item.tab_3,
@@ -303,6 +303,9 @@ export class DashboardComponent implements OnInit {
               this.products.push(val);
             }
           });
+
+          console.log(this.products[this.products.length - 1]); 
+          
         } else {
           this.products = [];
         }
@@ -312,6 +315,17 @@ export class DashboardComponent implements OnInit {
         this.applicantsLoader = false;
       },
     });
+  }
+
+
+  parseData(item:any){
+    if(!item) return null;
+    try {
+      const parsedData = JSON.parse(item);
+      return parsedData;
+    } catch (error) {
+      return null; // or handle the error as needed
+    }
   }
   getVacancies(): void {
     // ?first_name=${''}&last_name=${''}&email=${''}&user_name=${''}'
@@ -347,6 +361,24 @@ export class DashboardComponent implements OnInit {
     }
 
     return selectedEnrolment;
+  }
+
+
+  getTdValue(item: any, key: string) {
+    let retVal:{ color:string , show:boolean} = { color:'' , show:false};
+
+    try {
+      if(item.tab1_parse[key]){
+        retVal.color = item.tab1_parse[key].color ?? 'black';
+        retVal.show = item.tab1_parse[key].color?true : false;
+  
+        return retVal;
+      }
+      return {color:'', show:false};
+    } catch (error) {
+      return {color:'', show:false};
+    }
+   
   }
 
   getSubcategoryById(id: any) {

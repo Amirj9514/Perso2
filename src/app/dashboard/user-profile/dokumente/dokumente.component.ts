@@ -24,7 +24,7 @@ export class DokumenteComponent implements OnChanges {
 
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['userDetail'].currentValue) {
+    if (changes['userDetail']?.currentValue) {
       this.onlyView = this.userDetail?.role === 'viewer' ? true : false;
     }
   }

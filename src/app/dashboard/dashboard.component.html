@@ -2,43 +2,28 @@
   <div class="flex align-items-center justify-content-between py-2 w-full">
     <div class="text-xl font-semibold">Kandidaten</div>
     @if(!onlyView){
-      <div>
-        <p-button (onClick)="visible = !visible" label="Add  Kandidaten" />
-      </div>
+    <div>
+      <p-button (onClick)="visible = !visible" label="Add  Kandidaten" />
+    </div>
     }
-  
+
   </div>
 
   <div class="mainCard">
     <div class="px-2 py-3 border-bottom-1" style="background-color: #f8fafc">
       <p-iconfield>
         <p-inputicon styleClass="pi pi-search" />
-        <input
-          (keyup)="handelSearch($event)"
-          type="text"
-          class="w-25rem"
-          pInputText
-          placeholder="Search"
-        />
+        <input (keyup)="handelSearch($event)" type="text" class="w-25rem" pInputText placeholder="Search" />
       </p-iconfield>
     </div>
-    <p-table
-      #dt2
-      [value]="products"
-      [paginator]="true"
-      stripedRows
-      [rows]="10"
-      [globalFilterFields]="[
+    <p-table #dt2 [value]="products" [paginator]="true" stripedRows [rows]="10" [globalFilterFields]="[
         'age',
         'first_name',
         'last_name',
         'applied_at',
         'email',
         'vacancieName'
-      ]"
-      [tableStyle]="{ 'min-width': '50rem' }"
-      [rowsPerPageOptions]="[10, 50, 100]"
-    >
+      ]" [tableStyle]="{ 'min-width': '50rem' }" [rowsPerPageOptions]="[10, 50, 100]">
       <ng-template #header>
         <tr>
           <th style="width: 25%">Aktennummer</th>
@@ -46,6 +31,11 @@
           <th style="width: 25%">Position/Status</th>
           <th style="width: 25%">Arbeitgeber</th>
           <th style="width: 25%">Kontakt Info</th>
+          <th style="width: 25%">Antrag Anerkennung</th>
+          <th style="width: 25%">Antrag §81a</th>
+          <th style="width: 25%">VAZ</th>
+          <th style="width: 25%">Vereinbarung</th>
+         
 
           <th>Bearbeiten</th>
         </tr>
@@ -53,6 +43,10 @@
       <ng-template #body let-product>
         @if(applicantsLoader){
         <tr>
+          <td><p-skeleton /></td>
+          <td><p-skeleton /></td>
+          <td><p-skeleton /></td>
+          <td><p-skeleton /></td>
           <td><p-skeleton /></td>
           <td><p-skeleton /></td>
           <td><p-skeleton /></td>
@@ -67,28 +61,48 @@
           <td>{{ product?.vacancieName }}</td>
           <td>{{ product?.applied_at }}</td>
           <td>{{ product?.email }}</td>
+          <td>
+            @if( getTdValue(product , 'proAnererkennung').show){
+            <div class="w-2rem h-2rem" [ngStyle]="{'background-color': getTdValue(product , 'proAnererkennung').color}"
+              style="border-radius: 50%;">
+              <span style="visibility: hidden;">''</span>
+            </div>
+            }@else {
+            <div>--</div>
+            }
+          </td>
+          <td> @if( getTdValue(product , 'proS81a').show){
+            <div class="w-2rem h-2rem" [ngStyle]="{'background-color': getTdValue(product , 'proS81a').color}"
+              style="border-radius: 50%;">
+              <span style="visibility: hidden;">''</span>
+            </div>
+            }@else {
+            <div>--</div>
+            }</td>
+          <td> @if( getTdValue(product , 'proVaz').show){
+            <div class="w-2rem h-2rem" [ngStyle]="{'background-color': getTdValue(product , 'proVaz').color}"
+              style="border-radius: 50%;">
+              <span style="visibility: hidden;">''</span>
+            </div>
+            }@else {
+            <div>--</div>
+            }</td>
+          <td> @if( getTdValue(product , 'proVereinbarung').show){
+            <div class="w-2rem h-2rem" [ngStyle]="{'background-color': getTdValue(product , 'proVereinbarung').color}"
+              style="border-radius: 50%;">
+              <span style="visibility: hidden;">''</span>
+            </div>
+            }@else {
+            <div>--</div>
+            }</td>
 
           <td>
             <div class="flex">
-              <p-button
-                icon="pi pi-eye"
-                (onClick)="viewDetail(product)"
-                [text]="true"
-              />
-              <p-button
-                *ngIf="activeRole !== 'viewer'"
-                icon="pi pi-pen-to-square"
-                (onClick)="editDetail(product)"
-                [text]="true"
-                severity="help"
-              />
-              <p-button
-                *ngIf="activeRole !== 'viewer'"
-                icon="pi pi-trash"
-                (onClick)="onDelete(product)"
-                [text]="true"
-                severity="danger"
-              />
+              <p-button icon="pi pi-eye" (onClick)="viewDetail(product)" [text]="true" />
+              <p-button *ngIf="activeRole !== 'viewer'" icon="pi pi-pen-to-square" (onClick)="editDetail(product)"
+                [text]="true" severity="help" />
+              <p-button *ngIf="activeRole !== 'viewer'" icon="pi pi-trash" (onClick)="onDelete(product)" [text]="true"
+                severity="danger" />
               <!-- <div class="pi pi-eye view" (click)="viewDetail(product)"></div>
               <div class="pi pi-user-edit edit" (click)="editDetail(product)"></div>
               <div class="pi pi-trash delete" (click)="onDelete(product)"></div> -->
@@ -101,173 +115,97 @@
   </div>
 </div>
 
-<p-drawer
-  #drawerRef
-  (onHide)="
+<p-drawer #drawerRef (onHide)="
     newApplicationFrom.reset();
     viewDetails = false;
     selectedRow = null;
     vacancieName = '';
     isEdit = false
-  "
-  [(visible)]="visible"
-  [modal]="true"
-  [dismissible]="false"
-  position="right"
-  [styleClass]="viewDetails ? 'w-26rem' : 'w-6'"
->
+  " [(visible)]="visible" [modal]="true" [dismissible]="false" position="right"
+  [styleClass]="viewDetails ? 'w-26rem' : 'w-6'">
   <ng-template #headless>
     <div class="flex flex-col h-full relative">
       <div class="flex items-center justify-between shrink-0 w-full">
-        <p-button
-          (onClick)="closeCallback($event)"
-          icon="pi pi-angle-left"
-          [rounded]="true"
-          class="drawerBackBtn"
-        />
+        <p-button (onClick)="closeCallback($event)" icon="pi pi-angle-left" [rounded]="true" class="drawerBackBtn" />
         @if (viewDetails) {
-        <app-view-detail
-          class="w-full"
-          [Vacances]="vacancieName"
-          [selectedRow]="selectedRow"
-        ></app-view-detail>
+        <app-view-detail class="w-full" [Vacances]="vacancieName" [selectedRow]="selectedRow"></app-view-detail>
         }@else {
         <div class="w-full">
-          <div
-            class="text-xl px-4 font-semibold py-3 border-bottom-1 headerBg borderClr"
-          >
+          <div class="text-xl px-4 font-semibold py-3 border-bottom-1 headerBg borderClr">
             Kandidat hinzufügen
           </div>
 
-          <form
-            [formGroup]="newApplicationFrom"
-            class="pl-4 pr-3 mt-3 draweBody"
-          >
+          <form [formGroup]="newApplicationFrom" class="pl-4 pr-3 mt-3 draweBody">
             <p-fieldset legend="Basic Information">
               <div class="grid pt-2">
                 <div class="col-6">
                   <p-floatlabel class="w-full md:w-56" variant="on">
-                    <p-select
-                      formControlName="enrollment"
-                      inputId="on_label"
-                      (ngModelChange)="onEnrollmentChange($event)"
-                      [options]="enrollmentCategory"
-                      appendTo="body"
-                      [loading]="getApiLoader"
-                      optionLabel="name"
-                      styleClass="w-full"
-                    />
-                    <label for="on_label"
-                      >Category
-                      <span
-                        class="text-red-600"
-                        *ngIf="
+                    <p-select formControlName="enrollment" inputId="on_label"
+                      (ngModelChange)="onEnrollmentChange($event)" [options]="enrollmentCategory" appendTo="body"
+                      [loading]="getApiLoader" optionLabel="name" styleClass="w-full" />
+                    <label for="on_label">Category
+                      <span class="text-red-600" *ngIf="
                           newApplicationFrom.get('enrollment')?.touched &&
                           newApplicationFrom.get('enrollment')?.invalid
-                        "
-                        >*</span
-                      >
+                        ">*</span>
                     </label>
                   </p-floatlabel>
-                  <span
-                    class="text-sm"
-                    *ngIf="
+                  <span class="text-sm" *ngIf="
                       (newApplicationFrom.get('enrollment')?.touched ||
                         formSubmit) &&
                       newApplicationFrom.get('enrollment')?.errors
-                    "
-                  >
-                    <span
-                      class="text-red-600"
-                      *ngIf="
+                    ">
+                    <span class="text-red-600" *ngIf="
                         newApplicationFrom
                           .get('enrollment')
                           ?.hasError('required')
-                      "
-                      >Category date Pflichtfeld</span
-                    >
+                      ">Category date Pflichtfeld</span>
                   </span>
                 </div>
                 <div class="col-6">
                   <p-floatlabel class="w-full md:w-56" variant="on">
-                    <p-select
-                      formControlName="sub_category"
-                      inputId="on_label"
-                      [options]="selectedSubCategory"
-                      appendTo="body"
-                      [loading]="getApiLoader"
-                      optionLabel="name"
-                      styleClass="w-full"
-                    />
-                    <label for="on_label"
-                      >Position
-                      <span
-                        class="text-red-600"
-                        *ngIf="
+                    <p-select formControlName="sub_category" inputId="on_label" [options]="selectedSubCategory"
+                      appendTo="body" [loading]="getApiLoader" optionLabel="name" styleClass="w-full" />
+                    <label for="on_label">Position
+                      <span class="text-red-600" *ngIf="
                           newApplicationFrom.get('sub_category')?.touched &&
                           newApplicationFrom.get('sub_category')?.invalid
-                        "
-                        >*</span
-                      >
+                        ">*</span>
                     </label>
                   </p-floatlabel>
-                  <span
-                    class="text-sm"
-                    *ngIf="
+                  <span class="text-sm" *ngIf="
                       (newApplicationFrom.get('sub_category')?.touched ||
                         formSubmit) &&
                       newApplicationFrom.get('sub_category')?.errors
-                    "
-                  >
-                    <span
-                      class="text-red-600"
-                      *ngIf="
+                    ">
+                    <span class="text-red-600" *ngIf="
                         newApplicationFrom
                           .get('sub_category')
                           ?.hasError('required')
-                      "
-                      >Position date Pflichtfeld</span
-                    >
+                      ">Position date Pflichtfeld</span>
                   </span>
                 </div>
 
                 <div class="col-6">
                   <p-floatlabel class="w-full" variant="on">
-                    <input
-                      type="text"
-                      pInputText
-                      class="w-full"
-                      formControlName="appledDate"
-                    />
-                    <label for="on_label"
-                      >Arbeitgeber
-                      <span
-                        class="text-red-600"
-                        *ngIf="
+                    <input type="text" pInputText class="w-full" formControlName="appledDate" />
+                    <label for="on_label">Arbeitgeber
+                      <span class="text-red-600" *ngIf="
                           newApplicationFrom.get('appledDate')?.touched &&
                           newApplicationFrom.get('appledDate')?.invalid
-                        "
-                        >*</span
-                      >
+                        ">*</span>
                     </label>
                   </p-floatlabel>
-                  <span
-                    class="text-sm"
-                    *ngIf="
+                  <span class="text-sm" *ngIf="
                       (newApplicationFrom.get('appledDate')?.touched ||
                         formSubmit) &&
                       newApplicationFrom.get('appledDate')?.errors
-                    "
-                  >
-                    <span
-                      class="text-red-600"
-                      *ngIf="
+                    ">
+                    <span class="text-red-600" *ngIf="
                         newApplicationFrom
                           .get('appledDate')
                           ?.hasError('required')
-                      "
-                      >Arbeitgeber Pflichtfeld</span
-                    >
+                      ">Arbeitgeber Pflichtfeld</span>
                   </span>
                 </div>
               </div>
@@ -278,375 +216,209 @@
                 <div class="grid pt-2">
                   <div class="col-6">
                     <p-floatlabel class="w-full md:w-56" variant="on">
-                      <input
-                        type="text"
-                        pInputText
-                        class="w-full"
-                        formControlName="firstName"
-                      />
-                      <label for="on_label"
-                        >Vorname
-                        <span
-                          class="text-red-600"
-                          *ngIf="
+                      <input type="text" pInputText class="w-full" formControlName="firstName" />
+                      <label for="on_label">Vorname
+                        <span class="text-red-600" *ngIf="
                             newApplicationFrom.get('firstName')?.touched &&
                             newApplicationFrom.get('firstName')?.invalid
-                          "
-                          >*</span
-                        >
+                          ">*</span>
                       </label>
                     </p-floatlabel>
-                    <span
-                      class="text-sm"
-                      *ngIf="
+                    <span class="text-sm" *ngIf="
                         (newApplicationFrom.get('firstName')?.touched ||
                           formSubmit) &&
                         newApplicationFrom.get('firstName')?.errors
-                      "
-                    >
-                      <span
-                        class="text-red-600"
-                        *ngIf="
+                      ">
+                      <span class="text-red-600" *ngIf="
                           newApplicationFrom
                             .get('firstName')
                             ?.hasError('required')
-                        "
-                        >Vorname Pflichtfeld</span
-                      >
+                        ">Vorname Pflichtfeld</span>
                     </span>
                   </div>
                   <div class="col-6">
                     <p-floatlabel class="w-full md:w-56" variant="on">
-                      <input
-                        type="text"
-                        class="w-full"
-                        pInputText
-                        formControlName="lastName"
-                      />
-                      <label for="on_label"
-                        >Nachname
-                        <span
-                          class="text-red-600"
-                          *ngIf="
+                      <input type="text" class="w-full" pInputText formControlName="lastName" />
+                      <label for="on_label">Nachname
+                        <span class="text-red-600" *ngIf="
                             newApplicationFrom.get('lastName')?.touched &&
                             newApplicationFrom.get('lastName')?.invalid
-                          "
-                          >*</span
-                        >
+                          ">*</span>
                       </label>
                     </p-floatlabel>
-                    <span
-                      class="text-sm"
-                      *ngIf="
+                    <span class="text-sm" *ngIf="
                         (newApplicationFrom.get('lastName')?.touched ||
                           formSubmit) &&
                         newApplicationFrom.get('lastName')?.errors
-                      "
-                    >
-                      <span
-                        class="text-red-600"
-                        *ngIf="
+                      ">
+                      <span class="text-red-600" *ngIf="
                           newApplicationFrom
                             .get('lastName')
                             ?.hasError('required')
-                        "
-                        >Nachname Pflichtfeld</span
-                      >
+                        ">Nachname Pflichtfeld</span>
                     </span>
                   </div>
 
                   <div class="col-6">
                     <p-floatlabel class="w-full md:w-56" variant="on">
-                      <input
-                        type="text"
-                        pInputText
-                        class="w-full"
-                        formControlName="phone"
-                      />
-                      <label for="on_label"
-                        >Rufnummer
-                        <span
-                          class="text-red-600"
-                          *ngIf="
+                      <input type="text" pInputText class="w-full" formControlName="phone" />
+                      <label for="on_label">Rufnummer
+                        <span class="text-red-600" *ngIf="
                             newApplicationFrom.get('phone')?.touched &&
                             newApplicationFrom.get('phone')?.invalid
-                          "
-                          >*</span
-                        >
+                          ">*</span>
                       </label>
-                      <span
-                        class="text-sm"
-                        *ngIf="
+                      <span class="text-sm" *ngIf="
                           (newApplicationFrom.get('phone')?.touched ||
                             formSubmit) &&
                           newApplicationFrom.get('phone')?.errors
-                        "
-                      >
-                        <span
-                          class="text-red-600"
-                          *ngIf="
+                        ">
+                        <span class="text-red-600" *ngIf="
                             newApplicationFrom
                               .get('phone')
                               ?.hasError('required')
-                          "
-                          >Rufnummer Pflichtfeld</span
-                        >
+                          ">Rufnummer Pflichtfeld</span>
                       </span>
                     </p-floatlabel>
                   </div>
                   <div class="col-6">
                     <p-floatlabel class="w-full md:w-56" variant="on">
-                      <input
-                        type="text"
-                        class="w-full"
-                        pInputText
-                        formControlName="age"
-                      />
-                      <label for="on_label"
-                        >Aktennummer
-                        <span
-                          class="text-red-600"
-                          *ngIf="
+                      <input type="text" class="w-full" pInputText formControlName="age" />
+                      <label for="on_label">Aktennummer
+                        <span class="text-red-600" *ngIf="
                             newApplicationFrom.get('age')?.touched &&
                             newApplicationFrom.get('age')?.invalid
-                          "
-                          >*</span
-                        >
+                          ">*</span>
                       </label>
                     </p-floatlabel>
-                    <span
-                      class="text-sm"
-                      *ngIf="
+                    <span class="text-sm" *ngIf="
                         (newApplicationFrom.get('age')?.touched ||
                           formSubmit) &&
                         newApplicationFrom.get('age')?.errors
-                      "
-                    >
-                      <span
-                        class="text-red-600"
-                        *ngIf="
+                      ">
+                      <span class="text-red-600" *ngIf="
                           newApplicationFrom.get('age')?.hasError('required')
-                        "
-                        >Aktennummer Pflichtfeld</span
-                      >
+                        ">Aktennummer Pflichtfeld</span>
                     </span>
                   </div>
 
                   <div class="col-6">
                     <p-floatlabel class="w-full md:w-56" variant="on">
-                      <input
-                        type="email"
-                        class="w-full"
-                        pInputText
-                        formControlName="email"
-                      />
-                      <label for="on_label"
-                        >Email
-                        <span
-                          class="text-red-600"
-                          *ngIf="
+                      <input type="email" class="w-full" pInputText formControlName="email" />
+                      <label for="on_label">Email
+                        <span class="text-red-600" *ngIf="
                             newApplicationFrom.get('email')?.touched &&
                             newApplicationFrom.get('email')?.invalid
-                          "
-                          >*</span
-                        >
+                          ">*</span>
                       </label>
                     </p-floatlabel>
-                    <span
-                      class="text-sm"
-                      *ngIf="
+                    <span class="text-sm" *ngIf="
                         (newApplicationFrom.get('email')?.touched ||
                           formSubmit) &&
                         newApplicationFrom.get('email')?.errors
-                      "
-                    >
-                      <span
-                        class="text-red-600"
-                        *ngIf="
+                      ">
+                      <span class="text-red-600" *ngIf="
                           newApplicationFrom.get('email')?.hasError('required')
-                        "
-                        >Email Address Pflichtfeld</span
-                      >
-                      <span
-                        class="text-red-600"
-                        *ngIf="
+                        ">Email Address Pflichtfeld</span>
+                      <span class="text-red-600" *ngIf="
                           newApplicationFrom.get('email')?.hasError('email')
-                        "
-                        >Ungültige E-Mail Adresse</span
-                      >
+                        ">Ungültige E-Mail Adresse</span>
                     </span>
                   </div>
                   <div class="col-6 pb-3">
                     <p-floatlabel class="w-full md:w-56" variant="on">
-                      <p-select
-                        formControlName="country"
-                        inputId="on_label"
-                        [options]="countryList"
-                        optionLabel="name"
-                        appendTo="body"
-                        styleClass="w-full"
-                        [filter]="true"
-                        filterBy="name"
-                      />
-                      <label for="on_label"
-                        >Nationalität
-                        <span
-                          class="text-red-600"
-                          *ngIf="
+                      <p-select formControlName="country" inputId="on_label" [options]="countryList" optionLabel="name"
+                        appendTo="body" styleClass="w-full" [filter]="true" filterBy="name" />
+                      <label for="on_label">Nationalität
+                        <span class="text-red-600" *ngIf="
                             newApplicationFrom.get('country')?.touched &&
                             newApplicationFrom.get('country')?.invalid
-                          "
-                          >*</span
-                        >
+                          ">*</span>
                       </label>
                     </p-floatlabel>
-                    <span
-                      class="text-sm"
-                      *ngIf="
+                    <span class="text-sm" *ngIf="
                         (newApplicationFrom.get('country')?.touched ||
                           formSubmit) &&
                         newApplicationFrom.get('country')?.errors
-                      "
-                    >
-                      <span
-                        class="text-red-600"
-                        *ngIf="
+                      ">
+                      <span class="text-red-600" *ngIf="
                           newApplicationFrom
                             .get('country')
                             ?.hasError('required')
-                        "
-                        >Nationalität Pflichtfeld</span
-                      >
+                        ">Nationalität Pflichtfeld</span>
                     </span>
                   </div>
 
                   <div class="col-6">
                     <p-floatlabel class="w-full md:w-56" variant="on">
-                      <p-select
-                        formControlName="maritalStatus"
-                        inputId="on_label"
-                        [options]="maritalStatus"
-                        optionLabel="name"
-                        appendTo="body"
-                        styleClass="w-full"
-                      />
-                      <label for="on_label"
-                        >Familienstand
-                        <span
-                          class="text-red-600"
-                          *ngIf="
+                      <p-select formControlName="maritalStatus" inputId="on_label" [options]="maritalStatus"
+                        optionLabel="name" appendTo="body" styleClass="w-full" />
+                      <label for="on_label">Familienstand
+                        <span class="text-red-600" *ngIf="
                             newApplicationFrom.get('maritalStatus')?.touched &&
                             newApplicationFrom.get('maritalStatus')?.invalid
-                          "
-                          >*</span
-                        >
+                          ">*</span>
                       </label>
                     </p-floatlabel>
-                    <span
-                      class="text-sm"
-                      *ngIf="
+                    <span class="text-sm" *ngIf="
                         (newApplicationFrom.get('maritalStatus')?.touched ||
                           formSubmit) &&
                         newApplicationFrom.get('maritalStatus')?.errors
-                      "
-                    >
-                      <span
-                        class="text-red-600"
-                        *ngIf="
+                      ">
+                      <span class="text-red-600" *ngIf="
                           newApplicationFrom
                             .get('maritalStatus')
                             ?.hasError('required')
-                        "
-                        >Familienstand Pflichtfeld</span
-                      >
+                        ">Familienstand Pflichtfeld</span>
                     </span>
                   </div>
                   <div class="col-6">
                     <p-floatlabel class="w-full" variant="on">
-                      <p-datepicker
-                        styleClass="w-full"
-                        appendTo="body"
-                        formControlName="dob"
-                      />
-                      <label for="on_label"
-                        >Geburtsdatum
-                        <span
-                          class="text-red-600"
-                          *ngIf="
+                      <p-datepicker styleClass="w-full" appendTo="body" formControlName="dob" />
+                      <label for="on_label">Geburtsdatum
+                        <span class="text-red-600" *ngIf="
                             newApplicationFrom.get('dob')?.touched &&
                             newApplicationFrom.get('dob')?.invalid
-                          "
-                          >*</span
-                        >
+                          ">*</span>
                       </label>
                     </p-floatlabel>
-                    <span
-                      class="text-sm"
-                      *ngIf="
+                    <span class="text-sm" *ngIf="
                         (newApplicationFrom.get('dob')?.touched ||
                           formSubmit) &&
                         newApplicationFrom.get('dob')?.errors
-                      "
-                    >
-                      <span
-                        class="text-red-600"
-                        *ngIf="
+                      ">
+                      <span class="text-red-600" *ngIf="
                           newApplicationFrom.get('dob')?.hasError('required')
-                        "
-                        >Geburtsdatum Pflichtfeld</span
-                      >
+                        ">Geburtsdatum Pflichtfeld</span>
                     </span>
                   </div>
 
                   <div class="col-12">
                     <p-floatlabel class="w-full md:w-56" variant="on">
-                      <input
-                        type="text"
-                        class="w-full"
-                        pInputText
-                        formControlName="address"
-                      />
-                      <label for="on_label"
-                        >Addresse
-                        <span
-                          class="text-red-600"
-                          *ngIf="
+                      <input type="text" class="w-full" pInputText formControlName="address" />
+                      <label for="on_label">Addresse
+                        <span class="text-red-600" *ngIf="
                             newApplicationFrom.get('address')?.touched &&
                             newApplicationFrom.get('address')?.invalid
-                          "
-                          >*</span
-                        >
+                          ">*</span>
                       </label>
                     </p-floatlabel>
-                    <span
-                      class="text-sm"
-                      *ngIf="
+                    <span class="text-sm" *ngIf="
                         (newApplicationFrom.get('address')?.touched ||
                           formSubmit) &&
                         newApplicationFrom.get('address')?.errors
-                      "
-                    >
-                      <span
-                        class="text-red-600"
-                        *ngIf="
+                      ">
+                      <span class="text-red-600" *ngIf="
                           newApplicationFrom
                             .get('address')
                             ?.hasError('required')
-                        "
-                        >Addresse Pflichtfeld</span
-                      >
+                        ">Addresse Pflichtfeld</span>
                     </span>
                   </div>
 
                   <div class="col-12 pb-3">
                     <p-floatlabel class="w-full" variant="on">
-                      <textarea
-                        rows="5"
-                        cols="30"
-                        class="w-full"
-                        formControlName="description"
-                        pTextarea
-                      ></textarea>
+                      <textarea rows="5" cols="30" class="w-full" formControlName="description" pTextarea></textarea>
                       <label for="on_label">Beschreibung</label>
                     </p-floatlabel>
                   </div>
@@ -660,186 +432,107 @@
 
                   <div class="col-6">
                     <p-floatlabel class="w-full" variant="on">
-                      <input
-                        type="text"
-                        pInputText
-                        class="w-full"
-                        formControlName="qualification"
-                      />
+                      <input type="text" pInputText class="w-full" formControlName="qualification" />
                       <label for="on_label">Bildungsabschluss </label>
                     </p-floatlabel>
                   </div>
 
                   <div class="col-6">
                     <p-floatlabel class="w-full" variant="on">
-                      <input
-                        type="text"
-                        pInputText
-                        class="w-full"
-                        formControlName="numOfChildren"
-                      />
+                      <input type="text" pInputText class="w-full" formControlName="numOfChildren" />
                       <label for="on_label">Kinder Anzahl </label>
                     </p-floatlabel>
                   </div>
 
                   <div class="col-6">
                     <p-floatlabel class="w-full" variant="on">
-                      <input
-                        type="text"
-                        pInputText
-                        class="w-full"
-                        formControlName="occupation"
-                      />
+                      <input type="text" pInputText class="w-full" formControlName="occupation" />
                       <label for="on_label">Beruf des Ehe Partners</label>
                     </p-floatlabel>
                   </div>
 
                   <div class="col-6">
                     <p-floatlabel class="w-full" variant="on">
-                      <input
-                        type="text"
-                        pInputText
-                        class="w-full"
-                        formControlName="fsb"
-                      />
+                      <input type="text" pInputText class="w-full" formControlName="fsb" />
                       <label for="on_label">FSB</label>
                     </p-floatlabel>
                   </div>
 
                   <div class="col-6">
                     <p-floatlabel class="w-full" variant="on">
-                      <p-select
-                      formControlName="jobType"
-                      inputId="on_label"
-                      [options]="jobTypes"
-                      appendTo="body"
-                      [loading]="getApiLoader"
-                      optionLabel="name"
-                      styleClass="w-full"
-                    />
+                      <p-select formControlName="jobType" inputId="on_label" [options]="jobTypes" appendTo="body"
+                        [loading]="getApiLoader" optionLabel="name" styleClass="w-full" />
                       <label for="on_label">Voll-Teil</label>
                     </p-floatlabel>
                   </div>
 
                   <div class="col-6">
                     <p-floatlabel class="w-full" variant="on">
-                      <input
-                        type="text"
-                        pInputText
-                        class="w-full"
-                        formControlName="approval"
-                      />
+                      <input type="text" pInputText class="w-full" formControlName="approval" />
                       <label for="on_label">Vorabzustimmung</label>
                     </p-floatlabel>
                   </div>
 
                   <div class="col-6">
                     <p-floatlabel class="w-full" variant="on">
-                      <input
-                        type="text"
-                        pInputText
-                        class="w-full"
-                        formControlName="applicationNo"
-                      />
+                      <input type="text" pInputText class="w-full" formControlName="applicationNo" />
                       <label for="on_label">Antragnummer §81a</label>
                     </p-floatlabel>
                   </div>
 
                   <div class="col-6">
                     <p-floatlabel class="w-full" variant="on">
-                      <input
-                        type="text"
-                        pInputText
-                        class="w-full"
-                        formControlName="visa"
-                      />
+                      <input type="text" pInputText class="w-full" formControlName="visa" />
                       <label for="on_label">Visa</label>
                     </p-floatlabel>
                   </div>
 
                   <div class="col-6">
                     <p-floatlabel class="w-full" variant="on">
-                      <input
-                        type="text"
-                        pInputText
-                        class="w-full"
-                        formControlName="startofWork"
-                      />
+                      <input type="text" pInputText class="w-full" formControlName="startofWork" />
                       <label for="on_label">Arbeitsbeginn</label>
                     </p-floatlabel>
                   </div>
 
                   <div class="col-6">
                     <p-floatlabel class="w-full" variant="on">
-                      <input
-                        type="text"
-                        pInputText
-                        class="w-full"
-                        formControlName="contractCadidate"
-                      />
+                      <input type="text" pInputText class="w-full" formControlName="contractCadidate" />
                       <label for="on_label">Vertrag Kandidaten Pers2 / Koop</label>
                     </p-floatlabel>
-                  </div>  
+                  </div>
 
                   <div class="col-6">
                     <p-floatlabel class="w-full" variant="on">
-                      <input
-                        type="text"
-                        pInputText
-                        class="w-full"
-                        formControlName="dateOfContract"
-                      />
+                      <input type="text" pInputText class="w-full" formControlName="dateOfContract" />
                       <label for="on_label">Datum des Vertrags mit Perso 2</label>
                     </p-floatlabel>
-                  </div>  
+                  </div>
 
                   <div class="col-6">
                     <p-floatlabel class="w-full" variant="on">
-                      <input
-                        type="text"
-                        pInputText
-                        class="w-full"
-                        formControlName="employerContact"
-                      />
+                      <input type="text" pInputText class="w-full" formControlName="employerContact" />
                       <label for="on_label">Vertrag Arbeitgeber Direkt / Koop</label>
                     </p-floatlabel>
                   </div>
 
                   <div class="col-6">
                     <p-floatlabel class="w-full" variant="on">
-                      <input
-                        type="text"
-                        pInputText
-                        class="w-full"
-                        formControlName="certification"
-                      />
+                      <input type="text" pInputText class="w-full" formControlName="certification" />
                       <label for="on_label">Urkunde</label>
                     </p-floatlabel>
                   </div>
 
                   <div class="col-6">
                     <p-floatlabel class="w-full" variant="on">
-                      <p-select
-                      formControlName="langLvl"
-                      inputId="on_label"
-                      [options]="languagesLvl"
-                      appendTo="body"
-                      [loading]="getApiLoader"
-                      optionLabel="name"
-                      styleClass="w-full"
-                    />
+                      <p-select formControlName="langLvl" inputId="on_label" [options]="languagesLvl" appendTo="body"
+                        [loading]="getApiLoader" optionLabel="name" styleClass="w-full" />
                       <label for="on_label">B1 / B2</label>
                     </p-floatlabel>
                   </div>
 
                   <div class="col-6">
                     <p-floatlabel class="w-full" variant="on">
-                      <input
-                        type="text"
-                        pInputText
-                        class="w-full"
-                        formControlName="status"
-                      />
+                      <input type="text" pInputText class="w-full" formControlName="status" />
                       <label for="on_label">Status</label>
                     </p-floatlabel>
                   </div>
@@ -848,21 +541,10 @@
             </div>
           </form>
 
-          <div
-            class="flex justify-content-end align-items-center pt-3 gap-3 w-full px-4"
-          >
-            <p-button
-              variant="outlined"
-              severity="secondary"
-              [ngClass]="{ disableBtn: formSubmit }"
-              (onClick)="closeCallback($event)"
-              label="Abbrechen"
-            />
-            <p-button
-              [loading]="formSubmit"
-              (click)="onSubmit()"
-              label="Speichern"
-            />
+          <div class="flex justify-content-end align-items-center pt-3 gap-3 w-full px-4">
+            <p-button variant="outlined" severity="secondary" [ngClass]="{ disableBtn: formSubmit }"
+              (onClick)="closeCallback($event)" label="Abbrechen" />
+            <p-button [loading]="formSubmit" (click)="onSubmit()" label="Speichern" />
           </div>
         </div>
         }
@@ -871,38 +553,19 @@
   </ng-template>
 </p-drawer>
 
-<p-dialog
-  [modal]="true"
-  [dismissableMask]="false"
-  maskStyleClass="backdrop-blur-sm"
-  [style]="{ width: '35rem' }"
-  [(visible)]="showDialoag"
->
+<p-dialog [modal]="true" [dismissableMask]="false" maskStyleClass="backdrop-blur-sm" [style]="{ width: '35rem' }"
+  [(visible)]="showDialoag">
   <ng-template #headless>
-    <div
-      class="flex flex-column align-items-center px-8 py-4 bg-surface-0 dark:bg-surface-900 rounded"
-    >
-      <div
-        class="rounded-full bg-primary text-primary-contrast inline-flex justify-center items-center"
-        style="border-radius: 50%"
-      >
+    <div class="flex flex-column align-items-center px-8 py-4 bg-surface-0 dark:bg-surface-900 rounded">
+      <div class="rounded-full bg-primary text-primary-contrast inline-flex justify-center items-center"
+        style="border-radius: 50%">
         <i class="pi pi-question text-5xl" style="padding: 19px"></i>
       </div>
       <span class="font-bold text-2xl block mb-2 mt-4">Bist du sicher?</span>
       <div class="flex items-center gap-2 mt-5">
-        <p-button
-          label="Löschen"
-          (onClick)="onAccept()"
-          [loading]="deleteLoader"
-          styleClass="w-10rem"
-        ></p-button>
-        <p-button
-          label="Abbrechen"
-          [outlined]="true"
-          [ngClass]="deleteLoader ? 'disableBtn' : ''"
-          (onClick)="showDialoag = false; selectedRow = null"
-          styleClass="w-10rem"
-        ></p-button>
+        <p-button label="Löschen" (onClick)="onAccept()" [loading]="deleteLoader" styleClass="w-10rem"></p-button>
+        <p-button label="Abbrechen" [outlined]="true" [ngClass]="deleteLoader ? 'disableBtn' : ''"
+          (onClick)="showDialoag = false; selectedRow = null" styleClass="w-10rem"></p-button>
       </div>
     </div>
   </ng-template>

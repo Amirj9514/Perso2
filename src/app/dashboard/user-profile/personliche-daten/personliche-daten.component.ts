@@ -96,11 +96,11 @@ export class PersonlicheDatenComponent {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['applicant'].currentValue) {
+    if (changes['applicant']?.currentValue) {
       this.getVacancies();
     }
 
-    if (changes['userDetail'].currentValue) {
+    if (changes['userDetail']?.currentValue) {
       this.onlyView = this.userDetail?.role === 'viewer' ? true : false;
     }
   }

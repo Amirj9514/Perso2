@@ -80,11 +80,11 @@ export class InfoDeComponent {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['applicant'].currentValue) {
+    if (changes['applicant']?.currentValue) {
       this.tab1SaveValue = this.applicant.tab_2;
       this.updateFromValue();
     }
-    if (changes['userDetail'].currentValue) {
+    if (changes['userDetail']?.currentValue) {
       this.onlyView = this.userDetail?.role === 'viewer' ? true : false;
     }
   }

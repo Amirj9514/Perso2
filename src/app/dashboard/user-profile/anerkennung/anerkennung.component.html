@@ -53,10 +53,7 @@
                 [ngClass]="
                   returnFeildBg(feild) ? 'px-1 py-1 text-sm text-light' : ''
                 "
-                [ngStyle]="{
-                                      'background-color': returnFeildBg(feild),
-                                    
-                                    }"
+                [ngStyle]="{'background-color': returnFeildBg(feild)}"
               >
                 <div
                   [ngStyle]="{

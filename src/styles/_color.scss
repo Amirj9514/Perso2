@@ -89,11 +89,11 @@
 }
 
 .gradientBg {
-  background: hsla(264, 68%, 63%, 1);
+  background: #29a3a4;
 
-  background: linear-gradient(0deg, hsla(264, 68%, 63%, 1) 0%, hsla(263, 69%, 72%, 1) 100%);
+  // background: linear-gradient(0deg, hsla(264, 68%, 63%, 1) 0%, hsla(263, 69%, 72%, 1) 100%);
   
-  background: -moz-linear-gradient(0deg, hsla(264, 68%, 63%, 1) 0%, hsla(263, 69%, 72%, 1) 100%);
+  // background: -moz-linear-gradient(0deg, hsla(264, 68%, 63%, 1) 0%, hsla(263, 69%, 72%, 1) 100%);
   
-  background: -webkit-linear-gradient(0deg, hsla(264, 68%, 63%, 1) 0%, hsla(263, 69%, 72%, 1) 100%);
+  // background: -webkit-linear-gradient(0deg, hsla(264, 68%, 63%, 1) 0%, hsla(263, 69%, 72%, 1) 100%);
 }

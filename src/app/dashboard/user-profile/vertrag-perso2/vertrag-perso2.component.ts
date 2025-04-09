@@ -24,7 +24,7 @@ export class VertragPerso2Component implements OnInit , OnChanges {
   constructor(private formsJsonS:FormsJsonService , private router:Router){}
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['userDetail'].currentValue) {
+    if (changes['userDetail']?.currentValue) {
       this.onlyView = this.userDetail?.role === 'viewer' ? true : false;
     }
   }

@@ -77,11 +77,14 @@ export class ProzessubersichtComponent implements OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['applicant'].currentValue) {
+    if (changes['applicant']?.currentValue) {
       this.tab1SaveValue = this.applicant.tab_1;
       this.updateFromValue();
     }
-    if (changes['userDetail'].currentValue) {
+
+    console.log(changes);
+    
+    if (changes['userDetail']?.currentValue) {
       this.onlyView = this.userDetail?.role === 'viewer' ? true : false;
     }
   }

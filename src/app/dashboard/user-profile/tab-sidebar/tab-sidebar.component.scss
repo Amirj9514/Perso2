@@ -154,14 +154,14 @@ $border-color: #ddd;
   .sidebar-footer {
     position: absolute;
     bottom: 0;
-    background-color: #935FDF;
+    background-color: #29a3a4;
     width: 100%;
     color: #ffffff;
   }
 }
 .activeNav {
   color: #ffffff !important;
-  background: #935FDF;
+  background: #29a3a4;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
@@ -176,7 +176,7 @@ $border-color: #ddd;
   &:hover {
     color: black;
     // background: rgb(77, 243, 188);
-    background: #935FDF;
+    background: #29a3a4;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   }
 }
