@@ -28,6 +28,10 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { CommonModule } from '@angular/common';
 import { EditorModule } from 'primeng/editor';
 
+import JSZip from 'jszip';
+import { saveAs } from 'file-saver';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+
 @Component({
   selector: 'app-user-profile',
   standalone: true,
@@ -52,7 +56,8 @@ import { EditorModule } from 'primeng/editor';
      FloatLabelModule,
      ReactiveFormsModule,
      CommonModule,
-     EditorModule
+     EditorModule,
+     ProgressSpinnerModule
   ],
   templateUrl: './user-profile.component.html',
   styleUrl: './user-profile.component.scss',
@@ -74,6 +79,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
 
   emailForm!:FormGroup;
   formSubmit: boolean = false;
+  showDownloadLoader: boolean = false;
+  
 
   
   constructor(
@@ -159,21 +166,25 @@ export class UserProfileComponent implements OnInit, OnDestroy {
 
   downloadFile(file: any) {
     const url = `application-documents/${file.id}/file`;
-    this.sharedS.sendGetRequest(url).subscribe({
-      next: (res: any) => {
-        if (res.status === 200) {
-          // const fileUrl = res.body.url;
-          // window.open(fileUrl, '_blank');
-        }
+    this.sharedS.getBlob(url).subscribe({
+      next: (blob: any) => {
+         const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = file.name ?? '';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(url);
       },
       error: (err: any) => {
         this.toastS.setToast({
           show: true,
           severity: 'error',
-          message: 'Error in downloading file.',
+          message: 'Error in downloading file',
         });
-      },
-    });
+      }
+    })
   }
   deleteFileHandler(applicant: any , file: any) {
 
@@ -249,6 +260,55 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         });
       }
     })
+  }
+
+  showAllDownloadBtn(){
+    const allFiles: any[] = [];
+    this.selectedFiles.map((applicant:any)=>{
+      if(applicant.files && applicant.files.length > 0){
+        allFiles.push(...applicant.files);
+      }
+    });
+
+    if(allFiles.length > 1){
+      return true;
+    }
+    return false;
+  }
+
+  downloadMultipleFiles() {
+    const allFiles: any[] = [];
+    const today = new Date();
+    const formattedDate = today.toISOString().split('T')[0]; // Format date as YYYY-MM-DD
+    this.showDownloadLoader =  true;
+    this.selectedFiles.map((applicant:any)=>{
+      if(applicant.files && applicant.files.length > 0){
+        allFiles.push(...applicant.files);
+      }
+    });
+    const zip = new JSZip();
+    const downloadPromises = allFiles.map(file => {
+      const url = `application-documents/${file.id}/file`;
+      return this.sharedS.getBlob(url).toPromise().then((blob: Blob) => {
+        const fileName = file.name ?? `file-${file.id}`;
+        zip.file(fileName, blob);
+      });
+    });
+  
+    Promise.all(downloadPromises).then(() => {
+      this.showDownloadLoader = false;
+      zip.generateAsync({ type: 'blob' }).then((content) => {
+        saveAs(content, `documents-${formattedDate}.zip`);
+      });
+    }).catch((err) => {
+      this.showDownloadLoader = false;
+      this.toastS.setToast({
+        show: true,
+        severity: 'error',
+        message: 'Error downloading one or more files.',
+      });
+    });
+
   }
 
   selectAllFiles(){

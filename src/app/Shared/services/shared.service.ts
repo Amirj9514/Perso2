@@ -167,6 +167,25 @@ export class SharedService {
   }
 
 
+  public getBlob(target: string, jwtToken?: string): Observable<any> {
+    if (!jwtToken) {
+      jwtToken = this.getToken(); // Your own method to fetch token
+    }
+  
+    const headers_object = new HttpHeaders({
+      Authorization: `Bearer ${jwtToken}`,
+    });
+  
+    const httpOptions = {
+      headers: headers_object,
+      responseType: 'blob' as 'json' // Important: cast to 'json' for TypeScript
+    };
+  
+    return this.httpClient
+      .get<Blob>(environment.apiUrl + target, httpOptions)
+      .pipe(catchError((error) => this.handleError(error)));
+  }
+
   async downloadFilesAsZip(fileUrls: string[], zipFileName: string = 'download.zip') {
     const zip = new JSZip();
 

@@ -8,133 +8,73 @@
       <div class="flex align-items-center justify-content-end h-full gap-3">
 
         @if(documentList && documentList.length){
-          @if(showBtn()){
-            <div class="">
-              <p-button
-                icon="pi pi-plus"
-                label="Select All Files"
-                class="addBtn"
-                (onClick)="selectAllFiles()"
-              ></p-button>
-            </div>
-          }@else {
-            <div class="">
-              <p-button
-                icon="pi pi-minus"
-                label="UnSelect All Files"
-                class="addBtn"
-                (onClick)="unselectAllFiles()"
-              ></p-button>
-            </div>
-          }
+        @if(showBtn()){
+        <div class="">
+          <p-button icon="pi pi-plus" label="Select All Files" class="addBtn" (onClick)="selectAllFiles()"></p-button>
+        </div>
+        }@else {
+        <div class="">
+          <p-button icon="pi pi-minus" label="UnSelect All Files" class="addBtn"
+            (onClick)="unselectAllFiles()"></p-button>
+        </div>
+        }
         }
         <div class="notification" (click)="visible = true">
           <i class="pi pi-inbox"></i>
         </div>
 
-     
+
       </div>
     </div>
     @if (activeTab === 1) {
-    <app-prozessubersicht
-      class="content_container"
-      [applicant]="applicant"
-      [categoory]="categoory"
-      [userDetail]="userDetail"
-    ></app-prozessubersicht>
+    <app-prozessubersicht class="content_container" [applicant]="applicant" [categoory]="categoory"
+      [userDetail]="userDetail"></app-prozessubersicht>
     }@else if(activeTab === 2) {
-    <app-personliche-daten
-      [applicant]="applicant"
-      [categoory]="categoory"
-      [userDetail]="userDetail"
-    ></app-personliche-daten>
+    <app-personliche-daten [applicant]="applicant" [categoory]="categoory"
+      [userDetail]="userDetail"></app-personliche-daten>
     }@else if(activeTab === 3) {
-    <app-vertrag-perso2
-      [applicant]="applicant"
-      [categoory]="categoory"
-      [userDetail]="userDetail"
-    ></app-vertrag-perso2>
+    <app-vertrag-perso2 [applicant]="applicant" [categoory]="categoory" [userDetail]="userDetail"></app-vertrag-perso2>
     }@else if(activeTab === 4) {
-    <app-dokumente
-      [applicant]="applicant"
-      [categoory]="categoory"
-      [userDetail]="userDetail"
-    ></app-dokumente>
+    <app-dokumente [applicant]="applicant" [categoory]="categoory" [userDetail]="userDetail"></app-dokumente>
     }@else if(activeTab === 5) {
-    <app-vorstellungsgesrpach
-      [categoory]="categoory"
-      [applicant]="applicant"
-      [userDetail]="userDetail"
-    ></app-vorstellungsgesrpach>
+    <app-vorstellungsgesrpach [categoory]="categoory" [applicant]="applicant"
+      [userDetail]="userDetail"></app-vorstellungsgesrpach>
     }@else if(activeTab === 6) {
-    <app-anerkennung
-      [applicant]="applicant"
-      [categoory]="categoory"
-      [userDetail]="userDetail"
-    ></app-anerkennung>
+    <app-anerkennung [applicant]="applicant" [categoory]="categoory" [userDetail]="userDetail"></app-anerkennung>
     }@else if(activeTab === 7) {
-    <app-s81a
-      [applicant]="applicant"
-      [categoory]="categoory"
-      [userDetail]="userDetail"
-    ></app-s81a>
+    <app-s81a [applicant]="applicant" [categoory]="categoory" [userDetail]="userDetail"></app-s81a>
     }@else if(activeTab === 8) {
-    <app-urkunde
-      [applicant]="applicant"
-      [categoory]="categoory"
-      [userDetail]="userDetail"
-    ></app-urkunde>
+    <app-urkunde [applicant]="applicant" [categoory]="categoory" [userDetail]="userDetail"></app-urkunde>
     }@else if(activeTab === 9) {
-    <app-unterkunft
-      [applicant]="applicant"
-      [categoory]="categoory"
-      [userDetail]="userDetail"
-    ></app-unterkunft>
+    <app-unterkunft [applicant]="applicant" [categoory]="categoory" [userDetail]="userDetail"></app-unterkunft>
     }@else if(activeTab === 10) {
-    <app-integration
-      [applicant]="applicant"
-      [categoory]="categoory"
-      [userDetail]="userDetail"
-    ></app-integration>
+    <app-integration [applicant]="applicant" [categoory]="categoory" [userDetail]="userDetail"></app-integration>
     }@else if(activeTab === 11) {
-    <app-buchhaltung
-      [applicant]="applicant"
-      [categoory]="categoory"
-      [userDetail]="userDetail"
-    ></app-buchhaltung>
+    <app-buchhaltung [applicant]="applicant" [categoory]="categoory" [userDetail]="userDetail"></app-buchhaltung>
     }@else if(activeTab === 12) {
-    <app-info-de
-      [applicant]="applicant"
-      [categoory]="categoory"
-      [userDetail]="userDetail"
-    ></app-info-de>
+    <app-info-de [applicant]="applicant" [categoory]="categoory" [userDetail]="userDetail"></app-info-de>
     }
   </div>
 </div>
 
-<p-drawer
-  #drawerRef
-  [(visible)]="visible"
-  [modal]="true"
-  [dismissible]="false"
-  position="right"
-  styleClass="w-26rem"
->
+<p-drawer #drawerRef [(visible)]="visible" [modal]="true" [dismissible]="false" position="right" styleClass="w-26rem">
   <ng-template #headless>
     <div class="flex flex-col h-full relative">
       <div class="flex items-center justify-between shrink-0 w-full">
-        <p-button
-          (onClick)="closeCallback($event)"
-          icon="pi pi-angle-left"
-          [rounded]="true"
-          class="drawerBackBtn"
-        />
+        <p-button (onClick)="closeCallback($event)" icon="pi pi-angle-left" [rounded]="true" class="drawerBackBtn" />
 
         <div class="w-full">
-          <div
-            class="text-xl px-4 font-semibold py-3 border-bottom-1 headerBg borderClr"
-          >
-            Selected Files
+          <div class=" py-3 border-bottom-1 headerBg borderClr flex align-items-center justify-content-between">
+            <div class="text-xl px-4 font-semibold">Selected Files</div>
+
+            @if(showAllDownloadBtn()){
+            <div class="mr-2">
+              <p-button [disabled]="emailLoader" (onClick)="downloadMultipleFiles()" type="button" variant="outlined"
+                label="Download All" class="" />
+            </div>
+            }
+
+
           </div>
 
           <div class="pl-4 pr-3 mt-3 draweBody">
@@ -145,18 +85,16 @@
                 <div class="font-semibold">{{ applicant?.applicant?.age }}</div>
                 <div class="text-sm">
                   {{
-                    applicant?.applicant?.first_name +
-                      " " +
-                      applicant?.applicant?.last_name
+                  applicant?.applicant?.first_name +
+                  " " +
+                  applicant?.applicant?.last_name
                   }}
                 </div>
               </div>
 
               @for (file of applicant.files; track $index) {
 
-              <div
-                class="file-upload flex align-items-center justify-content-between mb-2"
-              >
+              <div class="file-upload flex align-items-center justify-content-between mb-2">
                 <div class="file-select">
                   <div class="flex gap-2 align-items-center">
                     <div class="iconBox2">
@@ -166,9 +104,7 @@
                       <div class="text-sm font-semibold" id="fileName">
                         {{ file ? file.name : "Choose File" }}
                       </div>
-                      <div
-                        class="text-sm textClr-400 pt-1 align-items-center flex gap-1 actionBtn"
-                      >
+                      <div class="text-sm textClr-400 pt-1 align-items-center flex gap-1 actionBtn">
                         {{ calFileSize(file?.additional_data?.size) }}
                       </div>
                     </div>
@@ -178,10 +114,7 @@
                   <div class="iconBox" (click)="downloadFile(file)">
                     <i class="pi pi-download"></i>
                   </div>
-                  <div
-                    class="iconBox"
-                    (click)="deleteFileHandler(applicant, file)"
-                  >
+                  <div class="iconBox" (click)="deleteFileHandler(applicant, file)">
                     <i class="pi pi-trash"></i>
                   </div>
                 </div>
@@ -191,17 +124,8 @@
             } }
           </div>
           <div class="draweFooter flex justify-content-end gap-3 mx-3 mt-2">
-            <p-button
-              (onClick)="closeCallback($event)"
-              variant="outlined"
-              label="Cancel"
-              class=""
-            />
-            <p-button
-              (onClick)="emailDialog = true"
-              label="Send Email"
-              class=""
-            />
+            <p-button (onClick)="closeCallback($event)" variant="outlined" label="Cancel" class="" />
+            <p-button (onClick)="emailDialog = true" label="Send Email" class="" />
           </div>
         </div>
       </div>
@@ -209,82 +133,43 @@
   </ng-template>
 </p-drawer>
 
-<p-dialog
-  maskStyleClass="backdrop-blur-sm"
-  [(visible)]="emailDialog"
-  [modal]="true"
-  [dismissableMask]="emailLoader ? false : true"
-  [style]="{ width: '60%', height: '80vh' }"
->
+<p-dialog maskStyleClass="backdrop-blur-sm" [(visible)]="emailDialog" [modal]="true"
+  [dismissableMask]="emailLoader ? false : true" [style]="{ width: '60%', height: '80vh' }">
   <ng-template #headless>
     <div class="flex flex-col h-full relative">
       <form [formGroup]="emailForm" class="p-3 w-full">
         <div class="mb-3">
           <p-floatlabel class="w-full" variant="on">
-            <input
-              type="email"
-              pInputText
-              class="w-full"
-              formControlName="email"
-            />
-            <label for="on_label"
-              >Email
-              <span
-                class="text-red-600"
-                *ngIf="
+            <input type="email" pInputText class="w-full" formControlName="email" />
+            <label for="on_label">Email
+              <span class="text-red-600" *ngIf="
                   emailForm.get('email')?.touched &&
                   emailForm.get('email')?.invalid
-                "
-                >*</span
-              >
+                ">*</span>
             </label>
           </p-floatlabel>
-          <span
-            class="text-sm"
-            *ngIf="
+          <span class="text-sm" *ngIf="
               (emailForm.get('email')?.touched || formSubmit) &&
               emailForm.get('email')?.errors
-            "
-          >
-            <span
-              class="text-red-600"
-              *ngIf="emailForm.get('email')?.hasError('required')"
-              >Email Pflichtfeld</span
-            >
+            ">
+            <span class="text-red-600" *ngIf="emailForm.get('email')?.hasError('required')">Email Pflichtfeld</span>
           </span>
         </div>
         <div class="mb-3">
           <p-floatlabel class="w-full" variant="on">
-            <input
-              type="text"
-              pInputText
-              class="w-full"
-              formControlName="subject"
-            />
-            <label for="on_label"
-              >Subject
-              <span
-                class="text-red-600"
-                *ngIf="
+            <input type="text" pInputText class="w-full" formControlName="subject" />
+            <label for="on_label">Subject
+              <span class="text-red-600" *ngIf="
                   emailForm.get('subject')?.touched &&
                   emailForm.get('subject')?.invalid
-                "
-                >*</span
-              >
+                ">*</span>
             </label>
           </p-floatlabel>
-          <span
-            class="text-sm"
-            *ngIf="
+          <span class="text-sm" *ngIf="
               (emailForm.get('subject')?.touched || formSubmit) &&
               emailForm.get('subject')?.errors
-            "
-          >
-            <span
-              class="text-red-600"
-              *ngIf="emailForm.get('subject')?.hasError('required')"
-              >Subject Pflichtfeld</span
-            >
+            ">
+            <span class="text-red-600" *ngIf="emailForm.get('subject')?.hasError('required')">Subject Pflichtfeld</span>
           </span>
         </div>
 
@@ -293,22 +178,23 @@
         </div>
 
         <div class="flex justify-content-end gap-3 mx-3 mt-2">
-          <p-button
-            [disabled]="emailLoader"
-            (onClick)="emailDialog = false"
-            type="button"
-            variant="outlined"
-            label="Cancel"
-            class=""
-          />
-          <p-button
-            [loading]="emailLoader"
-            (onClick)="sendEmail()"
-            label="Send Email"
-            class=""
-          />
+          <p-button [disabled]="emailLoader" (onClick)="emailDialog = false" type="button" variant="outlined"
+            label="Cancel" class="" />
+          <p-button [loading]="emailLoader" (onClick)="sendEmail()" label="Send Email" class="" />
         </div>
       </form>
     </div>
+  </ng-template>
+</p-dialog>
+
+
+
+<p-dialog [modal]="true" [dismissableMask]="false" maskStyleClass="backdrop-blur-sm" [style]="{ width: '25rem' }"
+  [(visible)]="showDownloadLoader">
+  <ng-template #headless>
+    <div class="flex justify-content-center align-items-center my-4">
+      <p-progress-spinner ariaLabel="loading" [style]="{ width: '150px', height: '150px' }" />
+    </div>
+
   </ng-template>
 </p-dialog>

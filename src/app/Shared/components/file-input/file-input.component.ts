@@ -148,23 +148,43 @@ export class FileInputComponent implements OnChanges, OnDestroy {
       link.download = this.file.name;
       link.click();
     } else {
-      const url = `application-documents/${this.selectedFile.id}/url`;
-      this.sharedS.sendGetRequest(url).subscribe({
-        next: (res: any) => {
-          if (res.status === 200) {
-            const fileUrl = res.body.url;
-            window.open(fileUrl, '_blank');
-            // this.sharedS.sendDownloadRequest(fileUrl);
-          }
+      const url = `application-documents/${this.selectedFile.id}/file`;
+      this.sharedS.getBlob(url).subscribe({
+        next: (blob: any) => {
+           const url = window.URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = this.selectedFile.name ?? '';
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          window.URL.revokeObjectURL(url);
         },
         error: (err: any) => {
           this.toastS.setToast({
             show: true,
             severity: 'error',
-            message: 'Error in deleting file.',
+            message: 'Error in downloading file',
           });
-        },
-      });
+        }
+      })
+      // const url = `application-documents/${this.selectedFile.id}/url`;
+      // this.sharedS.sendGetRequest(url).subscribe({
+      //   next: (res: any) => {
+      //     if (res.status === 200) {
+      //       const fileUrl = res.body.url;
+      //       window.open(fileUrl, '_blank');
+      //       // this.sharedS.sendDownloadRequest(fileUrl);
+      //     }
+      //   },
+      //   error: (err: any) => {
+      //     this.toastS.setToast({
+      //       show: true,
+      //       severity: 'error',
+      //       message: 'Error in deleting file.',
+      //     });
+      //   },
+      // });
     }
   }
 
