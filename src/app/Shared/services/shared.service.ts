@@ -9,6 +9,8 @@ import { catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { environment } from '../../../environments/environment.development';
 import { CustomToastService } from './custom-toast.service';
+import JSZip from 'jszip';
+import { saveAs } from 'file-saver';
 
 @Injectable({
   providedIn: 'root',
@@ -139,37 +141,52 @@ export class SharedService {
 
   public sendDownloadRequest(target: string) {
     let token = this.getToken();
-    // const headers_object = new HttpHeaders({
-    //   Authorization: `Bearer ${token}`,
-    //   'Content-Type': 'application/octet-stream'
-    // });
-
-    // const httpOptions:any = {
-    //   headers: headers_object,
-    //   responseType: 'blob'
-    // };
-
-    // return this.httpClient
-    //   .get<any>(target, httpOptions)
-    //   .pipe(catchError((error) => this.handleError(error)));
     const headers = new HttpHeaders({
       'Content-Type': 'application/octet-stream'
     });
 
-    this.httpClient.get(target, { headers, responseType: 'blob' }).subscribe(blob => {
+    this.httpClient.get(target, {
+      headers,
+      responseType: 'blob' as 'json',
+      observe: 'response'
+    }).subscribe(response => {
+      const blob = response.body as Blob;
       const a = document.createElement('a');
       const objectUrl = URL.createObjectURL(blob);
       a.href = objectUrl;
-      a.download = 'downloaded_file.png'; // Change filename as needed
+      a.download = 'downloaded_file.png';
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
       URL.revokeObjectURL(objectUrl);
     }, error => {
-      
+      console.error('Error downloading file:', error);
     });
+    
   
   }
 
+
+  async downloadFilesAsZip(fileUrls: string[], zipFileName: string = 'download.zip') {
+    const zip = new JSZip();
+
+    for (const url of fileUrls) {
+      const fileName = this.extractFileName(url);
+      try {
+        const fileData = await this.httpClient.get(url, { responseType: 'blob' }).toPromise();
+        zip.file(fileName, fileData as Blob);
+      } catch (error) {
+        console.error(`Failed to download ${url}`, error);
+      }
+    }
+
+    zip.generateAsync({ type: 'blob' }).then((content:any) => {
+      saveAs(content, zipFileName);
+    });
+  }
+
+  private extractFileName(url: string): string {
+    return url.split('/').pop() || `file-${Date.now()}`;
+  }
 
 }

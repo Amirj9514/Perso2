@@ -275,7 +275,7 @@ export class DashboardComponent implements OnInit {
               address: item.address,
               marital_status: item.marital_status,
               date_of_birth: item.date_of_birth,
-              country: item.country,
+              country: item.country,    
               description: item.description,
               sub_category: item.sub_category,
               category: category,
@@ -302,10 +302,7 @@ export class DashboardComponent implements OnInit {
             } else {
               this.products.push(val);
             }
-          });
-
-          console.log(this.products[this.products.length - 1]); 
-          
+          }); 
         } else {
           this.products = [];
         }

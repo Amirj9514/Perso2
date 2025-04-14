@@ -4,6 +4,7 @@ import {
   EventEmitter,
   Input,
   OnChanges,
+  OnDestroy,
   Output,
   SimpleChanges,
 } from '@angular/core';
@@ -11,17 +12,18 @@ import { FileUpload, FileSelectEvent } from 'primeng/fileupload';
 import { CustomToastService } from '../../services/custom-toast.service';
 import { SharedService } from '../../services/shared.service';
 import { ApplicantService } from '../../services/applicant.service';
-import { take } from 'rxjs';
+import { Subject, take, takeUntil } from 'rxjs';
 import { Dialog } from 'primeng/dialog';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { FileService } from '../../services/file.service';
 @Component({
   selector: 'app-file-input',
   standalone: true,
-  imports: [FileUpload, CommonModule , Dialog , ProgressSpinnerModule],
+  imports: [FileUpload, CommonModule, Dialog, ProgressSpinnerModule],
   templateUrl: './file-input.component.html',
   styleUrl: './file-input.component.scss',
 })
-export class FileInputComponent implements OnChanges {
+export class FileInputComponent implements OnChanges, OnDestroy {
   @Input() disabled: boolean = false;
   @Input() documentList: any[] = [];
   @Input() lable: string = '';
@@ -29,21 +31,25 @@ export class FileInputComponent implements OnChanges {
   @Input() controlName: string = '';
   @Output() uploadFile = new EventEmitter<any>();
   @Output() deleteFile = new EventEmitter<any>();
+  private destroy$ = new Subject<void>();
+  private destroy2$ = new Subject<void>();
 
   showDialog: boolean = false;
 
   file: File | null = null;
   selectedFile: any = null;
+  isSelected: boolean = false;
   constructor(
     private toastS: CustomToastService,
     private sharedS: SharedService,
-    private applicantS: ApplicantService
+    private applicantS: ApplicantService,
+    private fileS: FileService
   ) {}
 
   ngOnChanges(changes: SimpleChanges): void {
     this.applicantS
       .getDocumentList()
-      .pipe(take(1))
+      .pipe(takeUntil(this.destroy$))
       .subscribe((data) => {
         this.documentList = data ?? [];
         if (this.documentList.length > 0) {
@@ -53,11 +59,19 @@ export class FileInputComponent implements OnChanges {
                 ...doc,
                 additional_data: JSON.parse(doc.additional_data),
               };
+              this.isSelected = this.fileS.checkIfFileExist(this.selectedFile);
               break;
             }
           }
         }
       });
+
+
+      this.fileS.getSelectedFiles().pipe(takeUntil(this.destroy2$)).subscribe((file:any)=>{
+        if (this.selectedFile) {
+          this.isSelected = this.fileS.checkIfFileExist(this.selectedFile);
+        }
+      })
   }
   onBasicUploadAuto(event: FileSelectEvent) {
     const isValid = this.validateFile(event.currentFiles[0]);
@@ -84,7 +98,8 @@ export class FileInputComponent implements OnChanges {
     return formattedSize;
   }
 
-  deleteFileHandler() {
+  deleteFileHandler(event: any) {
+    event.stopPropagation();
     if (this.selectedFile) {
       this.showDialog = true;
       this.sharedS
@@ -102,7 +117,7 @@ export class FileInputComponent implements OnChanges {
                 (doc) => doc.id === this.selectedFile.id
               );
 
-              if(index > -1){
+              if (index > -1) {
                 this.documentList.splice(index, 1);
                 this.applicantS.updateDocumentList(this.documentList);
                 this.selectedFile = null;
@@ -124,32 +139,32 @@ export class FileInputComponent implements OnChanges {
     }
   }
 
-  downloadFile() {
+  downloadFile(event:any) {
+    event.stopPropagation();
     if (this.file) {
       const url = URL.createObjectURL(this.file);
       const link = document.createElement('a');
       link.href = url;
       link.download = this.file.name;
       link.click();
-    }
-    else{
-      const url = `application-documents/${this.selectedFile.id}/url`
+    } else {
+      const url = `application-documents/${this.selectedFile.id}/url`;
       this.sharedS.sendGetRequest(url).subscribe({
-        next:(res:any)=>{
-          if(res.status === 200){
+        next: (res: any) => {
+          if (res.status === 200) {
             const fileUrl = res.body.url;
             window.open(fileUrl, '_blank');
             // this.sharedS.sendDownloadRequest(fileUrl);
           }
-
-        },error:(err:any)=>{
+        },
+        error: (err: any) => {
           this.toastS.setToast({
             show: true,
             severity: 'error',
             message: 'Error in deleting file.',
           });
-        }
-      })
+        },
+      });
     }
   }
 
@@ -181,9 +196,16 @@ export class FileInputComponent implements OnChanges {
                     ...element,
                     additional_data: JSON.parse(element.additional_data),
                   };
+
+                  this.documentList.push({
+                    ...this.selectedFile,
+                    additional_data: JSON.stringify(
+                      this.selectedFile.additional_data
+                    ),
+                  });
+                  this.applicantS.updateDocumentList(this.documentList);
                   break;
                 }
-                
               }
               this.file = null;
               this.toastS.setToast({
@@ -247,5 +269,20 @@ export class FileInputComponent implements OnChanges {
     }
 
     return false;
+  }
+
+  selectedFileHandler() {
+    const file = this.selectedFile;
+    if(!file) return;
+    this.isSelected = !this.fileS.checkIfFileExist(file);
+    this.fileS.filterFiles(file , this.applicatanData);
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
+
+    this.destroy2$.next();
+    this.destroy2$.complete();
   }
 }

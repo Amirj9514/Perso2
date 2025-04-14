@@ -4,8 +4,40 @@
   </div>
 
   <div class="mainContainer">
+    <div class="topHeader">
+      <div class="flex align-items-center justify-content-end h-full gap-3">
+
+        @if(documentList && documentList.length){
+          @if(showBtn()){
+            <div class="">
+              <p-button
+                icon="pi pi-plus"
+                label="Select All Files"
+                class="addBtn"
+                (onClick)="selectAllFiles()"
+              ></p-button>
+            </div>
+          }@else {
+            <div class="">
+              <p-button
+                icon="pi pi-minus"
+                label="UnSelect All Files"
+                class="addBtn"
+                (onClick)="unselectAllFiles()"
+              ></p-button>
+            </div>
+          }
+        }
+        <div class="notification" (click)="visible = true">
+          <i class="pi pi-inbox"></i>
+        </div>
+
+     
+      </div>
+    </div>
     @if (activeTab === 1) {
     <app-prozessubersicht
+      class="content_container"
       [applicant]="applicant"
       [categoory]="categoory"
       [userDetail]="userDetail"
@@ -79,3 +111,204 @@
     }
   </div>
 </div>
+
+<p-drawer
+  #drawerRef
+  [(visible)]="visible"
+  [modal]="true"
+  [dismissible]="false"
+  position="right"
+  styleClass="w-26rem"
+>
+  <ng-template #headless>
+    <div class="flex flex-col h-full relative">
+      <div class="flex items-center justify-between shrink-0 w-full">
+        <p-button
+          (onClick)="closeCallback($event)"
+          icon="pi pi-angle-left"
+          [rounded]="true"
+          class="drawerBackBtn"
+        />
+
+        <div class="w-full">
+          <div
+            class="text-xl px-4 font-semibold py-3 border-bottom-1 headerBg borderClr"
+          >
+            Selected Files
+          </div>
+
+          <div class="pl-4 pr-3 mt-3 draweBody">
+            @for (applicant of selectedFiles; track $index) { @if
+            (applicant?.files && applicant?.files.length) {
+            <div class="user-container">
+              <div class="userDetail my-3">
+                <div class="font-semibold">{{ applicant?.applicant?.age }}</div>
+                <div class="text-sm">
+                  {{
+                    applicant?.applicant?.first_name +
+                      " " +
+                      applicant?.applicant?.last_name
+                  }}
+                </div>
+              </div>
+
+              @for (file of applicant.files; track $index) {
+
+              <div
+                class="file-upload flex align-items-center justify-content-between mb-2"
+              >
+                <div class="file-select">
+                  <div class="flex gap-2 align-items-center">
+                    <div class="iconBox2">
+                      <i class="pi pi-file"></i>
+                    </div>
+                    <div>
+                      <div class="text-sm font-semibold" id="fileName">
+                        {{ file ? file.name : "Choose File" }}
+                      </div>
+                      <div
+                        class="text-sm textClr-400 pt-1 align-items-center flex gap-1 actionBtn"
+                      >
+                        {{ calFileSize(file?.additional_data?.size) }}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="uploadBtn gap-2">
+                  <div class="iconBox" (click)="downloadFile(file)">
+                    <i class="pi pi-download"></i>
+                  </div>
+                  <div
+                    class="iconBox"
+                    (click)="deleteFileHandler(applicant, file)"
+                  >
+                    <i class="pi pi-trash"></i>
+                  </div>
+                </div>
+              </div>
+              }
+            </div>
+            } }
+          </div>
+          <div class="draweFooter flex justify-content-end gap-3 mx-3 mt-2">
+            <p-button
+              (onClick)="closeCallback($event)"
+              variant="outlined"
+              label="Cancel"
+              class=""
+            />
+            <p-button
+              (onClick)="emailDialog = true"
+              label="Send Email"
+              class=""
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</p-drawer>
+
+<p-dialog
+  maskStyleClass="backdrop-blur-sm"
+  [(visible)]="emailDialog"
+  [modal]="true"
+  [dismissableMask]="emailLoader ? false : true"
+  [style]="{ width: '60%', height: '80vh' }"
+>
+  <ng-template #headless>
+    <div class="flex flex-col h-full relative">
+      <form [formGroup]="emailForm" class="p-3 w-full">
+        <div class="mb-3">
+          <p-floatlabel class="w-full" variant="on">
+            <input
+              type="email"
+              pInputText
+              class="w-full"
+              formControlName="email"
+            />
+            <label for="on_label"
+              >Email
+              <span
+                class="text-red-600"
+                *ngIf="
+                  emailForm.get('email')?.touched &&
+                  emailForm.get('email')?.invalid
+                "
+                >*</span
+              >
+            </label>
+          </p-floatlabel>
+          <span
+            class="text-sm"
+            *ngIf="
+              (emailForm.get('email')?.touched || formSubmit) &&
+              emailForm.get('email')?.errors
+            "
+          >
+            <span
+              class="text-red-600"
+              *ngIf="emailForm.get('email')?.hasError('required')"
+              >Email Pflichtfeld</span
+            >
+          </span>
+        </div>
+        <div class="mb-3">
+          <p-floatlabel class="w-full" variant="on">
+            <input
+              type="text"
+              pInputText
+              class="w-full"
+              formControlName="subject"
+            />
+            <label for="on_label"
+              >Subject
+              <span
+                class="text-red-600"
+                *ngIf="
+                  emailForm.get('subject')?.touched &&
+                  emailForm.get('subject')?.invalid
+                "
+                >*</span
+              >
+            </label>
+          </p-floatlabel>
+          <span
+            class="text-sm"
+            *ngIf="
+              (emailForm.get('subject')?.touched || formSubmit) &&
+              emailForm.get('subject')?.errors
+            "
+          >
+            <span
+              class="text-red-600"
+              *ngIf="emailForm.get('subject')?.hasError('required')"
+              >Subject Pflichtfeld</span
+            >
+          </span>
+        </div>
+
+        <div class="mb-3">
+          <p-editor formControlName="message" [style]="{ height: '320px' }" />
+        </div>
+
+        <div class="flex justify-content-end gap-3 mx-3 mt-2">
+          <p-button
+            [disabled]="emailLoader"
+            (onClick)="emailDialog = false"
+            type="button"
+            variant="outlined"
+            label="Cancel"
+            class=""
+          />
+          <p-button
+            [loading]="emailLoader"
+            (onClick)="sendEmail()"
+            label="Send Email"
+            class=""
+          />
+        </div>
+      </form>
+    </div>
+  </ng-template>
+</p-dialog>

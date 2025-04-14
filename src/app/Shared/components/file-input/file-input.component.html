@@ -4,21 +4,25 @@
   }}</label>
 
   @if(selectedFile){
-
-
     <div
+    (click)="selectedFileHandler()"
     class="file-upload flex align-items-center justify-content-between"
     id="app-file-input"
+    [ngClass]="isSelected ? 'selectedFile' : ''"
   >
     <div class="file-select">
       <div class="flex gap-2 align-items-center">
-        <div class="iconBox2" [ngClass]="{ activeBox: file }">
-          <i class="pi pi-file"></i>
+        <div class="iconBox2" [ngClass]="{ activeBox: file || isSelected }">
+          @if(isSelected){
+            <i class="pi pi-check-circle"></i>
+          }@else {
+            <i class="pi pi-file"></i>
+          }
         </div>
 
         <div>
           <div class="text-sm font-semibold" id="fileName">
-            {{ selectedFile ? selectedFile?.additional_data?.name : "Choose File" }}
+            {{ selectedFile ? selectedFile?.additional_data?.name  : "Choose File" }}
           </div>
           @if(selectedFile){
           <div
@@ -33,7 +37,7 @@
       </div>
     </div>
     @if(!selectedFile){
-    <div class="uploadBtn" [ngClass]="{ disabledBtn: disabled }">
+    <div class="uploadBtn" [ngClass]="{ disabledBtn2: disabled }">
       <p-fileupload
         mode="basic"
         name="demo[]"
@@ -45,13 +49,13 @@
     </div>
     }@else {
     <div class="uploadBtn gap-2">
-      <div class="iconBox" (click)="downloadFile()">
+      <div class="iconBox" (click)="downloadFile($event)">
         <i class="pi pi-eye"></i>
       </div>
       <div
         class="iconBox"
         [ngClass]="{ disabledBtn: disabled }"
-        (click)="deleteFileHandler()"
+        (click)="deleteFileHandler($event)"
       >
         <i class="pi pi-trash"></i>
       </div>
@@ -63,11 +67,16 @@
     <div
     class="file-upload flex align-items-center justify-content-between"
     id="app-file-input"
+    (click)="selectedFileHandler()"
   >
     <div class="file-select">
       <div class="flex gap-2 align-items-center">
-        <div class="iconBox2" [ngClass]="{ activeBox: file }">
-          <i class="pi pi-file"></i>
+        <div class="iconBox2" [ngClass]="{ activeBox: file || isSelected }">
+          @if(isSelected){
+            <i class="pi pi-check-circle"></i>
+          }@else {
+            <i class="pi pi-file"></i>
+          }
         </div>
 
         <div>
@@ -87,7 +96,7 @@
       </div>
     </div>
     @if(!file){
-    <div class="uploadBtn" [ngClass]="{ disabledBtn: disabled }">
+    <div class="uploadBtn" [ngClass]="{ disabledBtn2: disabled }">
       <p-fileupload
         mode="basic"
         name="demo[]"
@@ -99,19 +108,19 @@
     </div>
     }@else {
     <div class="uploadBtn gap-2">
-      <div class="iconBox" (click)="downloadFile()">
+      <div class="iconBox" (click)="downloadFile($event)">
         <i class="pi pi-download"></i>
       </div>
       <div
         class="iconBox"
         [ngClass]="{ disabledBtn: disabled }"
-        (click)="deleteFileHandler()"
+        (click)="deleteFileHandler($event)"
       >
         <i class="pi pi-trash"></i>
       </div>
     </div>
     }
-  </div>
+  </div>  
   }
  
 </div>
