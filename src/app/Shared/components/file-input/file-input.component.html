@@ -1,7 +1,10 @@
 <div>
-  <label class="textClr-500 pb-1 font-semibold" for="app-file-input">{{
-    lable
-  }}</label>
+  @if (lable) {
+    <label class="textClr-500 pb-1 font-semibold" for="app-file-input">{{
+      lable
+    }}</label>
+  }
+
 
   @if(selectedFile){
     <div

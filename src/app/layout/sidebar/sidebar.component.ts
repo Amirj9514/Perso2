@@ -36,6 +36,20 @@ export class SidebarComponent {
       link: '/calendar',
       role: ['admin', 'agent'],
     },
+
+    {
+      title: 'Arbeitgeber',
+      icon: 'pi-briefcase',
+      link: '/arbeitgeber',
+      role: ['admin', 'agent'],
+    },
+
+    {
+      title: 'behorde',
+      icon: 'pi-building-columns',
+      link: '/behorde',
+      role: ['admin', 'agent'],
+    },
   ];
 
   dropdownOpen = false;

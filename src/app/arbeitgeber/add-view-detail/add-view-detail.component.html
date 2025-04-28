@@ -1,0 +1,57 @@
+<div class="flex flex-col h-full relative">
+    <div class="flex items-center justify-between shrink-0 w-full">
+        <p-button (onClick)="closeCallback($event)" icon="pi pi-angle-left" [rounded]="true" class="drawerBackBtn" />
+
+        <div class="w-full">
+            <div class="text-xl px-4 font-semibold py-3 border-bottom-1 headerBg borderClr">
+                Neu Arbeitsgeber
+            </div>
+
+            <form [formGroup]="newApplicationFrom" class="pl-4 pr-3 mt-3 draweBody">
+                <div class="mt-3">
+                    <div class="grid pt-2">
+                        <div class="col-12 mb-2">
+                            <p-floatlabel class="w-full md:w-56" variant="on">
+                                <input type="text" pInputText class="w-full" formControlName="branch" />
+                                <label for="on_label">Branche </label>
+                            </p-floatlabel>
+                        </div>
+                        <div class="col-12 mb-2">
+                            <p-floatlabel class="w-full md:w-56" variant="on">
+                                <input type="text" class="w-full" pInputText formControlName="cooperation_partner" />
+                                <label for="on_label">Kooperationspartner</label>
+                            </p-floatlabel>
+                        </div>
+
+                        <div class="col-12 mb-2">
+                            <p-floatlabel class="w-full md:w-56" variant="on">
+                                <input type="text" class="w-full" pInputText formControlName="employer" />
+                                <label for="on_label">Arbeitsgeber</label>
+                            </p-floatlabel>
+                        </div>
+
+                        <div class="col-12 mb-2">
+                            <p-floatlabel class="w-full md:w-56" variant="on">
+                                <input type="text" class="w-full" pInputText formControlName="place" />
+                                <label for="on_label">Ort</label>
+                            </p-floatlabel>
+                        </div>
+
+                        <div class="col-12 mb-2">
+                            <p-floatlabel class="w-full md:w-56" variant="on">
+                                <input type="text" class="w-full" pInputText formControlName="contact" />
+                                <label for="on_label">Ansprechpartner</label>
+                            </p-floatlabel>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <div class="flex justify-content-end align-items-center pt-3 gap-3 w-full px-4">
+                <p-button variant="outlined" severity="secondary" [ngClass]="{ disableBtn: formSubmit }"
+                    (onClick)="closeCallback($event)" label="Abbrechen" />
+                <p-button [ngClass]="{ disableBtn: formSubmit }" (click)="onSubmit()" label="Speichern" />
+            </div>
+        </div>
+    </div>
+</div>

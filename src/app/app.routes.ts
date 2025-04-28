@@ -13,7 +13,7 @@ export const routes: Routes = [
     path: '',
     component: LayoutComponent,
     canActivate: [authGuard],
-    data: { roles: ['admin','viewer' , 'agent'] },
+    data: { roles: ['admin', 'viewer', 'agent'] },
     children: [
       {
         path: '',
@@ -22,13 +22,16 @@ export const routes: Routes = [
             (m) => m.DashboardComponent
           ),
         canActivate: [authGuard],
-        data: { roles: ['admin' ,'agent','viewer'] },
+        data: { roles: ['admin', 'agent', 'viewer'] },
       },
       {
-        path:'applicant/:id',
-        loadComponent:()=>import('./dashboard/user-profile/user-profile.component').then(m=>m.UserProfileComponent),
+        path: 'applicant/:id',
+        loadComponent: () =>
+          import('./dashboard/user-profile/user-profile.component').then(
+            (m) => m.UserProfileComponent
+          ),
         canActivate: [authGuard],
-        data: { roles: ['admin' ,'agent','viewer'] },
+        data: { roles: ['admin', 'agent', 'viewer'] },
       },
       {
         path: 'employees',
@@ -37,7 +40,7 @@ export const routes: Routes = [
             (m) => m.EmployeesComponent
           ),
         canActivate: [authGuard],
-        data: { roles: ['admin'] }
+        data: { roles: ['admin'] },
       },
       {
         path: 'vacancies',
@@ -46,7 +49,7 @@ export const routes: Routes = [
             (m) => m.VacanciesComponent
           ),
         canActivate: [authGuard],
-        data: { roles: ['admin','agent'] }
+        data: { roles: ['admin', 'agent'] },
       },
       {
         path: 'calendar',
@@ -55,7 +58,23 @@ export const routes: Routes = [
             (m) => m.CalenderComponent
           ),
         canActivate: [authGuard],
-        data: { roles: ['admin' ,'agent'] }
+        data: { roles: ['admin', 'agent'] },
+      },
+      {
+        path: 'arbeitgeber',
+        loadComponent: () =>
+          import('./arbeitgeber/arbeitgeber.component').then(
+            (m) => m.ArbeitgeberComponent
+          ),
+        canActivate: [authGuard],
+        data: { roles: ['admin', 'agent'] },
+      },
+      {
+        path: 'behorde',
+        loadComponent: () =>
+          import('./behorde/behorde.component').then((m) => m.BehordeComponent),
+        canActivate: [authGuard],
+        data: { roles: ['admin', 'agent'] },
       },
     ],
   },

@@ -81,9 +81,6 @@ export class ProzessubersichtComponent implements OnChanges {
       this.tab1SaveValue = this.applicant.tab_1;
       this.updateFromValue();
     }
-
-    console.log(changes);
-    
     if (changes['userDetail']?.currentValue) {
       this.onlyView = this.userDetail?.role === 'viewer' ? true : false;
     }

@@ -1,0 +1,26 @@
+
+.drawerBackBtn {
+    position: absolute;
+    left: -19px;
+    top: 46%;
+  }
+  
+  .draweBody {
+    height: calc(100vh - 130px);
+    overflow: auto;
+  }
+  
+  .position {
+    position: absolute;
+    right: 4px;
+    top: 8px;
+  }
+
+
+
+  .card_container{
+    border: 1px solid #fafafa;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    padding: 10px;
+  }

@@ -29,10 +29,12 @@ export class FileInputComponent implements OnChanges, OnDestroy {
   @Input() lable: string = '';
   @Input() applicatanData: any;
   @Input() controlName: string = '';
+  @Input() callFrom: 'applicant' | 'employee' = 'applicant';
   @Output() uploadFile = new EventEmitter<any>();
   @Output() deleteFile = new EventEmitter<any>();
   private destroy$ = new Subject<void>();
   private destroy2$ = new Subject<void>();
+  private destroy3$ = new Subject<void>();
 
   showDialog: boolean = false;
 
@@ -47,31 +49,57 @@ export class FileInputComponent implements OnChanges, OnDestroy {
   ) {}
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.applicantS
-      .getDocumentList()
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((data) => {
-        this.documentList = data ?? [];
-        if (this.documentList.length > 0) {
-          for (const doc of this.documentList) {
-            if (doc.metadata === this.controlName) {
-              this.selectedFile = {
-                ...doc,
-                additional_data: JSON.parse(doc.additional_data),
-              };
-              this.isSelected = this.fileS.checkIfFileExist(this.selectedFile);
-              break;
+    if (this.callFrom === 'applicant') {
+      this.applicantS
+        .getDocumentList()
+        .pipe(takeUntil(this.destroy$))
+        .subscribe((data) => {
+          this.documentList = data ?? [];
+          if (this.documentList.length > 0) {
+            for (const doc of this.documentList) {
+              if (doc.metadata === this.controlName) {
+                this.selectedFile = {
+                  ...doc,
+                  additional_data: JSON.parse(doc.additional_data),
+                };
+                this.isSelected = this.fileS.checkIfFileExist(
+                  this.selectedFile
+                );
+                break;
+              }
             }
           }
-        }
-      });
+        });
 
+      this.fileS
+        .getSelectedFiles()
+        .pipe(takeUntil(this.destroy2$))
+        .subscribe((file: any) => {
+          if (this.selectedFile) {
+            this.isSelected = this.fileS.checkIfFileExist(this.selectedFile);
+          }
+        });
+    }
 
-      this.fileS.getSelectedFiles().pipe(takeUntil(this.destroy2$)).subscribe((file:any)=>{
-        if (this.selectedFile) {
-          this.isSelected = this.fileS.checkIfFileExist(this.selectedFile);
-        }
-      })
+    if (this.callFrom === 'employee') {
+      this.applicantS
+        .getAuthorityDocumentList()
+        .pipe(takeUntil(this.destroy3$))
+        .subscribe((data) => {
+          this.documentList = data ?? [];
+          if (this.documentList.length > 0) {
+            for (const doc of this.documentList) {
+              if (doc.metadata === this.controlName) {
+                this.selectedFile = {
+                  ...doc,
+                  additional_data: JSON.parse(doc.additional_data),
+                };
+                break;
+              }
+            }
+          }
+        });
+    }
   }
   onBasicUploadAuto(event: FileSelectEvent) {
     const isValid = this.validateFile(event.currentFiles[0]);
@@ -102,44 +130,46 @@ export class FileInputComponent implements OnChanges, OnDestroy {
     event.stopPropagation();
     if (this.selectedFile) {
       this.showDialog = true;
-      this.sharedS
-        .sendDeleteRequest(`application-documents/${this.selectedFile.id}`)
-        .subscribe({
-          next: (resp) => {
-            this.showDialog = false;
-            if (resp.status === 200) {
-              this.toastS.setToast({
-                show: true,
-                severity: 'success',
-                message: 'File deleted successfully.',
-              });
-              const index = this.documentList.findIndex(
-                (doc) => doc.id === this.selectedFile.id
-              );
-
-              if (index > -1) {
-                this.documentList.splice(index, 1);
-                this.applicantS.updateDocumentList(this.documentList);
-                this.selectedFile = null;
-                return;
-              }
-
-              this.selectedFile = null;
-            }
-          },
-          error: (err: any) => {
-            this.showDialog = false;
+      let url = `application-documents/${this.selectedFile.id}`;
+      if (this.callFrom === 'employee') {
+        url = `authority-documents/${this.selectedFile.id}`;
+      }
+      this.sharedS.sendDeleteRequest(url).subscribe({
+        next: (resp) => {
+          this.showDialog = false;
+          if (resp.status === 200) {
             this.toastS.setToast({
               show: true,
-              severity: 'error',
-              message: 'Error in deleting file.',
+              severity: 'success',
+              message: 'File deleted successfully.',
             });
-          },
-        });
+            const index = this.documentList.findIndex(
+              (doc) => doc.id === this.selectedFile.id
+            );
+
+            if (index > -1) {
+              this.documentList.splice(index, 1);
+              this.applicantS.updateDocumentList(this.documentList);
+              this.selectedFile = null;
+              return;
+            }
+
+            this.selectedFile = null;
+          }
+        },
+        error: (err: any) => {
+          this.showDialog = false;
+          this.toastS.setToast({
+            show: true,
+            severity: 'error',
+            message: 'Error in deleting file.',
+          });
+        },
+      });
     }
   }
 
-  downloadFile(event:any) {
+  downloadFile(event: any) {
     event.stopPropagation();
     if (this.file) {
       const url = URL.createObjectURL(this.file);
@@ -148,10 +178,13 @@ export class FileInputComponent implements OnChanges, OnDestroy {
       link.download = this.file.name;
       link.click();
     } else {
-      const url = `application-documents/${this.selectedFile.id}/file`;
+      let url = `application-documents/${this.selectedFile.id}/file`;
+      if (this.callFrom === 'employee') {
+        url = `authority-documents/${this.selectedFile.id}/file`;
+      }
       this.sharedS.getBlob(url).subscribe({
         next: (blob: any) => {
-           const url = window.URL.createObjectURL(blob);
+          const url = window.URL.createObjectURL(blob);
           const a = document.createElement('a');
           a.href = url;
           a.download = this.selectedFile.name ?? '';
@@ -166,25 +199,8 @@ export class FileInputComponent implements OnChanges, OnDestroy {
             severity: 'error',
             message: 'Error in downloading file',
           });
-        }
-      })
-      // const url = `application-documents/${this.selectedFile.id}/url`;
-      // this.sharedS.sendGetRequest(url).subscribe({
-      //   next: (res: any) => {
-      //     if (res.status === 200) {
-      //       const fileUrl = res.body.url;
-      //       window.open(fileUrl, '_blank');
-      //       // this.sharedS.sendDownloadRequest(fileUrl);
-      //     }
-      //   },
-      //   error: (err: any) => {
-      //     this.toastS.setToast({
-      //       show: true,
-      //       severity: 'error',
-      //       message: 'Error in deleting file.',
-      //     });
-      //   },
-      // });
+        },
+      });
     }
   }
 
@@ -197,53 +213,68 @@ export class FileInputComponent implements OnChanges, OnDestroy {
 
     let formData = new FormData();
     formData.append('file', this.file as Blob);
-    formData.append('application_id', this.applicatanData.id);
     formData.append('metadata', this.controlName);
     formData.append('additional_data', JSON.stringify(fileData));
 
     if (this.applicatanData) {
       this.showDialog = true;
-      this.sharedS
-        .sendPostRequest('application-documents/upload', formData)
-        .subscribe({
-          next: (resp) => {
-            this.showDialog = false;
-            if (resp.status === 200) {
-              const fileList = resp?.body?.application_documents ?? [];
-              for (const element of fileList) {
-                if (element.metadata === this.controlName) {
-                  this.selectedFile = {
-                    ...element,
-                    additional_data: JSON.parse(element.additional_data),
-                  };
-
-                  this.documentList.push({
-                    ...this.selectedFile,
-                    additional_data: JSON.stringify(
-                      this.selectedFile.additional_data
-                    ),
-                  });
-                  this.applicantS.updateDocumentList(this.documentList);
-                  break;
-                }
-              }
-              this.file = null;
-              this.toastS.setToast({
-                show: true,
-                severity: 'success',
-                message: 'File uploaded successfully.',
-              });
+      let url = `application-documents/upload`;
+      if (this.callFrom === 'employee') {
+        url = `authority-documents/upload`;
+        formData.append('authority_id', this.applicatanData.id);
+      } else {
+        formData.append('application_id', this.applicatanData.id);
+      }
+      this.sharedS.sendPostRequest(url, formData).subscribe({
+        next: (resp) => {
+          this.showDialog = false;
+          if (resp.status === 200) {
+            let fileList = resp?.body?.application_documents ?? [];
+            if(this.callFrom === 'applicant') {
+              fileList =  resp?.body?.application_documents ?? [];
+            }else{
+              fileList =  resp?.body?.authority_documents ?? [];
             }
-          },
-          error: (err: any) => {
-            this.showDialog = false;
+            for (const element of fileList) {
+              if (element.metadata === this.controlName) {
+                this.selectedFile = {
+                  ...element,
+                  additional_data: JSON.parse(element.additional_data),
+                };
+
+                this.documentList.push({
+                  ...this.selectedFile,
+                  additional_data: JSON.stringify(
+                    this.selectedFile.additional_data
+                  ),
+                });
+
+                if(this.callFrom === 'applicant') {
+                  this.applicantS.updateDocumentList(this.documentList);
+                }else{
+                  this.applicantS.updateAuthorityDocumentList(this.documentList);
+                }
+               
+                break;
+              }
+            }
+            this.file = null;
             this.toastS.setToast({
               show: true,
-              severity: 'error',
-              message: 'Error in uploading file.',
+              severity: 'success',
+              message: 'File uploaded successfully.',
             });
-          },
-        });
+          }
+        },
+        error: (err: any) => {
+          this.showDialog = false;
+          this.toastS.setToast({
+            show: true,
+            severity: 'error',
+            message: 'Error in uploading file.',
+          });
+        },
+      });
     }
   }
 
@@ -292,10 +323,11 @@ export class FileInputComponent implements OnChanges, OnDestroy {
   }
 
   selectedFileHandler() {
+    if (this.callFrom === 'employee') return;
     const file = this.selectedFile;
-    if(!file) return;
+    if (!file) return;
     this.isSelected = !this.fileS.checkIfFileExist(file);
-    this.fileS.filterFiles(file , this.applicatanData);
+    this.fileS.filterFiles(file, this.applicatanData);
   }
 
   ngOnDestroy() {
@@ -304,5 +336,7 @@ export class FileInputComponent implements OnChanges, OnDestroy {
 
     this.destroy2$.next();
     this.destroy2$.complete();
+    this.destroy3$.next();
+    this.destroy3$.complete();
   }
 }
