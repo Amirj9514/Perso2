@@ -22,20 +22,23 @@
         'last_name',
         'applied_at',
         'email',
-        'vacancieName'
+        'vacancieName',
+        'proAnererkennung',
+        'proS81a',
+        'proVaz',
+        'proVereinbarung',
       ]" [tableStyle]="{ 'min-width': '50rem' }" [rowsPerPageOptions]="[10, 50, 100]">
       <ng-template #header>
         <tr>
-          <th style="width: 25%">Aktennummer</th>
-          <th style="width: 25%">Vor-Nachname</th>
-          <th style="width: 25%">Position/Status</th>
-          <th style="width: 25%">Arbeitgeber</th>
-          <th style="width: 25%">Kontakt Info</th>
-          <th style="width: 25%">Antrag Anerkennung</th>
-          <th style="width: 25%">Antrag §81a</th>
-          <th style="width: 25%">VAZ</th>
-          <th style="width: 25%">Vereinbarung</th>
-         
+          <th class="white-space-noWrap" pSortableColumn="age" >Aktennummer <p-sortIcon field="age"/></th>
+          <th class="white-space-noWrap" pSortableColumn="full_name" >Vor-Nachname <p-sortIcon field="full_name"/></th>
+          <th class="white-space-noWrap" pSortableColumn="vacancieName">Position/Status <p-sortIcon field="vacancieName"/></th>
+          <th class="white-space-noWrap" pSortableColumn="applied_at"  >Arbeitgeber<p-sortIcon field="applied_at"/></th>
+          <th class="white-space-noWrap" pSortableColumn="email" >Kontakt Info <p-sortIcon field="email"/></th>
+          <th class="white-space-noWrap" pSortableColumn="proAnererkennung">Antrag Anerkennung<p-sortIcon field="proAnererkennung"/></th>
+          <th class="white-space-noWrap" pSortableColumn="proS81a">Antrag §81a<p-sortIcon field="proS81a"/></th>
+          <th class="white-space-noWrap" pSortableColumn="proVaz">VAZ<p-sortIcon field="proVaz"/></th>
+          <th class="white-space-noWrap" pSortableColumn="proVereinbarung">Vereinbarung<p-sortIcon field="proVereinbarung"/></th>      
 
           <th>Bearbeiten</th>
         </tr>
@@ -57,12 +60,12 @@
         }@else{
         <tr>
           <td><span (click)="openDetail(product)" class="link">{{ product?.age }}</span></td>
-          <td>{{ product?.first_name + " " + product?.last_name }}</td>
+          <td>{{ product?.full_name }}</td>
           <td>{{ product?.vacancieName }}</td>
           <td>{{ product?.applied_at }}</td>
           <td>{{ product?.email }}</td>
           <td>
-            @if( getTdValue(product , 'proAnererkennung').show){
+            @if(product?.proAnererkennung){
             <div class="w-2rem h-2rem" [ngStyle]="{'background-color': getTdValue(product , 'proAnererkennung').color}"
               style="border-radius: 50%;">
               <span style="visibility: hidden;">''</span>
@@ -71,7 +74,7 @@
             <div>--</div>
             }
           </td>
-          <td> @if( getTdValue(product , 'proS81a').show){
+          <td> @if(product?.proS81a){
             <div class="w-2rem h-2rem" [ngStyle]="{'background-color': getTdValue(product , 'proS81a').color}"
               style="border-radius: 50%;">
               <span style="visibility: hidden;">''</span>
@@ -79,7 +82,7 @@
             }@else {
             <div>--</div>
             }</td>
-          <td> @if( getTdValue(product , 'proVaz').show){
+          <td> @if( product?.proVaz){
             <div class="w-2rem h-2rem" [ngStyle]="{'background-color': getTdValue(product , 'proVaz').color}"
               style="border-radius: 50%;">
               <span style="visibility: hidden;">''</span>
@@ -87,7 +90,7 @@
             }@else {
             <div>--</div>
             }</td>
-          <td> @if( getTdValue(product , 'proVereinbarung').show){
+          <td> @if(product?.proVereinbarung){
             <div class="w-2rem h-2rem" [ngStyle]="{'background-color': getTdValue(product , 'proVereinbarung').color}"
               style="border-radius: 50%;">
               <span style="visibility: hidden;">''</span>

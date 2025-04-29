@@ -21,13 +21,6 @@
     </div>
     <p-table
       #dt2
-      [globalFilterFields]="[
-        'branch',
-        'contact',
-        'place',
-        'cooperation_partner',
-        'employer'
-      ]"
       [value]="products"
       [paginator]="true"
       stripedRows
@@ -44,11 +37,11 @@
     >
       <ng-template #header>
         <tr>
-          <th>Branche</th>
-          <th>Kooperationspartner</th>
-          <th>Arbeitsgeber</th>
-          <th>Ort</th>
-          <th>Ansprechpartner</th>
+          <th class="white-space-noWrap" pSortableColumn="branch">Branche <p-sortIcon field="branch"/></th>
+          <th class="white-space-noWrap" pSortableColumn="contact">Kooperationspartner <p-sortIcon field="contact"/></th>
+          <th class="white-space-noWrap" pSortableColumn="place">Arbeitsgeber <p-sortIcon field="place"/></th>
+          <th class="white-space-noWrap" pSortableColumn="cooperation_partner">Ort <p-sortIcon field="cooperation_partner"/></th>
+          <th class="white-space-noWrap" pSortableColumn="employer">Ansprechpartner <p-sortIcon field="employer"/></th>
           <th>Bearbeiten</th>
         </tr>
       </ng-template>

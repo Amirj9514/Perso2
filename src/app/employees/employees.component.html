@@ -25,10 +25,10 @@
     >
       <ng-template #header>
         <tr>
-          <th style="width: 25%">Vorname</th>
-          <th style="width: 25%">Nachname</th>
-          <th style="width: 25%">Username</th>
-          <th style="width: 25%">Created at</th>
+          <th class="white-space-noWrap" pSortableColumn="first_name">Vorname <p-sortIcon field="first_name"/></th>
+          <th class="white-space-noWrap" pSortableColumn="last_name">Nachname <p-sortIcon field="last_name"/></th>
+          <th class="white-space-noWrap" pSortableColumn="user_name">Username <p-sortIcon field="user_name"/></th>
+          <th class="white-space-noWrap" pSortableColumn="created_at">Created at <p-sortIcon field="created_at"/></th>
           <th >Bearbeiten</th>
         </tr>
       </ng-template>
@@ -44,10 +44,10 @@
         </tr>
         }@else{
           <tr>
-            <td>{{ product.first_name }}</td>
-            <td>{{ product.last_name }}</td>
-            <td>{{ product.user_name }}</td>
-            <td>{{ product.created_at | date :'MM-dd-yyyy' }}</td>
+            <td>{{ product?.first_name ?? "--" }}</td>
+            <td>{{ product?.last_name ?? "--" }}</td>
+            <td>{{ product?.user_name ?? "--" }}</td>
+            <td>{{ product?.created_at | date :'MM-dd-yyyy' }}</td>
             <td>
               <p-button
                 icon="pi pi-trash"

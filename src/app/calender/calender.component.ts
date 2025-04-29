@@ -16,7 +16,6 @@ import { CommonModule } from '@angular/common';
 import { DialogModule } from 'primeng/dialog';
 import { AddNewMeetingComponent } from "./add-new-meeting/add-new-meeting.component";
 import { SharedService } from '../Shared/services/shared.service';
-import { AddViewDetailComponent } from "../arbeitgeber/add-view-detail/add-view-detail.component";
 import { ViewNewMeetingComponent } from "./view-new-meeting/view-new-meeting.component";
 
 @Component({
@@ -29,7 +28,7 @@ import { ViewNewMeetingComponent } from "./view-new-meeting/view-new-meeting.com
     FloatLabelModule,
     ReactiveFormsModule,
     DatePickerModule,
-    InputTextModule, AddNewMeetingComponent, AddViewDetailComponent, ViewNewMeetingComponent],
+    InputTextModule, AddNewMeetingComponent, ViewNewMeetingComponent],
   templateUrl: './calender.component.html',
   styleUrl: './calender.component.scss'
 })

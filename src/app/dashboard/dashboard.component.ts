@@ -134,7 +134,7 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.userDetail = this.rolesS.getLoginUser() ?? null;
-    if(this.userDetail.role === 'viewer') {
+    if (this.userDetail.role === 'viewer') {
       this.onlyView = true;
     }
     this.getVacancies();
@@ -267,6 +267,7 @@ export class DashboardComponent implements OnInit {
               id: item.id,
               applied_at: item.applied_at,
               vacancy_id: item.vacancy_id,
+              full_name: item?.first_name ?? '' + ' ' + item?.last_name ?? '',
               first_name: item.first_name,
               last_name: item.last_name,
               email: item.email,
@@ -275,13 +276,23 @@ export class DashboardComponent implements OnInit {
               address: item.address,
               marital_status: item.marital_status,
               date_of_birth: item.date_of_birth,
-              country: item.country,    
+              country: item.country,
               description: item.description,
               sub_category: item.sub_category,
               category: category,
               vacancieName: this.getVacancieById(item.vacancy_id),
               additional_data: item.additional_data,
-              tab1_parse:this.parseData(item.tab_1),
+              tab1_parse: this.parseData(item.tab_1),
+              proAnererkennung: this.getTdValue2(
+                this.parseData(item.tab_1),
+                'proAnererkennung'
+              ),
+              proS81a: this.getTdValue2(this.parseData(item.tab_1), 'proS81a'),
+              proVaz: this.getTdValue2(this.parseData(item.tab_1), 'proVaz'),
+              proVereinbarung: this.getTdValue2(
+                this.parseData(item.tab_1),
+                'proVereinbarung'
+              ),
               tab_1: item.tab_1,
               tab_2: item.tab_2,
               tab_3: item.tab_3,
@@ -302,7 +313,7 @@ export class DashboardComponent implements OnInit {
             } else {
               this.products.push(val);
             }
-          }); 
+          });
         } else {
           this.products = [];
         }
@@ -314,9 +325,8 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-
-  parseData(item:any){
-    if(!item) return null;
+  parseData(item: any) {
+    if (!item) return null;
     try {
       const parsedData = JSON.parse(item);
       return parsedData;
@@ -360,22 +370,34 @@ export class DashboardComponent implements OnInit {
     return selectedEnrolment;
   }
 
-
   getTdValue(item: any, key: string) {
-    let retVal:{ color:string , show:boolean} = { color:'' , show:false};
+    let retVal: { color: string; show: boolean } = { color: '', show: false };
 
     try {
-      if(item.tab1_parse[key]){
+      if (item.tab1_parse[key]) {
         retVal.color = item.tab1_parse[key].color ?? 'black';
-        retVal.show = item.tab1_parse[key].color?true : false;
-  
+        retVal.show = item.tab1_parse[key].color ? true : false;
+
         return retVal;
       }
-      return {color:'', show:false};
+      return { color: '', show: false };
     } catch (error) {
-      return {color:'', show:false};
+      return { color: '', show: false };
     }
-   
+  }
+
+  getTdValue2(item: any, key: string) {
+    let color: any = null;
+
+    try {
+      if (item[key]) {
+        color = item[key].color ?? null;
+        return color;
+      }
+      return  color;
+    } catch (error) {
+      return null;
+    }
   }
 
   getSubcategoryById(id: any) {
@@ -438,7 +460,6 @@ export class DashboardComponent implements OnInit {
   }
 
   editDetail(product: any) {
-
     this.viewDetails = false;
 
     this.isEdit = true;

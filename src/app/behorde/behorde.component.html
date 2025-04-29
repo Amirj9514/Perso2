@@ -22,11 +22,11 @@
     <p-table
       #dt2
       [globalFilterFields]="[
-        'branch',
         'contact',
-        'place',
-        'cooperation_partner',
-        'employer'
+        'email',
+        'phone',
+        'application',
+        'address'
       ]"
       [value]="products"
       [paginator]="true"
@@ -37,13 +37,13 @@
     >
       <ng-template #header>
         <tr>
-          <th>Ref_ID</th>
-          <th>Kontaktperson</th>
-          <th>E-Mail</th>
-          <th>Telefonnummer</th>
-          <th>Antragstellung</th>
-          <th>Adresse</th>
-          <th>Bearbeiten</th>
+          <th  class="white-space-noWrap" pSortableColumn="id">Ref_ID <p-sortIcon field="id"/></th>
+          <th  class="white-space-noWrap" pSortableColumn="contact">Kontaktperson <p-sortIcon field="contact"/></th>
+          <th  class="white-space-noWrap" pSortableColumn="email">E-Mail <p-sortIcon field="email"/></th>
+          <th  class="white-space-noWrap" pSortableColumn="phone">Telefonnummer <p-sortIcon field="phone"/></th>
+          <th  class="white-space-noWrap" pSortableColumn="application">Antragstellung <p-sortIcon field="application"/></th>
+          <th  class="white-space-noWrap" pSortableColumn="address">Adresse <p-sortIcon field="address"/></th>
+          <th  class="white-space-noWrap">Bearbeiten</th>
         </tr>
       </ng-template>
       <ng-template #body let-product>
