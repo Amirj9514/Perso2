@@ -1,0 +1,212 @@
+<div class="flex flex-col h-full relative">
+  <div class="flex items-center justify-between shrink-0 w-full">
+    <p-button
+      (onClick)="closeCallback($event)"
+      icon="pi pi-angle-left"
+      [rounded]="true"
+      class="drawerBackBtn"
+    />
+
+    <div class="w-full">
+      <div
+        class="text-xl px-4 font-semibold py-3 border-bottom-1 headerBg borderClr"
+      >
+        Neu Meeting
+      </div>
+
+      <form [formGroup]="newApplicationFrom" class="pl-4 pr-3 mt-3 draweBody">
+        <div class="mt-3">
+          <div class="grid pt-2">
+            <div class="col-12 mb-2">
+              <p-floatlabel class="w-full md:w-56" variant="on">
+                <input
+                  type="text"
+                  pInputText
+                  class="w-full"
+                  formControlName="title"
+                />
+                <label for="on_label"
+                  >Title
+                  <span
+                    class="text-red-600"
+                    *ngIf="
+                      newApplicationFrom.get('title')?.touched &&
+                      newApplicationFrom.get('title')?.invalid
+                    "
+                    >*</span
+                  >
+                </label>
+              </p-floatlabel>
+              <span
+                class="text-sm"
+                *ngIf="
+                  (newApplicationFrom.get('title')?.touched || formSubmit) &&
+                  newApplicationFrom.get('title')?.errors
+                "
+              >
+                <span
+                  class="text-red-600"
+                  *ngIf="newApplicationFrom.get('title')?.hasError('required')"
+                  >Title Pflichtfeld</span
+                >
+              </span>
+            </div>
+
+            <div class="col-12 mb-2">
+                <p-floatlabel class="w-full md:w-56" variant="on">
+                  <p-select
+                    formControlName="type"
+                    inputId="on_label"
+                    [options]="meetingTypes"
+                    appendTo="body"
+                    optionLabel="label"
+                    styleClass="w-full"
+                  />
+                  <label for="on_label"
+                    >Type
+                    <span
+                      class="text-red-600"
+                      *ngIf="
+                        newApplicationFrom.get('type')?.touched &&
+                        newApplicationFrom.get('type')?.invalid
+                      "
+                      >*</span
+                    >
+                  </label>
+                </p-floatlabel>
+                <span
+                  class="text-sm"
+                  *ngIf="
+                    (newApplicationFrom.get('type')?.touched || formSubmit) &&
+                    newApplicationFrom.get('type')?.errors
+                  "
+                >
+                  <span
+                    class="text-red-600"
+                    *ngIf="newApplicationFrom.get('type')?.hasError('required')"
+                    >Type Pflichtfeld</span
+                  >
+                </span>
+              </div>
+            <div class="col-12 mb-2">
+              <p-floatlabel class="w-full md:w-56" variant="on">
+                <p-datepicker
+                  type="datetime"
+                  class="w-full"
+                  styleClass="w-full"
+                  [minDate]="todayDate"
+                  formControlName="date"
+                />
+                <label for="on_label"
+                  >Date
+                  <span
+                    class="text-red-600"
+                    *ngIf="
+                      newApplicationFrom.get('date')?.touched &&
+                      newApplicationFrom.get('date')?.invalid
+                    "
+                    >*</span
+                  >
+                </label>
+              </p-floatlabel>
+              <span
+                class="text-sm"
+                *ngIf="
+                  (newApplicationFrom.get('date')?.touched || formSubmit) &&
+                  newApplicationFrom.get('date')?.errors
+                "
+              >
+                <span
+                  class="text-red-600"
+                  *ngIf="newApplicationFrom.get('date')?.hasError('required')"
+                  >Date Pflichtfeld</span
+                >
+              </span>
+            </div>
+
+            <div class="col-12 mb-2">
+              <p-floatlabel class="w-full md:w-56" variant="on">
+                <input
+                  type="datetime"
+                  class="w-full"
+                  styleClass="w-full"
+                  pInputText
+                  type="time"
+                  formControlName="time"
+                />
+                <label for="on_label"
+                  >Time
+                  <span
+                    class="text-red-600"
+                    *ngIf="
+                      newApplicationFrom.get('time')?.touched &&
+                      newApplicationFrom.get('time')?.invalid
+                    "
+                    >*</span
+                  >
+                </label>
+              </p-floatlabel>
+              <span
+                class="text-sm"
+                *ngIf="
+                  (newApplicationFrom.get('time')?.touched || formSubmit) &&
+                  newApplicationFrom.get('time')?.errors
+                "
+              >
+                <span
+                  class="text-red-600"
+                  *ngIf="newApplicationFrom.get('date')?.hasError('required')"
+                  >Time Pflichtfeld</span
+                >
+              </span>
+            </div>
+
+           
+
+            <div class="col-12 pb-3">
+              <label for="on_label">Description</label>
+                <textarea
+                  rows="5"
+                  cols="30"
+                  class="w-full"
+                  formControlName="description"
+                  pTextarea
+                ></textarea>
+
+               
+              <span
+                class="text-sm"
+                *ngIf="
+                  (newApplicationFrom.get('description')?.touched ||
+                    formSubmit) &&
+                  newApplicationFrom.get('description')?.errors
+                "
+              >
+                <span
+                  class="text-red-600"
+                  *ngIf="
+                    newApplicationFrom.get('description')?.hasError('required')
+                  "
+                  >Description Pflichtfeld</span
+                >
+              </span>
+            </div>
+          </div>
+        </div>
+      </form>
+
+      <div
+        class="flex justify-content-end align-items-center pt-3 gap-3 w-full px-4"
+      >
+        <p-button
+          variant="outlined"
+          [disabled]="loader"
+          severity="secondary"
+          (onClick)="closeCallback($event)"
+          label="Abbrechen"
+        />
+        <p-button (click)="onSubmit()" [loading]="loader" label="Speichern" />
+      </div>
+    </div>
+  </div>
+</div>

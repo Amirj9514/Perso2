@@ -1,0 +1,32 @@
+.disableFeild{
+    background-color: #F7F7F7;
+    border-radius: 10px;
+    padding:6px 10px;
+    overflow: hidden;
+
+    .lable{
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 16px;
+        margin-bottom: 3px;
+        font-weight: 600;
+    }
+}
+
+
+
+.drawerBackBtn {
+    position: absolute;
+    left: -19px;
+    top: 46%;
+  }
+  
+  .draweBody {
+    height: calc(100vh - 130px);
+    overflow: auto;
+  }
+  
+  .position {
+    position: absolute;
+    right: 4px;
+    top: 8px;
+  }
