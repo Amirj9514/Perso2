@@ -1,0 +1,91 @@
+.home-container-box {
+  background: #f9f9f9;
+}
+
+.dashboard-txt {
+  font-size: 20px;
+  font-weight: 600;
+  color: #000000;
+  padding: 20px;
+}
+
+.meeting-card-header{
+    padding: 10px;
+}
+.meeting-Container {
+  height: calc(100vh - 128px);
+  overflow: auto;
+
+  .meeting-card {
+    border-radius: 12px;
+    height: 100%;
+  
+    background-color: #fff;
+    box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px,
+      rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+    &-header {
+      font-size: 20px;
+      font-weight: 600;
+      color: #000000;
+    }
+
+    .subTitle {
+      font-size: 14px;
+      font-weight: 600;
+      margin: 15px 0px;
+    }
+    .meeting-card-body {
+        padding: 10px;
+      height: calc(100vh - 188px);
+      overflow: auto;
+    }
+
+    &-list {
+      margin-top: 10px;
+      border-radius: 10px;
+      display: flex;
+      gap: 10px;
+      padding: 10px;
+      cursor: pointer;
+      box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+
+      .date-box {
+        width: 50px;
+        min-width: 50px;
+        min-height: 50px;
+        height: 50px;
+        background-color: #29a3a4;
+        color: #fff;
+        border-radius: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        .date {
+          font-size: 20px;
+          font-weight: 600;
+        }
+        .month {
+          font-size: 10px;
+          padding-left: 3px;
+        }
+      }
+
+      .meeting-name {
+        font-size: 16px;
+        font-weight: 600;
+        color: #000000;
+      }
+      .meeting-time {
+        font-size: 12px;
+        font-weight: 400;
+        color: #000000;
+      }
+      .meeting-discription {
+        font-size: 14px;
+        font-weight: 400;
+        color: gray;
+      }
+    }
+  }
+}

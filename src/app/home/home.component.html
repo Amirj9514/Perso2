@@ -1,0 +1,85 @@
+<div class="home-container-box">
+  <div class="dashboard-txt">Dashboard</div>
+
+  <div class="grid meeting-Container">
+    <div class="md:col-6 col-12">
+      <div class="meeting-card">
+        <div class="meeting-card-header">Meeting</div>
+        <div class="meeting-card-body">
+          @for (item of filteredMeetings; track $index) {
+          <div class="subTitle">{{ item?.title }}</div>
+          @for (meating of item?.data?.meeting; track $index) {
+          <div class="meeting-card-list" (click)="visible = true; selectedRow = meating">
+            <div class="date-box">
+              <div class="date">{{ meating?.meeting_date | date : "dd" }}</div>
+              <div class="month">
+                {{ meating?.meeting_date | date : "MMM" }}
+              </div>
+            </div>
+            <div class="detail">
+              <div class="meeting-name">{{ meating?.title }}</div>
+              <div class="meeting-time">
+                {{ meating?.meeting_date | date : "hh:mm a" }}
+              </div>
+              <div class="meeting-discription mt-2">
+                {{ shortDescription(meating?.description) }}
+              </div>
+            </div>
+          </div>
+          }@empty {
+            <div class="text-center mt-2">
+              <div class="subTitle">No {{item?.title}} Meeting</div>
+            </div>
+            } }
+        </div>
+      </div>
+    </div>
+    <div class="md:col-6 col-12">
+      <div class="meeting-card">
+        <div class="meeting-card-header">Deadline</div>
+        <div class="meeting-card-body">
+          @for (item of filteredMeetings; track $index) {
+          <div class="subTitle">{{ item?.title }}</div>
+          @for (meating of item?.data?.deadline; track $index) {
+          <div class="meeting-card-list">
+            <div class="date-box">
+              <div class="date">{{ meating?.meeting_date | date : "dd" }}</div>
+              <div class="month">
+                {{ meating?.meeting_date | date : "MMM" }}
+              </div>
+            </div>
+            <div class="detail">
+              <div class="meeting-name">{{ meating?.title }}</div>
+              <div class="meeting-time">
+                {{ meating?.meeting_date | date : "hh:mm a" }}
+              </div>
+              <div class="meeting-discription mt-2">
+                {{ shortDescription(meating?.description) }}
+              </div>
+            </div>
+          </div>
+          }@empty {
+          <div class="text-center mt-2">
+            <div class="subTitle">No  {{item?.title}} Deadline</div>
+          </div>
+          } }
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<p-drawer
+  #drawerRef
+  [(visible)]="visible"
+  [modal]="true"
+  [dismissible]="false"
+  position="right"
+  styleClass="w-26rem"
+>
+  <ng-template #headless>
+    <app-view-new-meeting [selectedRow]="selectedRow" (closeDrawer)="visible = false" (onFormsubmit)="visible = false; getmeetingData()"></app-view-new-meeting>
+  </ng-template>
+</p-drawer>

@@ -16,6 +16,14 @@ export const routes: Routes = [
     data: { roles: ['admin', 'viewer', 'agent'] },
     children: [
       {
+        path:'dashboard',
+        loadComponent: () =>
+          import('./home/home.component').then(
+            (m) => m.HomeComponent
+          ),
+        canActivate: [authGuard],
+      },
+      {
         path: '',
         loadComponent: () =>
           import('./dashboard/dashboard.component').then(
